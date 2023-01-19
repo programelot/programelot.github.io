@@ -1,0 +1,1132 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Jekyll, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Motivation Most of time, GPU sufferes from a lack of memories. There are many techniques that tries to optimize memory. However, utilizing GPU memory is a hard problem. This study was done for studying about algorithmic approach to determine a good memory ordering for a gpu utilization. Problem definition Let&apos;s assume there are M data. Then, M data will be consisted by the some combination of address spaces. For given data $D = \{D_1, D_2, \cdots, D_m\}$, each data will have a transfer cost. Let&apos;s call each transfer costs as $C = \{c_1, c_2, \cdots, c_m\}$. These data will be used on the kernel calls $K = \{K_1, K_2, \cdots, K_n\}$. Now each kernel call will require some set of data in D. Let&apos;s define these required data as $R = \{R_1, R_2, \cdots, R_n\}$ Notice that $R_i \subseteq 2^D$ and $c_j &amp;gt; 0$ $\forall 1 \le i \le n ,1 \le j \le m$. Now, the problem can be a minimization problem as follows. $$\text{Minimize } \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j$$ In here, it is assumed to be a round-kernel call. Which means, it will be $K_1$ $\rightarrow$ $K_2$ $\rightarrow$ $\cdots$ $K_n = K_0$ $\rightarrow$ $K_1$ and so-on. Naive approach Native way to solve this is trying every possible order and checking it. In general, it is possible but it takes too much if there are too many kernel calls. Notice that it takes $O(n!)$. Therefore, it is not realistic to use as it is. Approximated approach Formula above is a bit complex, but it can be transfered as follows. $ \begin{array}{lcl} &amp; \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_{i - 1}))c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i)- \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ \end{array} $ Notice that $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j $ $=$ $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j$ because entire costs doesn&apos;t depend on the order. As a result, problem is converted to be a symmetric unlike before. Now, it can be converted to the metric. Let&apos;s define $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ Now, it fullfills following property of metrics. $d_{i,j} = 0$ $\Leftrightarrow$ $i = j$ $d_{i,j} = d_{j,i}$ $d_{i,j} \le d_{i,k} + d_{k,j}$ Proofs are as follows. It need to be proven for both ways. ($\Leftarrow$) $d_{i,i}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_i) - \unicode{x1D7D9}(D_x \in R_i \cap R_i))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i) - \unicode{x1D7D9}(D_x \in R_i))c_x$ $=$ $0$ ($\Rightarrow$) $0$ $=$ $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $\Leftrightarrow$ $\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j) = 0$ $\Leftrightarrow$ $R_i = R_j$. Notice that, if two kernels uses the same data, it can be combined in to one kernel. $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_j \cup R_i) - \unicode{x1D7D9}(D_x \in R_j \cap R_i))c_x$ $=$ $d_{j,i}$ $ \begin{array}{lcl} d_{i,j} &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i - R_j) + \unicode{x1D7D9}(D_x \in R_j - R_i))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_i \cap R_k) - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_i - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_j \cap R_k) - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_j - R_k)))c_x \\ &amp; \le &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_j)) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_i)) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; d_{i,k} + d_{j,k} \\ \end{array} $ As a result, it can be solved with the metric salesman traveling problem. There are two ways to solve this. Minimum spanning tree. It will give 2 approximation algorithm for the metric salesman traveling problem. Christofides algorithm. It will give 1.5 approximation algorithm for the metric salesman traveling problem. Limitation This approach works when kerenels can be reordered. Which means algorithm need to be big enough to be seperated as multiple parts without dependencies. Therefore, this may only works for only scientific algorithms. Extension In general, this study suggests that memory loading ordering problem for GPU can be transfered into TSP. At the same time, TSP is one of the well-known problem between many comptuer science problems. Therefore, it can proceed more by using research about TSP.">
+<meta name="keywords" content="Jekyll, NexT">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GPU utilization">
+<meta property="og:url" content="https://programelot.github.io/projects/GPUtil/">
+<meta property="og:site_name" content="REAL">
+<meta property="og:description" content="Motivation Most of time, GPU sufferes from a lack of memories. There are many techniques that tries to optimize memory. However, utilizing GPU memory is a hard problem. This study was done for studying about algorithmic approach to determine a good memory ordering for a gpu utilization. Problem definition Let&apos;s assume there are M data. Then, M data will be consisted by the some combination of address spaces. For given data $D = \{D_1, D_2, \cdots, D_m\}$, each data will have a transfer cost. Let&apos;s call each transfer costs as $C = \{c_1, c_2, \cdots, c_m\}$. These data will be used on the kernel calls $K = \{K_1, K_2, \cdots, K_n\}$. Now each kernel call will require some set of data in D. Let&apos;s define these required data as $R = \{R_1, R_2, \cdots, R_n\}$ Notice that $R_i \subseteq 2^D$ and $c_j &amp;gt; 0$ $\forall 1 \le i \le n ,1 \le j \le m$. Now, the problem can be a minimization problem as follows. $$\text{Minimize } \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j$$ In here, it is assumed to be a round-kernel call. Which means, it will be $K_1$ $\rightarrow$ $K_2$ $\rightarrow$ $\cdots$ $K_n = K_0$ $\rightarrow$ $K_1$ and so-on. Naive approach Native way to solve this is trying every possible order and checking it. In general, it is possible but it takes too much if there are too many kernel calls. Notice that it takes $O(n!)$. Therefore, it is not realistic to use as it is. Approximated approach Formula above is a bit complex, but it can be transfered as follows. $ \begin{array}{lcl} &amp; \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_{i - 1}))c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i)- \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ \end{array} $ Notice that $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j $ $=$ $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j$ because entire costs doesn&apos;t depend on the order. As a result, problem is converted to be a symmetric unlike before. Now, it can be converted to the metric. Let&apos;s define $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ Now, it fullfills following property of metrics. $d_{i,j} = 0$ $\Leftrightarrow$ $i = j$ $d_{i,j} = d_{j,i}$ $d_{i,j} \le d_{i,k} + d_{k,j}$ Proofs are as follows. It need to be proven for both ways. ($\Leftarrow$) $d_{i,i}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_i) - \unicode{x1D7D9}(D_x \in R_i \cap R_i))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i) - \unicode{x1D7D9}(D_x \in R_i))c_x$ $=$ $0$ ($\Rightarrow$) $0$ $=$ $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $\Leftrightarrow$ $\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j) = 0$ $\Leftrightarrow$ $R_i = R_j$. Notice that, if two kernels uses the same data, it can be combined in to one kernel. $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_j \cup R_i) - \unicode{x1D7D9}(D_x \in R_j \cap R_i))c_x$ $=$ $d_{j,i}$ $ \begin{array}{lcl} d_{i,j} &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i - R_j) + \unicode{x1D7D9}(D_x \in R_j - R_i))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_i \cap R_k) - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_i - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_j \cap R_k) - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_j - R_k)))c_x \\ &amp; \le &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_j)) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_i)) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; d_{i,k} + d_{j,k} \\ \end{array} $ As a result, it can be solved with the metric salesman traveling problem. There are two ways to solve this. Minimum spanning tree. It will give 2 approximation algorithm for the metric salesman traveling problem. Christofides algorithm. It will give 1.5 approximation algorithm for the metric salesman traveling problem. Limitation This approach works when kerenels can be reordered. Which means algorithm need to be big enough to be seperated as multiple parts without dependencies. Therefore, this may only works for only scientific algorithms. Extension In general, this study suggests that memory loading ordering problem for GPU can be transfered into TSP. At the same time, TSP is one of the well-known problem between many comptuer science problems. Therefore, it can proceed more by using research about TSP.">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GPU utilization">
+<meta name="twitter:description" content="Motivation Most of time, GPU sufferes from a lack of memories. There are many techniques that tries to optimize memory. However, utilizing GPU memory is a hard problem. This study was done for studying about algorithmic approach to determine a good memory ordering for a gpu utilization. Problem definition Let&apos;s assume there are M data. Then, M data will be consisted by the some combination of address spaces. For given data $D = \{D_1, D_2, \cdots, D_m\}$, each data will have a transfer cost. Let&apos;s call each transfer costs as $C = \{c_1, c_2, \cdots, c_m\}$. These data will be used on the kernel calls $K = \{K_1, K_2, \cdots, K_n\}$. Now each kernel call will require some set of data in D. Let&apos;s define these required data as $R = \{R_1, R_2, \cdots, R_n\}$ Notice that $R_i \subseteq 2^D$ and $c_j &amp;gt; 0$ $\forall 1 \le i \le n ,1 \le j \le m$. Now, the problem can be a minimization problem as follows. $$\text{Minimize } \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j$$ In here, it is assumed to be a round-kernel call. Which means, it will be $K_1$ $\rightarrow$ $K_2$ $\rightarrow$ $\cdots$ $K_n = K_0$ $\rightarrow$ $K_1$ and so-on. Naive approach Native way to solve this is trying every possible order and checking it. In general, it is possible but it takes too much if there are too many kernel calls. Notice that it takes $O(n!)$. Therefore, it is not realistic to use as it is. Approximated approach Formula above is a bit complex, but it can be transfered as follows. $ \begin{array}{lcl} &amp; \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j ot\in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_{i - 1}))c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i)- \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j &amp; + &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ = &amp; \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j \\ \end{array} $ Notice that $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j $ $=$ $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j$ because entire costs doesn&apos;t depend on the order. As a result, problem is converted to be a symmetric unlike before. Now, it can be converted to the metric. Let&apos;s define $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ Now, it fullfills following property of metrics. $d_{i,j} = 0$ $\Leftrightarrow$ $i = j$ $d_{i,j} = d_{j,i}$ $d_{i,j} \le d_{i,k} + d_{k,j}$ Proofs are as follows. It need to be proven for both ways. ($\Leftarrow$) $d_{i,i}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_i) - \unicode{x1D7D9}(D_x \in R_i \cap R_i))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i) - \unicode{x1D7D9}(D_x \in R_i))c_x$ $=$ $0$ ($\Rightarrow$) $0$ $=$ $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $\Leftrightarrow$ $\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j) = 0$ $\Leftrightarrow$ $R_i = R_j$. Notice that, if two kernels uses the same data, it can be combined in to one kernel. $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_j \cup R_i) - \unicode{x1D7D9}(D_x \in R_j \cap R_i))c_x$ $=$ $d_{j,i}$ $ \begin{array}{lcl} d_{i,j} &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i - R_j) + \unicode{x1D7D9}(D_x \in R_j - R_i))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_i \cap R_k) - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_i - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_j \cap R_k) - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_j - R_k)))c_x \\ &amp; \le &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_j)) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\ &amp; + &amp; \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_i)) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\ &amp; = &amp; d_{i,k} + d_{j,k} \\ \end{array} $ As a result, it can be solved with the metric salesman traveling problem. There are two ways to solve this. Minimum spanning tree. It will give 2 approximation algorithm for the metric salesman traveling problem. Christofides algorithm. It will give 1.5 approximation algorithm for the metric salesman traveling problem. Limitation This approach works when kerenels can be reordered. Which means algorithm need to be big enough to be seperated as multiple parts without dependencies. Therefore, this may only works for only scientific algorithms. Extension In general, this study suggests that memory loading ordering problem for GPU can be transfered into TSP. At the same time, TSP is one of the well-known problem between many comptuer science problems. Therefore, it can proceed more by using research about TSP.">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://programelot.github.io/"/>
+
+
+
+
+
+  <title></title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">REAL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-project">
+          <a href="/projects/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Project
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/projects/GPUtil/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            GPU utilization
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<h2>Motivation</h2>
+Most of time, GPU sufferes from a lack of memories.<br>
+There are many techniques that tries to optimize memory.<br>
+However, utilizing GPU memory is a hard problem.<br>
+This study was done for studying about algorithmic approach to determine a good memory ordering for a gpu utilization.<br>
+<hr> 
+<h2>Problem definition</h2>
+Let's assume there are M data.<br>
+Then, M data will be consisted by the some combination of address spaces.<br>
+For given data $D = \{D_1, D_2, \cdots, D_m\}$, each data will have a transfer cost.<br>
+Let's call each transfer costs as $C = \{c_1, c_2, \cdots, c_m\}$. <br>
+These data will be used on the kernel calls $K = \{K_1, K_2, \cdots, K_n\}$.<br>
+Now each kernel call will require some set of data in D.<br>
+Let's define these required data as $R = \{R_1, R_2, \cdots, R_n\}$<br> 
+Notice that $R_i \subseteq 2^D$ and $c_j > 0$ $\forall 1 \le i \le n ,1 \le j \le m$.<br>
+Now, the problem can be a minimization problem as follows.<br>
+$$\text{Minimize } \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j \not\in R_{i - 1})c_j$$
+In here, it is assumed to be a round-kernel call. Which means, it will be $K_1$ $\rightarrow$ $K_2$ $\rightarrow$ $\cdots$ $K_n = K_0$ $\rightarrow$ $K_1$ and so-on.
+<hr> 
+<h2>Naive approach</h2>
+Native way to solve this is trying every possible order and checking it.<br>
+In general, it is possible but it takes too much if there are too many kernel calls.<br>
+Notice that it takes $O(n!)$. Therefore, it is not realistic to use as it is.<br>
+<hr> 
+<h2>Approximated approach</h2>
+Formula above is a bit complex, but it can be transfered as follows.<br>
+$
+\begin{array}{lcl}
+   & \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m} \unicode{x1D7D9}(D_j \in R_i, D_j \not\in R_{i - 1})c_j \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j \not\in R_{i - 1})c_j &  +  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i, D_j \not\in R_{i - 1})c_j \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_{i - 1}))c_j  &  +  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i)- \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j  \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j  &  +  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j  \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1})c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i \cap R_{i-1})c_j  &  +  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j - \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j  \\
+=  & \frac{1}{2}\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}(\unicode{x1D7D9}(D_j \in R_i \cup R_{i - 1}) - \unicode{x1D7D9}(D_j \in R_i \cap R_{i-1}))c_j  \\
+\end{array}
+$
+Notice that $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_i)c_j $ $=$ $\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{m}\unicode{x1D7D9}(D_j \in R_{i - 1})c_j$ because entire costs doesn't depend on the order.<br>
+As a result, problem is converted to be a symmetric unlike before.<br>
+Now, it can be converted to the metric.<br>
+Let's define $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$<br>
+Now, it fullfills following property of metrics.
+<ul>
+    <li>$d_{i,j} = 0$ $\Leftrightarrow$ $i = j$</li>
+    <li>$d_{i,j} = d_{j,i}$</li>
+    <li>$d_{i,j} \le d_{i,k} + d_{k,j}$</li>
+</ul>
+Proofs are as follows.
+<ul>
+    <li>
+        It need to be proven for both ways.
+        <ul>
+            <li>($\Leftarrow$)<br>
+                $d_{i,i}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_i) - \unicode{x1D7D9}(D_x \in R_i \cap R_i))c_x$ $=$  $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i) - \unicode{x1D7D9}(D_x \in R_i))c_x$ $=$ $0$
+            </li>
+            <li>($\Rightarrow$)<br>
+                $0$ $=$ $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$<br>
+                $\Leftrightarrow$ $\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j) = 0$
+                $\Leftrightarrow$ $R_i = R_j$.<br>
+            </li>
+        </ul>
+        Notice that, if two kernels uses the same data, it can be combined in to one kernel.
+    </li>
+    <li>
+    $d_{i,j}$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x$ $=$ $\sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_j \cup R_i) - \unicode{x1D7D9}(D_x \in R_j \cap R_i))c_x$ $=$ $d_{j,i}$
+    </li>
+    <li>
+        $
+        \begin{array}{lcl}
+        d_{i,j} & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i \cup R_j) - \unicode{x1D7D9}(D_x \in R_i \cap R_j))c_x \\
+        & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in R_i - R_j) + \unicode{x1D7D9}(D_x \in R_j - R_i))c_x \\
+        & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\
+        & + & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\
+        & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_i - R_j) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_j - R_i) \cap (U - R_k)))c_x \\
+        & + & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_j - R_i) \cap R_k) + \unicode{x1D7D9}(D_x \in (R_i - R_j) \cap (U - R_k)))c_x \\
+        & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_i \cap R_k) - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_i - R_k)))c_x \\
+        & + & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in ((R_j \cap R_k) - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_j - R_k)))c_x \\
+        & \le & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_j \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\
+        & + & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - (R_i \cap R_k))) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\
+        & = & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_j)) + \unicode{x1D7D9}(D_x \in (R_j - R_k)))c_x \\
+        & + & \sum\limits_{x = 1}^{m}(\unicode{x1D7D9}(D_x \in (R_k - R_i)) + \unicode{x1D7D9}(D_x \in (R_i - R_k)))c_x \\
+        & = & d_{i,k} + d_{j,k} \\
+        \end{array}
+        $
+    </li>
+</ul>
+As a result, it can be solved with the metric salesman traveling problem.<br>
+There are two ways to solve this.<br>
+<ul>
+    <li>Minimum spanning tree. It will give 2 approximation algorithm for the metric salesman traveling problem.</li>
+    <li>Christofides algorithm. It will give 1.5 approximation algorithm for the metric salesman traveling problem.</li>
+</ul>
+<hr> 
+<h2>Limitation</h2>
+This approach works when kerenels can be reordered.<br>
+Which means algorithm need to be big enough to be seperated as multiple parts without dependencies.<br>
+Therefore, this may only works for only scientific algorithms.
+<hr> 
+<h2>Extension</h2>
+In general, this study suggests that memory loading ordering problem for GPU can be transfered into TSP.<br>
+At the same time, TSP is one of the well-known problem between many comptuer science problems.<br>
+Therefore, it can proceed more by using research about TSP.
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    
+    <div class="references">
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Programelot</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
