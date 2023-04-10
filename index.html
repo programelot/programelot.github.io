@@ -92,11 +92,14 @@
   <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
 
 
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
-
-
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
 
 
@@ -241,6 +244,18 @@
         
         
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-project">
           <a href="/projects/" rel="section">
             
@@ -317,6 +332,44 @@
 </nav>
 
 
+<script>
+
+    function extractId(raw_page_url){
+        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
+    };
+
+    function num_dot_add(input){
+        input = input.toString();
+        output = '';
+        for(let s = 0; s < input.length; ++s){
+            if(s != input.length && s % 3 == 0 && s != 0)
+                output = ',' + output;
+                output = input[input.length - 1 - s] + output;
+        }
+        return output
+    }
+
+    function setVisitorCount(){
+        document.addEventListener("DOMContentLoaded", function(e) {
+            let visitlst = document.getElementsByClassName('visitors-count');
+            for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
+                let pageId = extractId(visitlst[vlidx].id);
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                
+                xhr.responseType = "json";
+                xhr.onload = function() {
+                    visitlst[vlidx].innerText = num_dot_add(this.response.value);
+                }
+                xhr.send();
+            }
+        });
+       
+    }
+    setVisitorCount();
+</script>
+
  </div>
     </header>
 
@@ -340,7 +393,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/08/13/Stack-Queue/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -362,7 +415,362 @@
           
             
                 
-                <a class="post-title-link" href="/2021/08/13/Stack-Queue/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/2023/01/30/Sum-of-beatty-sequence/" itemprop="url">
+                Sum of beatty sequence
+              </a>
+            
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span class="visitors" data-flag-title="Sum of beatty sequence">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2023/01/30/Sum-of-beatty-sequence/"></span>
+             </span>
+          
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h1 id="problem">Problem</h1>
+<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
+For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
+Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$.
+Then, problem is that compute $S(\alpha, n)$.
+In general, it can be computed easily by computing one by one which takes $O(n)$.
+However, there is another algorithm that takes much less time than this.</p>
+
+
+
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/algorithm/2023/01/30/Sum-of-beatty-sequence/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    <div class="references">
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+        
+        
+        
+        
+          <div class="post-eof"></div>
+        
+      
+    </footer>
+  </article>
+  
+    
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+                
+                <a class="post-title-link" href="/algorithm/2023/01/30/Rayleighs-theorem/" itemprop="url">
+                Rayleigh's theorem(Beatty's theorem)
+              </a>
+            
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span class="visitors" data-flag-title="Rayleigh's theorem(Beatty's theorem)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2023/01/30/Rayleighs-theorem/"></span>
+             </span>
+          
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="theorem">Theorem</h2>
+<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
+For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
+Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
+For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$.
+Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.</p>
+
+
+
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/algorithm/2023/01/30/Rayleighs-theorem/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    <div class="references">
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+        
+        
+        
+        
+          <div class="post-eof"></div>
+        
+      
+    </footer>
+  </article>
+  
+    
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+                
+                <a class="post-title-link" href="/algorithm/2021/08/13/Stack-Queue/" itemprop="url">
                 Stack and queue
               </a>
             
@@ -375,11 +783,47 @@
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Stack and queue">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2021/08/13/Stack-Queue/"></span>
+             </span>
+          
           
 
           
@@ -425,7 +869,7 @@ However, there are two types of ways to make policies for inserting and poping a
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/08/13/Stack-Queue/#more" rel="contents">
+            <a class="btn" href="/algorithm/2021/08/13/Stack-Queue/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -478,7 +922,7 @@ However, there are two types of ways to make policies for inserting and poping a
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/08/12/Array-List/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/12/Array-List/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -500,7 +944,7 @@ However, there are two types of ways to make policies for inserting and poping a
           
             
                 
-                <a class="post-title-link" href="/2021/08/12/Array-List/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/2021/08/12/Array-List/" itemprop="url">
                 Array and list
               </a>
             
@@ -513,11 +957,47 @@ However, there are two types of ways to make policies for inserting and poping a
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Array and list">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2021/08/12/Array-List/"></span>
+             </span>
+          
           
 
           
@@ -563,7 +1043,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/08/12/Array-List/#more" rel="contents">
+            <a class="btn" href="/algorithm/2021/08/12/Array-List/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -616,7 +1096,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/08/10/Complexity/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/10/Complexity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -638,7 +1118,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/08/10/Complexity/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/2021/08/10/Complexity/" itemprop="url">
                 Complexity
               </a>
             
@@ -651,11 +1131,47 @@ In this chapter, I’ll explain the most common data structures only.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Complexity">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2021/08/10/Complexity/"></span>
+             </span>
+          
           
 
           
@@ -699,7 +1215,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/08/10/Complexity/#more" rel="contents">
+            <a class="btn" href="/algorithm/2021/08/10/Complexity/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -752,7 +1268,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/08/02/Algorithm/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -774,7 +1290,7 @@ In this chapter, I’ll explain the most common data structures only.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/08/02/Algorithm/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/2021/08/02/Algorithm/" itemprop="url">
                 Algorithm
               </a>
             
@@ -787,11 +1303,47 @@ In this chapter, I’ll explain the most common data structures only.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Algorithm">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/2021/08/02/Algorithm/"></span>
+             </span>
+          
           
 
           
@@ -841,7 +1393,7 @@ Therefore, you started to think about the way to clean it up.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/08/02/Algorithm/#more" rel="contents">
+            <a class="btn" href="/algorithm/2021/08/02/Algorithm/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -894,7 +1446,7 @@ Therefore, you started to think about the way to clean it up.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/28/Hardness-of-approximation/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/05/28/Hardness-of-approximation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -916,7 +1468,7 @@ Therefore, you started to think about the way to clean it up.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/05/28/Hardness-of-approximation/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/" itemprop="url">
                 Hardness of approximation
               </a>
             
@@ -929,11 +1481,59 @@ Therefore, you started to think about the way to clean it up.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Hardness of approximation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/05/28/Hardness-of-approximation/"></span>
+             </span>
+          
           
 
           
@@ -977,7 +1577,7 @@ Therefore, you started to think about the way to clean it up.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/05/28/Hardness-of-approximation/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1030,7 +1630,7 @@ Therefore, you started to think about the way to clean it up.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/26/Approximation-algorithm(13)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1052,7 +1652,7 @@ Therefore, you started to think about the way to clean it up.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/05/26/Approximation-algorithm(13)/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" itemprop="url">
                 Approximation algorithm(13) - Buy-at-bulk network design
               </a>
             
@@ -1065,11 +1665,59 @@ Therefore, you started to think about the way to clean it up.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(13) - Buy-at-bulk network design">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/"></span>
+             </span>
+          
           
 
           
@@ -1116,7 +1764,7 @@ One thing that makes this problem interesting is that there is a cost function $
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/05/26/Approximation-algorithm(13)/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1169,7 +1817,7 @@ One thing that makes this problem interesting is that there is a cost function $
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/19/tree-metrics/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1191,7 +1839,7 @@ One thing that makes this problem interesting is that there is a cost function $
           
             
                 
-                <a class="post-title-link" href="/2021/05/19/tree-metrics/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/05/19/tree-metrics/" itemprop="url">
                 Approximation of metrics by tree metrics
               </a>
             
@@ -1204,11 +1852,59 @@ One thing that makes this problem interesting is that there is a cost function $
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Approximation of metrics by tree metrics">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/05/19/tree-metrics/"></span>
+             </span>
+          
           
 
           
@@ -1253,7 +1949,7 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/05/19/tree-metrics/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/05/19/tree-metrics/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1306,7 +2002,7 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/19/Useful-mathematical-tools/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/05/19/Useful-mathematical-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1328,7 +2024,7 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/05/19/Useful-mathematical-tools/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/05/19/Useful-mathematical-tools/" itemprop="url">
                 Useful mathematical tools
               </a>
             
@@ -1341,11 +2037,59 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Useful mathematical tools">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/05/19/Useful-mathematical-tools/"></span>
+             </span>
+          
           
 
           
@@ -1391,280 +2135,7 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/05/19/Useful-mathematical-tools/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/15/Graph-coloring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/2021/05/15/Graph-coloring/" itemprop="url">
-                Graph coloring
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>We need some definitions and theorems to discuss about the coloring.</p>
-
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/05/15/Graph-coloring/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/05/14/Markovs-inequality/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/2021/05/14/Markovs-inequality/" itemprop="url">
-                Markov's inequality
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>If $X$ is a nonnegative random variable and $a \gt 0$ then,
-$Pr[X \ge a]$ $\le$ $\frac{E(X)}{a}$.</p>
-
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/05/14/Markovs-inequality/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/05/19/Useful-mathematical-tools/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1715,7 +2186,7 @@ $Pr[X \ge a]$ $\le$ $\frac{E(X)}{a}$.</p>
 
 
 
-    <span class="page-number current">1</span> <a class="page-number" href="/page2">2</a> <span class="space">&hellip;</span> <a class="page-number" href="/page4">4</a> <a class="extend prev" rel="next" href="/page2"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span> <a class="page-number" href="/page2">2</a> <span class="space">&hellip;</span> <a class="page-number" href="/page5">5</a> <a class="extend prev" rel="next" href="/page2"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1762,23 +2233,23 @@ $Pr[X \ge a]$ $\le$ $\frac{E(X)}{a}$.</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
 
           
-
-          
             
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">tags</span>
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
+          
+
           
 
         </nav>

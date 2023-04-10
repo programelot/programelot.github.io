@@ -92,11 +92,14 @@
   <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
 
 
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
-
-
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
 
 
@@ -241,6 +244,18 @@
         
         
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-project">
           <a href="/projects/" rel="section">
             
@@ -317,6 +332,44 @@
 </nav>
 
 
+<script>
+
+    function extractId(raw_page_url){
+        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
+    };
+
+    function num_dot_add(input){
+        input = input.toString();
+        output = '';
+        for(let s = 0; s < input.length; ++s){
+            if(s != input.length && s % 3 == 0 && s != 0)
+                output = ',' + output;
+                output = input[input.length - 1 - s] + output;
+        }
+        return output
+    }
+
+    function setVisitorCount(){
+        document.addEventListener("DOMContentLoaded", function(e) {
+            let visitlst = document.getElementsByClassName('visitors-count');
+            for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
+                let pageId = extractId(visitlst[vlidx].id);
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                
+                xhr.responseType = "json";
+                xhr.onload = function() {
+                    visitlst[vlidx].innerText = num_dot_add(this.response.value);
+                }
+                xhr.send();
+            }
+        });
+       
+    }
+    setVisitorCount();
+</script>
+
  </div>
     </header>
 
@@ -343,7 +396,7 @@
     <div class="category-all-page">
       <div class="category-all-title">
           
-            No categories
+            11 categories in total
           
       </div>
       <div class="category-all">
@@ -352,6 +405,94 @@
 
         
   <ul class="category-list">
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/algorithm">algorithm</a>
+      <span class="category-list-count">37</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/simulation">simulation</a>
+      <span class="category-list-count">1</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/approximation">approximation</a>
+      <span class="category-list-count">22</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/concurrency">concurrency</a>
+      <span class="category-list-count">4</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/problem">problem</a>
+      <span class="category-list-count">1</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/graph">graph</a>
+      <span class="category-list-count">3</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/matrix">matrix</a>
+      <span class="category-list-count">1</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/gpu">gpu</a>
+      <span class="category-list-count">1</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/multi%20computer%20computing">multi computer computing</a>
+      <span class="category-list-count">1</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/LP">LP</a>
+      <span class="category-list-count">2</span>
+    </i>
+    
+    <li class="category-list-item">
+      
+      
+      
+      <a class="category-list-link" href="/category/#/network">network</a>
+      <span class="category-list-count">1</span>
+    </i>
     
   </ul>
 
@@ -402,23 +543,23 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
 
           
-
-          
             
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">tags</span>
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
+          
+
           
 
         </nav>

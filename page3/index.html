@@ -92,11 +92,14 @@
   <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
 
 
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
-
-
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
 
 
@@ -241,6 +244,18 @@
         
         
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-project">
           <a href="/projects/" rel="section">
             
@@ -317,6 +332,44 @@
 </nav>
 
 
+<script>
+
+    function extractId(raw_page_url){
+        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
+    };
+
+    function num_dot_add(input){
+        input = input.toString();
+        output = '';
+        for(let s = 0; s < input.length; ++s){
+            if(s != input.length && s % 3 == 0 && s != 0)
+                output = ',' + output;
+                output = input[input.length - 1 - s] + output;
+        }
+        return output
+    }
+
+    function setVisitorCount(){
+        document.addEventListener("DOMContentLoaded", function(e) {
+            let visitlst = document.getElementsByClassName('visitors-count');
+            for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
+                let pageId = extractId(visitlst[vlidx].id);
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                
+                xhr.responseType = "json";
+                xhr.onload = function() {
+                    visitlst[vlidx].innerText = num_dot_add(this.response.value);
+                }
+                xhr.send();
+            }
+        });
+       
+    }
+    setVisitorCount();
+</script>
+
  </div>
     </header>
 
@@ -340,7 +393,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/24/Linear-programming/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/network/2021/04/02/Network-flow-algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -362,7 +415,393 @@
           
             
                 
-                <a class="post-title-link" href="/2021/03/24/Linear-programming/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/network/2021/04/02/Network-flow-algorithm/" itemprop="url">
+                Network decomposition
+              </a>
+            
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/network" itemprop="url" rel="index">
+                    <span itemprop="name">network</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span class="visitors" data-flag-title="Network decomposition">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/network/2021/04/02/Network-flow-algorithm/"></span>
+             </span>
+          
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>A graph is a typical data structure which is used to represent some relations between nodes.
+From any graph, we can imagine a flow of a graph $G$.
+Formally, flow of the graph is defined like follow.
+For a given graph $G= (V, E)$, flow $f$ is a mapping function $V \times V \rightarrow \mathcal{R}$.
+To be a flow, there are some requirements.
+If there is a capacity $c$ for edeges $c : V \times V \rightarrow \mathcal{R}$, which $(u,v) \in E$ iff $c(u,v)$ exists.
+Then flow of graph can’t exceed that capacity.
+Which means $f(u,v) \le c(u, v)$.
+Also it requires two variables which are source $s$ and destination $t$.
+Then $\sum\limits_{(i, v) \in E, v \neq s,t}f(i, v) = \sum\limits_{(v, j) \in E, v \neq s,t}f(v, j)$.
+Which means that every value goes in $v$ should go out from $v$ either.
+Then we can evaluate this flow $f$ as $\sum\limits_{(s, v) \in E}f(s, v) - \sum\limits_{(v, s) \in E}f(v, s)$ $=$ $\sum\limits_{(v, t) \in E}f(v, t) - \sum\limits_{(t, v) \in E}f(t, v)$.</p>
+
+
+
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/algorithm/network/2021/04/02/Network-flow-algorithm/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    <div class="references">
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+        
+        
+        
+        
+          <div class="post-eof"></div>
+        
+      
+    </footer>
+  </article>
+  
+    
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+                
+                <a class="post-title-link" href="/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/" itemprop="url">
+                Approximation algorithm(7) - Minimizing sum of completion time
+              </a>
+            
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(7) - Minimizing sum of completion time">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/"></span>
+             </span>
+          
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="unweighted-version">Unweighted version</h2>
+<p>Minimizing the sum of completion time is a typical scheduling problem.
+Let’s think that there are $n$ works to be done.
+With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times.
+Now we will schedule that $n$ works in some order.
+With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished.
+The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$.
+Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.</p>
+
+
+
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    <div class="references">
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+        
+        
+        
+        
+          <div class="post-eof"></div>
+        
+      
+    </footer>
+  </article>
+  
+    
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/lp/2021/03/24/Linear-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+                
+                <a class="post-title-link" href="/algorithm/lp/2021/03/24/Linear-programming/" itemprop="url">
                 Linear programming
               </a>
             
@@ -375,11 +814,59 @@
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/LP" itemprop="url" rel="index">
+                    <span itemprop="name">LP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Linear programming">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/lp/2021/03/24/Linear-programming/"></span>
+             </span>
+          
           
 
           
@@ -427,7 +914,7 @@
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/24/Linear-programming/#more" rel="contents">
+            <a class="btn" href="/algorithm/lp/2021/03/24/Linear-programming/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -480,7 +967,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/24/Approximation-algorithm(6)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -502,7 +989,7 @@
           
             
                 
-                <a class="post-title-link" href="/2021/03/24/Approximation-algorithm(6)/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" itemprop="url">
                 Approximation algorithm(6) - Minimum-degree spanning tree
               </a>
             
@@ -515,11 +1002,59 @@
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(6) - Minimum-degree spanning tree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/"></span>
+             </span>
+          
           
 
           
@@ -566,7 +1101,7 @@ Notice that this is a NP-hard problem.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/24/Approximation-algorithm(6)/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -619,7 +1154,7 @@ Notice that this is a NP-hard problem.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/19/Parallel-Page-rank-and-BFS/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -641,7 +1176,7 @@ Notice that this is a NP-hard problem.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/03/19/Parallel-Page-rank-and-BFS/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" itemprop="url">
                 Parallel Page rank/BFS
               </a>
             
@@ -654,11 +1189,71 @@ Notice that this is a NP-hard problem.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/concurrency" itemprop="url" rel="index">
+                    <span itemprop="name">concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/graph" itemprop="url" rel="index">
+                    <span itemprop="name">graph</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Parallel Page rank/BFS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/"></span>
+             </span>
+          
           
 
           
@@ -710,7 +1305,7 @@ Let’s define some terms.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/19/Parallel-Page-rank-and-BFS/#more" rel="contents">
+            <a class="btn" href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -763,7 +1358,7 @@ Let’s define some terms.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/18/MPI/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/concurrency/multi%20computer%20computing/2021/03/18/MPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -785,7 +1380,7 @@ Let’s define some terms.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/03/18/MPI/" itemprop="url">
+                <a class="post-title-link" href="/concurrency/multi%20computer%20computing/2021/03/18/MPI/" itemprop="url">
                 MPI
               </a>
             
@@ -798,11 +1393,59 @@ Let’s define some terms.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/concurrency" itemprop="url" rel="index">
+                    <span itemprop="name">concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/multi%20computer%20computing" itemprop="url" rel="index">
+                    <span itemprop="name">multi computer computing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="MPI">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/concurrency/multi%20computer%20computing/2021/03/18/MPI/"></span>
+             </span>
+          
           
 
           
@@ -850,7 +1493,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/18/MPI/#more" rel="contents">
+            <a class="btn" href="/concurrency/multi%20computer%20computing/2021/03/18/MPI/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -903,7 +1546,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/17/Family-of-algorithms/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/17/Family-of-algorithms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -925,7 +1568,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/03/17/Family-of-algorithms/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/03/17/Family-of-algorithms/" itemprop="url">
                 Family of algorithms
               </a>
             
@@ -938,11 +1581,59 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Family of algorithms">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Family-of-algorithms/"></span>
+             </span>
+          
           
 
           
@@ -986,7 +1677,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/17/Family-of-algorithms/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/03/17/Family-of-algorithms/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1039,7 +1730,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/17/Approximation-algorithm(5)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1061,7 +1752,7 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/03/17/Approximation-algorithm(5)/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/" itemprop="url">
                 Approximation algorithm(5) - K-center
               </a>
             
@@ -1074,11 +1765,59 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(5) - K-center">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/"></span>
+             </span>
+          
           
 
           
@@ -1127,7 +1866,7 @@ It’s like making clusters efficiently.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/17/Approximation-algorithm(5)/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1180,7 +1919,7 @@ It’s like making clusters efficiently.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/17/Approximation-algorithm(4)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1202,7 +1941,7 @@ It’s like making clusters efficiently.</p>
           
             
                 
-                <a class="post-title-link" href="/2021/03/17/Approximation-algorithm(4)/" itemprop="url">
+                <a class="post-title-link" href="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/" itemprop="url">
                 Approximation algorithm(4) - Knapsack
               </a>
             
@@ -1215,11 +1954,59 @@ It’s like making clusters efficiently.</p>
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(4) - Knapsack">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/"></span>
+             </span>
+          
           
 
           
@@ -1265,7 +2052,7 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/17/Approximation-algorithm(4)/#more" rel="contents">
+            <a class="btn" href="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1318,7 +2105,7 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/16/CUDA_Stream/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/concurrency/gpu/2021/03/16/CUDA_Stream/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1340,7 +2127,7 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
           
             
                 
-                <a class="post-title-link" href="/2021/03/16/CUDA_Stream/" itemprop="url">
+                <a class="post-title-link" href="/concurrency/gpu/2021/03/16/CUDA_Stream/" itemprop="url">
                 CUDA
               </a>
             
@@ -1353,11 +2140,59 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
           
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/concurrency" itemprop="url" rel="index">
+                    <span itemprop="name">concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/gpu" itemprop="url" rel="index">
+                    <span itemprop="name">gpu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
+          
+          
+             <span class="visitors" data-flag-title="CUDA">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/concurrency/gpu/2021/03/16/CUDA_Stream/"></span>
+             </span>
+          
           
 
           
@@ -1402,281 +2237,7 @@ It supports multiple abstractions to handle NVIDIA GPU.</p>
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/03/16/CUDA_Stream/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/15/Kronecker-product/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/2021/03/15/Kronecker-product/" itemprop="url">
-                Kronecker product
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>Kronecker product is a mathmatical tools to find all possible combination of something.
-It can be used for many combinational problem like Traveling-salesman problem.</p>
-
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/03/15/Kronecker-product/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2021/03/14/Matrix-representation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/2021/03/14/Matrix-representation/" itemprop="url">
-                Matrix representation
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <h2 id="matrix-representation">Matrix representation</h2>
-<p>There are many formats to represent matrices.</p>
-
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/03/14/Matrix-representation/#more" rel="contents">
+            <a class="btn" href="/concurrency/gpu/2021/03/16/CUDA_Stream/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1727,7 +2288,7 @@ It can be used for many combinational problem like Traveling-salesman problem.</
 
 
 
-    <a class="extend prev" rel="prev" href="/page2"><i class="fa fa-angle-left"></i></a> <a class="page-number" href="/">1</a> <a class="page-number" href="/page2">2</a> <span class="page-number current">3</span> <a class="page-number" href="/page4">4</a> <a class="extend prev" rel="next" href="/page4"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page2"><i class="fa fa-angle-left"></i></a> <a class="page-number" href="/">1</a> <a class="page-number" href="/page2">2</a> <span class="page-number current">3</span> <a class="page-number" href="/page4">4</a> <a class="page-number" href="/page5">5</a> <a class="extend prev" rel="next" href="/page4"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1774,23 +2335,23 @@ It can be used for many combinational problem like Traveling-salesman problem.</
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
 
           
-
-          
             
             
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">tags</span>
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
+          
+
           
 
         </nav>

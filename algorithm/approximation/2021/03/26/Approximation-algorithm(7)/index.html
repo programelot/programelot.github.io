@@ -1,0 +1,1469 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+<meta name="keywords" content="Jekyll, NexT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Approximation algorithm(7) - Minimizing sum of completion time">
+<meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/">
+<meta property="og:site_name" content="REAL">
+<meta property="og:description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Approximation algorithm(7) - Minimizing sum of completion time">
+<meta name="twitter:description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://programelot.github.io/"/>
+
+
+
+
+
+  <title>Approximation algorithm(7) - Minimizing sum of completion time | REAL</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">REAL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-project">
+          <a href="/projects/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Project
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+<script>
+
+    function extractId(raw_page_url){
+        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
+    };
+
+    function num_dot_add(input){
+        input = input.toString();
+        output = '';
+        for(let s = 0; s < input.length; ++s){
+            if(s != input.length && s % 3 == 0 && s != 0)
+                output = ',' + output;
+                output = input[input.length - 1 - s] + output;
+        }
+        return output
+    }
+
+    function setVisitorCount(){
+        document.addEventListener("DOMContentLoaded", function(e) {
+            let visitlst = document.getElementsByClassName('visitors-count');
+            for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
+                let pageId = extractId(visitlst[vlidx].id);
+                let xhr = new XMLHttpRequest();
+                
+                let visited = parseInt(localStorage[pageId] || 0);
+                if(visited == 0){
+                    xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/` + pageId);
+                    localStorage[pageId] = 1;
+                }
+                else{
+                    xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                }
+                
+                xhr.responseType = "json";
+                xhr.onload = function() {
+                    visitlst[vlidx].innerText = num_dot_add(this.response.value);
+                }
+                xhr.send();
+            }
+        });
+       
+    }
+    setVisitorCount();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            Approximation algorithm(7) - Minimizing sum of completion time
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-26T00:00:00+09:00">
+                2021-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/approximation" itemprop="url" rel="index">
+                    <span itemprop="name">approximation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span class="visitors" data-flag-title="Approximation algorithm(7) - Minimizing sum of completion time">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views </span>
+               
+                 <span class="visitors-count" id="/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/"></span>
+             </span>
+          
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="unweighted-version">Unweighted version</h2>
+<p>Minimizing the sum of completion time is a typical scheduling problem.
+Let’s think that there are $n$ works to be done.
+With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times.
+Now we will schedule that $n$ works in some order.
+With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished.
+The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$.
+Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.</p>
+
+<p>Now we can do a relaxation at this problem by just changing nonpreemptive machine to preemptive machine which means each work may interrupt other works.
+If we change it to the preemptive machine, we can solve this problem with an algorithm below.</p>
+
+<div class="algTab">
+    $\operatorname{while}$ there is any work not finished.<div class="algTab">
+        $S \leftarrow \{$ work $i$ which didn't finished yet and $r_i \le$ current date $\}$.<br />
+        Choose a work $i \in S$ that has the smallest left processing time.<br />
+        Process work $i$ until work $i$ is done or new $r_j$ release.<br />
+    </div>
+</div>
+<p>This algorithm is so-called SRPT(shorted remaining processing time) rule.
+This algorithm works in a polynomial time because we can update a left processing time and get a minimum processing time by heap.
+We also can check whether new $r_j$ released or not by just sorting $r_i$ and checking it later.</p>
+
+<p>However, notice that schedule from preemptive machine can’t be run on the nonpreemptive machine.
+Therefore, we need to make a strict order for the execution.
+Therefore, we will reorder the index of works to the order of $C_i^P$ which $C_i^P$ is the termination time of preemptive machine.
+Now after this reordering, we will just do work in the order of $1,2,\cdots,n$.</p>
+
+<p>After this reordering, it will result in $2$-approximation algorithm.
+The proof is like follow.</p>
+
+<p>Let $C_i^N$ is the termination time of nonpreemptive machine.
+Since, schedule of nonpreemptive machine can be run on preemptive machine, $\sum\limits_{i=1}^n C_i^P \le \operatorname{OPT}$ such that $\operatorname{OPT}$ is an optimal solution.
+Now, there is two simple facts that $C^P_i \ge \max\limits_{k=1,\cdots,i}r_k$ and $C^P_i \ge \sum\limits_{k=1}^i p_k$ because it is reordered in the order of $C^P_i$.
+Notice that if work $j$ is done then every work $i &lt; j$ should be done from the definition.
+Now, let’s think about work $i$ in the nonpreemptive machine.
+Then we can know that $i$ should finished at most $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$.
+The reason is that work $i$ can only be idle because work $1, 2, \cdots, i - 1$ are still working.</p>
+
+<p>Therefore, $C^N_i$ $\le$ $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$ $\le$ $2C^P_i$.
+Which means $\sum\limits_{i=1}^n C^N_i$ $\le$ $2\sum\limits_{i=1}^n C^P_i$ $\le$ $2\operatorname{OPT}$.</p>
+
+<h2 id="weighted-version">Weighted version</h2>
+<p>The weighted version of the problem is simillar with the unweighted version.</p>
+
+<p>Let’s think that there are $n$ works to be done.
+With these works, let $r_1, r_2, \cdots, r_n$ as release dates, $p_1, p_2, \cdots, p_n$ as processing times and $w_1, w_2, \cdots, w_n$ as weights of each works.
+Notice that $w_i \ge 0$ $\forall 1 \le i \le n$
+Now we will schedule that $n$ works in some order.
+With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished.
+The problem is to find a schedule that minimize $\sum\limits_{i=1}^n w_i C_i$.
+Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.</p>
+
+<p>Now, we can’t solve problem with preemptive machine unlike unweighted verison of the problem in polynomail time else P is NP.
+Therefore, we will use a relaxation with linear programming in it.
+Relaxation of this problem is like below.</p>
+
+<p>Minimize $\sum\limits_{i=1}^n w_i C_i$ such that $C_i \ge r_i + p_i$ $\forall i \in N$ and $\sum\limits_{i \in S} p_iC_i \ge \frac{1}{2}\rho(S)^2$ $\forall S \subset N$ which $N = \{1, 2, \cdots, n$}.
+Objective function is trivial to be “Minimize $\sum\limits_{i=1}^n w_i C_i$” and first constraint is trivial either that “$C_i \ge r_i + p_i$ $\forall i \in N$” from the meaning.
+How about the second constraint?
+If you think about any $S \subset N$, each works in $S$ will be ordered in an optimal solution.
+Therefore, we can imagine that $S^\star$ is a ordered list in the order of an optimal solution from $S$.
+Then, <br /></p>
+<div style="algin=center;">
+        $\sum\limits_{i \in S} p_iC_i$ <br />
+        $=$ $\sum\limits_{i \in S^\star} p_iC_i$ <br />
+        $\ge$ $\sum\limits_{i,j \in S^\star, j \le i} p_ip_j$ <br />
+        $=$ $\frac{1}{2}\sum\limits_{i,j \in S^\star, j \le i} p_ip_j$ + $\frac{1}{2}\sum\limits_{i,j \in S^\star, j \le i} p_ip_j$<br />
+        $=$ $\frac{1}{2}\sum\limits_{i,j \in S^\star, j \le i} p_ip_j$ + $\frac{1}{2}\sum\limits_{j,i \in S^\star, i \le j} p_jp_i$<br />
+        $=$ $\frac{1}{2}\sum\limits_{i,j \in S^\star, j \le i} p_ip_j$ + $\frac{1}{2}\sum\limits_{j,i \in S^\star, i &lt; j} p_jp_i$ $+$ $\frac{1}{2}\sum\limits_{i \in S^\star} p_ip_i$<br />
+        $=$ $\frac{1}{2}\sum\limits_{i,j \in S^\star,} p_ip_j$ + $\frac{1}{2}\sum\limits_{i \in S^\star} p_i^2$ <br />
+        $=$ $\frac{1}{2}(\sum\limits_{i \in S^\star} p_i)^2$ + $\frac{1}{2}\sum\limits_{i \in S^\star} p_i^2$ <br />
+        $\ge$ $\frac{1}{2}(\sum\limits_{i \in S^\star} p_i)^2$.<br />
+</div>
+<p>Now let $\rho(S) = \sum\limits_{i \in S} p_i$ then constraint holds.</p>
+
+<p>Now, if we can solve that linear problem in polynomial time.
+We can make a strict order by termination time $C_i$ like unweighted version did.
+Then that solution should be in $3\operatorname{OPT}$.</p>
+
+<p>Proof is like follow.
+Let’s define $C^L_i$ as a termination time founded by linear programming.
+However we can sort that works in the order of $C^L_i$ so let’s assume so.
+Which means $C^L_1$ $\le$ $C^L_2$ $\le$ $C^L_3$ $\le$ $\cdots$ $\le$ $C^L_n$.
+Let’s define one more solution $C^R_i$ as a termination time of nonpreemptive machine’s work $i$ with processing order in $C^L_i$.
+Then, we can get 2 facts like unweighted version did and we can know other two facts below With these facts.</p>
+
+<ol>
+  <li>$\sum\limits_{i = 1}^nC^L_i \le \operatorname{OPT}$<br /></li>
+  <li>$C^R_i$ $\le$ $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$</li>
+  <li>$\max\limits_{k=1,2,\cdots,i}r_k  \le C^L_i$<br /></li>
+  <li>$\frac{1}{2}\sum\limits_{k=1}^i p_k = \frac{1}{2}\rho(\{1,2,\cdots,i\}) \le C^L_i$</li>
+</ol>
+
+<p>Third fact is a trivial because $C^L_i$ is ordered in $i$ and this means $C^L_i \ge C^L_j$ $\forall 1 \le j \le i$ and from the constraint $C^L_i \ge C^L_j \ge r_j$ $\forall 1 \le j \le i$.
+Simillary, fourth fact can be proven in following way.
+From the constaint, $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_j$.<br />
+Then, $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_j$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_i$ $=$ $C^L_i\sum\limits_{j = 1}^{i} p_j$ $=$ $C^L_i\rho(\{1,2,\cdots,i\})$.<br />
+As a result, $\frac{1}{2}\rho(\{1,2,\cdots,i\})$ $\le$ $C^L_i$ by dividing $\rho(\{1,2,\cdots,i\})$ for each side of $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $C^L_i\rho(\{1,2,\cdots,i\})$.<br />
+Therefore, fact 3, 4 has been proven.<br />
+Which means $C^R_i$ $\le$ $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$ $\le$ $C^L_i + 2C^L_i$ $=$ $3C^L_i$.<br />
+Therefore, $\sum\limits_{i=1}^n C^R_i$ $\le$ $\sum\limits_{i=1}^n 3C^L_i$ $\le$ $3\operatorname{OPT}$</p>
+
+<p>We didn’t discussed about the running time and it look exponential because the number of contraints is exponential.
+However, we still can solve this problem in the polynomial time with ellipsoid method which doesn’t bounded in the number of contraints.</p>
+
+<p>To solve this problem with ellipsoid method, we need a seperation oracle that runs in the polynomial time and checks whether a solution is a feasible or not.
+If we have a seperation oracle, ellipsoid method can solve the linear programming in $O(poly(log u, n))$ which $u$ is bit in use for saving the data.</p>
+
+<p>However we need to shirnk the number of constraint to check because it is exponential of number of variables.
+Therefore, we claim below.</p>
+
+<p>“Let’s define $S_1 = \{1$}, $S_2 = \{1, 2$}, $\cdots$, $S_n = \{1,2,\cdots,n$}.
+If every variable satisfies constraints for all $S_i$s then that solution statisfies all constraints.”</p>
+
+<p>Before proving this, we will check brief 2 facts below.
+Notice that S is an arbitrary set in $N$, $a$ is in $S$ and $b$ isn’t in S.<br /></p>
+<ol>
+  <li>$\rho(S)^2 - \rho(S - \{a\})^2$ $=$ $2p_a\rho(S - \{a\}) + p_a^2$ $=$ $p_a(2\rho(S - \{a\}) + p_a)$<br /></li>
+  <li>$\rho(S + \{b\})^2$ - $\rho(S)^2$ $=$ $2p_b\rho(S) + p_b^2$ $=$ $p_b(2\rho(S) + p_b)$<br /></li>
+</ol>
+
+<p>Proof is simple that $\rho(S)^2$ $=$ $\rho(S- \{a\} + \{a\})^2$ $=$ $(\rho(S- \{a\}) + p_a)^2$ $=$ $\rho(S - \{a\})^2 + 2p_a\rho(S - \{a\}) + p_a^2$ and simillar for fact 2.<br />
+Now, let’s think about $f(S) = \sum\limits_{i \in S}p_iC_i - \frac{1}{2}\rho(S)$.<br />
+Then with the fact above, $f(S - \{a\}) - f(S)$ $=$ $-p_aC_a + \frac{1}{2}(\rho(S)^2 - \rho(S - \{a\})^2)$ $=$ $-p_aC_a + \frac{1}{2}p_a(2\rho(S - \{a\}) + p_a)$ $=$ $p_a(-C_a + \rho(S - \{a\}) + \frac{1}{2}p_a)$.
+Simillary $f(S + \{b\}) - f(S)$ $=$ $p_bC_b -\frac{1}{2}(\rho(S + \{b\}) - \rho(S))$ $=$ $p_bC_b - \frac{1}{2}p_b(2\rho(S) + p_b)$ $=$ $p_b(C_b - \rho(S) - \frac{1}{2}p_b)$.</p>
+
+<p>As a result, removing $a$ from $S$ will decrease $f(S)$ if $C_a &gt; \rho(S - \{a\}) + \frac{1}{2}p_a$ and
+adding $b$ to $S$ will decrease $f(S)$ if $C_b &lt; \rho(S) + \frac{1}{2}p_b$.</p>
+
+<p>Now let’s assume that every variable satisfies for all $S_i$s but there is some constraint that doesn’t matches.
+Which means $\sum\limits_{j \in X}p_jC_j &lt; \frac{1}{2}\rho(X)^2$.
+Notice that $f(X) &lt; 0$.
+Now, let’s remove the biggest $j$ in $X$ if removing $j$ decreases $f(X)$.
+Let’s define $S_h$ as the termination of such an operation.
+Then, it will stop when $C_h \le \rho(S_h - \{h\}) + \frac{1}{2}p_h$ for the biggest $j = h$ in $X$.
+However we can add any $1 \le j &lt; h$ to decrease $f(S_h)$ because $C_j$ $\le$ $C_h$ $\le$ $\rho(S_h - \{h\}) + \frac{1}{2}p_h$ $&lt;$ $\rho(S_h - \{h\}) + p_h$ $=$ $\rho(S_h)$ $&lt;$ $\rho(S_h) + \frac{1}{2}p_j$.
+If we define $S_e=\{1,2,\cdots,h$} then, $f(S_e) \le f(S_h) \le f(X) &lt; 0$.
+However, it can’t be true because $f(S_e) = \sum\limits_{i = 1}^e p_iC_i - \frac{1}{2}\rho(S_e) \ge 0$ from the algorithm.
+As a result, we don’t need to see all the contraint but only for $S = \{1,2,\cdots,i$} is enough.</p>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      Programelot
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/" title="Approximation algorithm(7) - Minimizing sum of completion time">https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+    
+    <div class="references">
+      
+        
+          <p class="reference"><strong>Reference :</strong>David P. Williamson and David B. Shmoys, The Design of Approximation Algorithms</p>
+        
+          <p class="reference"><strong>Reference :</strong>CSI6107 lecture at Yonsei University</p>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/algorithm/network/2021/04/02/Network-flow-algorithm/" rel="next" title="Network decomposition">
+                <i class="fa fa-chevron-left"></i> Network decomposition
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm/lp/2021/03/24/Linear-programming/" rel="prev" title="Linear programming">
+                Linear programming <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="Programelot" />
+          <p class="site-author-name" itemprop="name">Programelot</p>
+           
+              <p class="site-description motion-element" itemprop="description">I am Programelot who is researching about optimization.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#unweighted-version"> <span class="nav-number">1</span> <span class="nav-text">Unweighted version</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#weighted-version"> <span class="nav-number">2</span> <span class="nav-text">Weighted version</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Programelot</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
