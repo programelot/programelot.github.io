@@ -1336,6 +1336,13 @@ There wer 14 setMat and 18 addMat operations but now it has 8 setMat and 15 addM
     </script>
 
     <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+               SVG: { linebreaks: { automatic: true } }
+      });
+      </script>
+
+    <script type="text/x-mathjax-config">
       MathJax.Hub.Queue(function() {
         var all = MathJax.Hub.getAllJax(), i;
         for (i=0; i < all.length; i += 1) {
