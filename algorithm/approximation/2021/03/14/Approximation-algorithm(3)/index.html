@@ -339,6 +339,8 @@
     };
 
     function num_dot_add(input){
+        if(input == null)
+            return "0"
         input = input.toString();
         output = '';
         for(let s = 0; s < input.length; ++s){
@@ -351,25 +353,88 @@
 
     function setVisitorCount(){
         document.addEventListener("DOMContentLoaded", function(e) {
-            let visitlst = document.getElementsByClassName('visitors-count');
-            for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
-                let pageId = extractId(visitlst[vlidx].id);
-                let xhr = new XMLHttpRequest();
-                
-                let visited = parseInt(localStorage[pageId] || 0);
-                if(visited == 0){
-                    xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/` + pageId);
-                    localStorage[pageId] = 1;
+            {
+                let visitlst = document.getElementsByClassName('visitors-count');
+                let todayVisit = visitlst[0];
+                let totalVisit = visitlst[0];
+                for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
+                    let pageoID = visitlst[vlidx].id;
+                    if(pageoID == "total visitors"){
+                        totalVisit = visitlst[vlidx];
+                        continue;
+                    }
+                    if(pageoID == "today visitors"){
+                        todayVisit = visitlst[vlidx];
+                        continue;
+                    }
+                    let pageId = extractId(pageoID);
+                    let xhr = new XMLHttpRequest();
+                    
+                    let visited = parseInt(localStorage[pageId] || 0);
+                    if(visited == 0){
+                        xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/` + pageId);
+                        localStorage[pageId] = 1;
+                    }
+                    else{
+                        xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                    }
+                    
+                    xhr.responseType = "json";
+                    xhr.onload = function() {
+                        visitlst[vlidx].innerText = num_dot_add(this.response.value);
+                    }
+                    xhr.send();
                 }
-                else{
-                    xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
+                {
+                    let today = new Date();
+
+                    let dateString = today.getFullYear();
+                    dateString += (((today.getMonth() + 1) < 10) ? "0" : "") + (today.getMonth() + 1);
+                    dateString += ((today.getDate() < 10) ? "0" : "") + today.getDate()
+
+                    let visited = parseInt(localStorage[dateString] || 0);
+                    if(visited == 0){
+                        {
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitd` + dateString);
+                            xhr.responseType = "json";
+                            xhr.onload = function() {
+                                todayVisit.innerText = num_dot_add(this.response.value);
+                            }
+                            xhr.send();
+                        }
+                        {
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitotal`);
+                            xhr.responseType = "json";
+                            xhr.onload = function() {
+                                totalVisit.innerText = num_dot_add(this.response.value);
+                            }
+                            xhr.send();
+                        }
+                        localStorage[dateString] = 1;
+                    }
+                    else{
+                        {
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitd` + dateString);
+                            xhr.responseType = "json";
+                            xhr.onload = function() {
+                                todayVisit.innerText = num_dot_add(this.response.value);
+                            }
+                            xhr.send();
+                        }
+                        {
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitotal`);
+                            xhr.responseType = "json";
+                            xhr.onload = function() {
+                                totalVisit.innerText = num_dot_add(this.response.value);
+                            }
+                            xhr.send();
+                        }
+                    }
                 }
-                
-                xhr.responseType = "json";
-                xhr.onload = function() {
-                    visitlst[vlidx].innerText = num_dot_add(this.response.value);
-                }
-                xhr.send();
             }
         });
        
@@ -855,6 +920,22 @@ We will see some other techniques with some examples.</p>
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Programelot</span>
+  <br>
+  <span class="visitors" data-flag-title="">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+      <span class="post-meta-item-text">total</span>
+      <span class="visitors-count" id="total visitors"></span>
+  </span>
+  
+  <span class="visitors" data-flag-title="">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+      <span class="post-meta-item-text">today</span>
+      <span class="visitors-count" id="today visitors"></span>
+  </span>
 </div>
 
 
