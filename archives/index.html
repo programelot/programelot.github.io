@@ -332,109 +332,6 @@
 </nav>
 
 
-<script>
-
-    function extractId(raw_page_url){
-        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
-    };
-
-    function num_dot_add(input){
-        if(input == null)
-            return "0"
-        input = input.toString();
-        output = '';
-        for(let s = 0; s < input.length; ++s){
-            if(s != input.length && s % 3 == 0 && s != 0)
-                output = ',' + output;
-                output = input[input.length - 1 - s] + output;
-        }
-        return output
-    }
-
-    function setVisitorCount(){
-        document.addEventListener("DOMContentLoaded", function(e) {
-            {
-                let visitlst = document.getElementsByClassName('visitors-count');
-                let todayVisit = visitlst[0];
-                let totalVisit = visitlst[0];
-                for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
-                    let pageoID = visitlst[vlidx].id;
-                    if(pageoID == "total visitors"){
-                        totalVisit = visitlst[vlidx];
-                        continue;
-                    }
-                    if(pageoID == "today visitors"){
-                        todayVisit = visitlst[vlidx];
-                        continue;
-                    }
-                    let pageId = extractId(pageoID);
-                    let xhr = new XMLHttpRequest();
-                    
-                    xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
-                    
-                    xhr.responseType = "json";
-                    xhr.onload = function() {
-                        visitlst[vlidx].innerText = num_dot_add(this.response.value);
-                    }
-                    xhr.send();
-                }
-                {
-                    let today = new Date();
-
-                    let dateString = today.getFullYear();
-                    dateString += (((today.getMonth() + 1) < 10) ? "0" : "") + (today.getMonth() + 1);
-                    dateString += ((today.getDate() < 10) ? "0" : "") + today.getDate()
-
-                    let visited = parseInt(localStorage[dateString] || 0);
-                    if(visited == 0){
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitd` + dateString);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                todayVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitotal`);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                totalVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        localStorage[dateString] = 1;
-                    }
-                    else{
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitd` + dateString);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                todayVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitotal`);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                totalVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                    }
-                }
-            }
-        });
-       
-    }
-    setVisitorCount();
-</script>
-
  </div>
     </header>
 
@@ -451,7 +348,7 @@
     
     OK!
     
-      41 posts in total.
+      42 posts in total.
     
     Keep on posting.
   </span>
@@ -469,6 +366,40 @@
       <div class="collection-title" route="/">
         <h2 class="archive-year motion-element" id="archive-year-2023">2023</h2>
       </div>
+    
+    
+
+    
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/algorithm/2023/04/13/Google-foobar/" itemprop="url">
+              
+                <span itemprop="name">Google foobar</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2023-04-13T00:00:00+09:00"
+              content="2023-04-13" >
+          04-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+  
+    
+
+    
+    
     
     
 
@@ -781,10 +712,15 @@
     
     
     
+      
+      <div class="collection-title" route="/page2">
+        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
+      </div>
+    
     
 
     
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page2">
     <header class="post-header">
 
       <h2 class="post-title">
@@ -814,11 +750,6 @@
 
     
     
-    
-      
-      <div class="collection-title" route="/page2">
-        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
-      </div>
     
     
 
@@ -1126,10 +1057,15 @@
     
     
     
+      
+      <div class="collection-title" route="/page3">
+        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
+      </div>
+    
     
 
     
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page2">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page3">
     <header class="post-header">
 
       <h2 class="post-title">
@@ -1159,11 +1095,6 @@
 
     
     
-    
-      
-      <div class="collection-title" route="/page3">
-        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
-      </div>
     
     
 
@@ -1471,10 +1402,15 @@
     
     
     
+      
+      <div class="collection-title" route="/page4">
+        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
+      </div>
+    
     
 
     
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page3">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page4">
     <header class="post-header">
 
       <h2 class="post-title">
@@ -1504,11 +1440,6 @@
 
     
     
-    
-      
-      <div class="collection-title" route="/page4">
-        <h2 class="archive-year motion-element" id="archive-year-2021">2021</h2>
-      </div>
     
     
 
@@ -1821,10 +1752,15 @@
     
     
     
+      
+      <div class="collection-title" route="/page5">
+        <h2 class="archive-year motion-element" id="archive-year-2020">2020</h2>
+      </div>
+    
     
 
     
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page4">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page5">
     <header class="post-header">
 
       <h2 class="post-title">
@@ -1854,11 +1790,6 @@
 
     
     
-    
-      
-      <div class="collection-title" route="/page5">
-        <h2 class="archive-year motion-element" id="archive-year-2020">2020</h2>
-      </div>
     
     
 
@@ -1936,7 +1867,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2006,21 +1937,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Programelot</span>
   <br>
-  <span class="visitors" data-flag-title="">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-      <span class="post-meta-item-text">total</span>
-      <span class="visitors-count" id="total visitors"></span>
-  </span>
   
-  <span class="visitors" data-flag-title="">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-      <span class="post-meta-item-text">today</span>
-      <span class="visitors-count" id="today visitors"></span>
-  </span>
 </div>
 
 
@@ -2167,7 +2084,7 @@
       
 
       
-        var sizes = 41
+        var sizes = 42
         var base = "#";
       
 

@@ -332,109 +332,6 @@
 </nav>
 
 
-<script>
-
-    function extractId(raw_page_url){
-        return raw_page_url.replace(/[^A-Za-z0-9]/g, '').substring(0,64);
-    };
-
-    function num_dot_add(input){
-        if(input == null)
-            return "0"
-        input = input.toString();
-        output = '';
-        for(let s = 0; s < input.length; ++s){
-            if(s != input.length && s % 3 == 0 && s != 0)
-                output = ',' + output;
-                output = input[input.length - 1 - s] + output;
-        }
-        return output
-    }
-
-    function setVisitorCount(){
-        document.addEventListener("DOMContentLoaded", function(e) {
-            {
-                let visitlst = document.getElementsByClassName('visitors-count');
-                let todayVisit = visitlst[0];
-                let totalVisit = visitlst[0];
-                for(let vlidx = 0; vlidx < visitlst.length; ++vlidx){
-                    let pageoID = visitlst[vlidx].id;
-                    if(pageoID == "total visitors"){
-                        totalVisit = visitlst[vlidx];
-                        continue;
-                    }
-                    if(pageoID == "today visitors"){
-                        todayVisit = visitlst[vlidx];
-                        continue;
-                    }
-                    let pageId = extractId(pageoID);
-                    let xhr = new XMLHttpRequest();
-                    
-                    xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/` + pageId);
-                    
-                    xhr.responseType = "json";
-                    xhr.onload = function() {
-                        visitlst[vlidx].innerText = num_dot_add(this.response.value);
-                    }
-                    xhr.send();
-                }
-                {
-                    let today = new Date();
-
-                    let dateString = today.getFullYear();
-                    dateString += (((today.getMonth() + 1) < 10) ? "0" : "") + (today.getMonth() + 1);
-                    dateString += ((today.getDate() < 10) ? "0" : "") + today.getDate()
-
-                    let visited = parseInt(localStorage[dateString] || 0);
-                    if(visited == 0){
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitd` + dateString);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                todayVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/hit/programelot.github.io/visitotal`);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                totalVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        localStorage[dateString] = 1;
-                    }
-                    else{
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitd` + dateString);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                todayVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                        {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("GET", `https://api.countapi.xyz/get/programelot.github.io/visitotal`);
-                            xhr.responseType = "json";
-                            xhr.onload = function() {
-                                totalVisit.innerText = num_dot_add(this.response.value);
-                            }
-                            xhr.send();
-                        }
-                    }
-                }
-            }
-        });
-       
-    }
-    setVisitorCount();
-</script>
-
  </div>
     </header>
 
@@ -553,19 +450,6 @@
             
           
 
-          
-          
-             <span class="visitors" data-flag-title="Network decomposition">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/network/2021/04/02/Network-flow-algorithm/">0</span>
-             </span>
-          
           
 
           
@@ -769,19 +653,6 @@ Then we can evaluate this flow $f$ as $\sum\limits_{(s, v) \in E}f(s, v) - \sum\
           
 
           
-          
-             <span class="visitors" data-flag-title="Approximation algorithm(7) - Minimizing sum of completion time">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/">0</span>
-             </span>
-          
-          
 
           
           
@@ -980,19 +851,6 @@ Notice that this machine is a nonpreemptively which means each work can’t inte
           
 
           
-          
-             <span class="visitors" data-flag-title="Linear programming">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/lp/2021/03/24/Linear-programming/">0</span>
-             </span>
-          
-          
 
           
           
@@ -1187,19 +1045,6 @@ Notice that this machine is a nonpreemptively which means each work can’t inte
             
           
 
-          
-          
-             <span class="visitors" data-flag-title="Approximation algorithm(6) - Minimum-degree spanning tree">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">0</span>
-             </span>
-          
           
 
           
@@ -1407,19 +1252,6 @@ Notice that this is a NP-hard problem.</p>
           
 
           
-          
-             <span class="visitors" data-flag-title="Parallel Page rank/BFS">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/">0</span>
-             </span>
-          
-          
 
           
           
@@ -1619,19 +1451,6 @@ Let’s define some terms.</p>
           
 
           
-          
-             <span class="visitors" data-flag-title="MPI">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/concurrency/multi%20computer%20computing/2021/03/18/MPI/">0</span>
-             </span>
-          
-          
 
           
           
@@ -1827,19 +1646,6 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
           
 
           
-          
-             <span class="visitors" data-flag-title="Family of algorithms">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Family-of-algorithms/">0</span>
-             </span>
-          
-          
 
           
           
@@ -2030,19 +1836,6 @@ Then, MPI uses 64 cores with out any consideration but just equally.</p>
             
           
 
-          
-          
-             <span class="visitors" data-flag-title="Approximation algorithm(5) - K-center">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/">0</span>
-             </span>
-          
           
 
           
@@ -2240,19 +2033,6 @@ It’s like making clusters efficiently.</p>
           
 
           
-          
-             <span class="visitors" data-flag-title="Approximation algorithm(4) - Knapsack">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/">0</span>
-             </span>
-          
-          
 
           
           
@@ -2445,19 +2225,6 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
             
           
 
-          
-          
-             <span class="visitors" data-flag-title="CUDA">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views </span>
-               
-                 <span class="visitors-count" id="/concurrency/gpu/2021/03/16/CUDA_Stream/">0</span>
-             </span>
-          
           
 
           
@@ -2670,21 +2437,7 @@ It supports multiple abstractions to handle NVIDIA GPU.</p>
   </span>
   <span class="author" itemprop="copyrightHolder">Programelot</span>
   <br>
-  <span class="visitors" data-flag-title="">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-      <span class="post-meta-item-text">total</span>
-      <span class="visitors-count" id="total visitors"></span>
-  </span>
   
-  <span class="visitors" data-flag-title="">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-      <span class="post-meta-item-text">today</span>
-      <span class="visitors-count" id="today visitors"></span>
-  </span>
 </div>
 
 
