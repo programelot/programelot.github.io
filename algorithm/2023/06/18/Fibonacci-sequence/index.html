@@ -1,0 +1,1512 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.">
+<meta name="keywords" content="Jekyll, NexT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fibonacci sequence">
+<meta property="og:url" content="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/">
+<meta property="og:site_name" content="REAL">
+<meta property="og:description" content="Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fibonacci sequence">
+<meta name="twitter:description" content="Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://programelot.github.io/"/>
+
+
+
+
+
+  <title>Fibonacci sequence | REAL</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">REAL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-project">
+          <a href="/projects/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Project
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            Fibonacci sequence
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00+09:00">
+                2023-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h1 id="definition">Definition</h1>
+<p>Fibonacci sequence is a sequence that generats numbers from previous two numbers.
+In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
+
+<p>$a_1 = a_2 = 1$, $a_n = a_{n - 1} + a_{n - 2} \forall n \ge 3$.</p>
+
+<p>Fibonacci sequence can be changed to simple form as follows.</p>
+
+<p>$a_n = a_{n-1} + a_{n-2}$</p>
+
+<p>$\Leftrightarrow a_n + (\frac{\sqrt{5}-1}{2})a_{n-1} = (\frac{\sqrt{5} + 1}{2})(a_{n-1} + (\frac{\sqrt{5}-1}{2}) a_{n-2})$</p>
+
+<p>$\Leftrightarrow a_{n+1} + (\frac{\sqrt{5}-1}{2})a_n = (\frac{\sqrt{5} + 1}{2})^{n - 1}(a_2 + (\frac{\sqrt{5}-1}{2})a_1) = (\frac{\sqrt{5} + 1}{2})^n$</p>
+
+<p>$\Leftrightarrow a_{n+1} - \frac{1}{\sqrt{5}}(\frac{\sqrt{5} + 1}{2})^{n+1} = -(\frac{\sqrt{5}-1}{2})(a_n - \frac{1}{\sqrt{5}}(\frac{\sqrt{5} + 1}{2})^n)$</p>
+
+<p>$\Leftrightarrow a_n - \frac{1}{\sqrt{5}}(\frac{\sqrt{5} + 1}{2})^n = (-(\frac{\sqrt{5}-1}{2}))^{n-1}(a_1 - \frac{1}{\sqrt{5}}(\frac{\sqrt{5} + 1}{2})) = -\frac{1}{\sqrt{5}}(\frac{1-\sqrt{5}}{2})^n$</p>
+
+<p>As a result, $\Leftrightarrow a_n = \frac{1}{\sqrt{5}}(\frac{\sqrt{5} + 1}{2})^n - \frac{1}{\sqrt{5}}(\frac{1-\sqrt{5}}{2})^n$</p>
+
+<p>or</p>
+
+<p>$a_n = a_{n-1} + a_{n-2}$</p>
+
+<p>$\Leftrightarrow a_n - (\frac{\sqrt{5}+1}{2})a_{n-1} = (\frac{1 - \sqrt{5} }{2})(a_{n-1} - (\frac{\sqrt{5}+1}{2}) a_{n-2})$</p>
+
+<p>$\Leftrightarrow a_{n+1} - (\frac{\sqrt{5}+1}{2})a_n = (\frac{1 - \sqrt{5}}{2})^{n-1}(a_2 - (\frac{\sqrt{5}+1}{2})a_1) = (\frac{1 - \sqrt{5}}{2})^n$</p>
+
+<p>$\Leftrightarrow a_{n+1} - (\frac{\sqrt{5}+1}{2})a_n = (\frac{1 - \sqrt{5}}{2})^n$</p>
+
+<p>$\Leftrightarrow a_{n+1} + \frac{1}{\sqrt{5}}(\frac{1 - \sqrt{5}}{2})^{n+1}= (\frac{\sqrt{5}+1}{2})(a_n + \frac{1}{\sqrt{5}}(\frac{1 - \sqrt{5}}{2})^n)$</p>
+
+<p>$\Leftrightarrow a_n + \frac{1}{\sqrt{5}}(\frac{1 - \sqrt{5}}{2})^n = (\frac{\sqrt{5}+1}{2})^{n-1}(a_1 + \frac{1}{\sqrt{5}}(\frac{1 - \sqrt{5}}{2})) = \frac{1}{\sqrt{5}}(\frac{\sqrt{5}+1}{2})^n$</p>
+
+<p>$\Leftrightarrow a_n = \frac{1}{\sqrt{5}}(\frac{\sqrt{5}+1}{2})^n - \frac{1}{\sqrt{5}}(\frac{1 - \sqrt{5}}{2})^n$</p>
+
+<p>As a result, $a_n = \frac{1}{\sqrt{5}}((\frac{\sqrt{5}+1}{2})^n - (\frac{1 - \sqrt{5}}{2})^n)$</p>
+
+<h1 id="implementation">Implementation</h1>
+
+<h2 id="recursion">Recursion</h2>
+
+<p>It is the most naive and simplest implementation among all.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4</pre></td><td class="code"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fib</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">){</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+   <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h2 id="dynamic-programming">Dynamic programming</h2>
+
+<h3 id="top-down-approach">Top-down approach</h3>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12</pre></td><td class="code"><pre class="highlight"><code><span class="c1">//Top-down approach
+</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">lst</span><span class="p">;</span><span class="c1">//3 &lt;= 0
+</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fib</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="n">lst</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lst</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">lst</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h3 id="bottom-up-approach">Bottom-up approach</h3>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10</pre></td><td class="code"><pre class="highlight"><code><span class="c1">//Bottom-up approach
+</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fib</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">){</span>
+  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+  <span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+    <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h2 id="mathematical-analysis">Mathematical analysis</h2>
+
+<p>From the formula $a_n = \frac{1}{\sqrt{5}}( ({\frac{1 + \sqrt{5}}{2}})^n - ({\frac{1 - \sqrt{5}}{2}})^n)$, Fibonacci sequence can be computed in logarithmic time with constant space.
+To apply this to the program, the following techniques have been used.
+First of all, it uses Multiply operation with the logarithmic algorithm.
+Secondly, it ignores one side of algorithm because it is Symmetry between <script type="math/tex">(a-b\sqrt{5})^x = c - d\sqrt{5}</script> and <script type="math/tex">(a+b\sqrt{5})^x=c+d\sqrt{5}</script>.
+This means it always has the same value for <script type="math/tex">c</script> and <script type="math/tex">d</script>.
+The proof is as follows.</p>
+
+<p>$(a+b\sqrt{5})(c+d\sqrt{5}) = ac +5bd + (ad+bc)\sqrt{5}$</p>
+
+<p>$(a-b\sqrt{5})(c-d\sqrt{5}) = ac +5bd - (ad+bc)\sqrt{5}$.</p>
+
+<p>Therefore, this program computes only $\frac{1}{\sqrt{5}}({\frac{1 + \sqrt{5}}{2}})^n$.
+Notice that if the $\frac{1}{\sqrt{5}}(\frac{1 + \sqrt{5}}{2})^n$ is $\frac{1}{\sqrt{5}}(a + b\sqrt{5})$ then answer should be <script type="math/tex">2b</script> because answer is an integer and it has the same value from the other side.</p>
+
+<p>Finally, program doesn’t compute $({\frac{1 + \sqrt{5}}{2}})^n$ but $\frac{(1 + \sqrt{5})^n}{2^n}$.
+This result in separate computation for $(1 + \sqrt{5})^n$ and ${2^n}$.
+Therefore, there couldn’t be a floating-point error.
+In the program below, it uses $a$ as an index of $1$, $b$ as an index of $\sqrt{5}$ and $div$ as an index of power of $2$.
+At the last step, it avoided division but used shift operation to reduce overhead.
+Notice that $a$ and $b$ will be divided in to two and $div$ will be subtracted by 1 if both $a$ and $b$ is even and $div$ is bigger than 1 to avoid overflow.
+$div$ will not go below 1 because it will be subtracted by one at the last step because the answer is $2b$ not $b$.
+Notice that it uses a logarithmic power operation to compute.
+In other world to compute $a^x$, it computes $a^1 + a^2 + a^4 + a^8 + \cdots$ depending on the binary digit of $x$.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39</pre></td><td class="code"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fib</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">){</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">div</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">res_a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">res_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">res_div</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bit</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">bit</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">;</span> <span class="n">bit</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">bit</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">){</span>
+            <span class="p">{</span>
+                <span class="kt">unsigned</span> <span class="kt">int</span>  <span class="n">tra</span><span class="p">,</span> <span class="n">trb</span><span class="p">;</span>
+                <span class="n">tra</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">res_a</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">b</span><span class="o">*</span><span class="n">res_b</span><span class="p">;</span>
+                <span class="n">trb</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">res_a</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">res_b</span><span class="p">;</span>
+                <span class="n">res_a</span> <span class="o">=</span> <span class="n">tra</span><span class="p">;</span>
+                <span class="n">res_b</span> <span class="o">=</span> <span class="n">trb</span><span class="p">;</span>
+                <span class="n">res_div</span> <span class="o">+=</span> <span class="n">div</span><span class="p">;</span>
+                <span class="k">while</span><span class="p">(((</span><span class="n">res_a</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="n">res_b</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">res_div</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)){</span>
+                    <span class="n">res_a</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+                    <span class="n">res_b</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+                    <span class="n">res_div</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="p">{</span>
+            <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ta</span><span class="p">,</span> <span class="n">tb</span><span class="p">;</span>
+            <span class="n">ta</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">;</span>
+            <span class="n">tb</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">;</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">ta</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">tb</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">div</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(((</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="n">b</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)){</span>
+            <span class="n">a</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">b</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">div</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">res_b</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">res_div</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h1 id="performance-comparison">Performance comparison</h1>
+<p>The mathematical approach is the fastest, the bottom-up approach is the second, top-down is the third, recursion is the last.</p>
+
+<p>Detailed test results are below.</p>
+
+<table>
+<tbody>
+<tr><td></td><td colspan="4"> Normal scale </td><td colspan="4"> Logarithmic scale </td></tr>
+<tr><td>N</td><td>Mathematical</td><td>Bottom-up</td><td>Top-down</td><td>Recursion</td><td>Mathematical</td><td>Bottom-up</td><td>Top-down</td><td>Recursion</td><td>Local best</td></tr>
+<tr><td>1</td><td>10235</td><td>8792</td><td>6851</td><td>6630</td><td>9.23357</td><td>9.0816</td><td>8.83215</td><td>8.79936</td><td>Recursion</td></tr>
+<tr><td>2</td><td>11630</td><td>8312</td><td>6708</td><td>6461</td><td>9.36134</td><td>9.02546</td><td>8.81106</td><td>8.77354</td><td>Recursion</td></tr>
+<tr><td>3</td><td>14169</td><td>9876</td><td>49613</td><td>8054</td><td>9.55881</td><td>9.19786</td><td>10.812</td><td>8.99392</td><td>Recursion</td></tr>
+<tr><td>4</td><td>13645</td><td>11052</td><td>50462</td><td>9608</td><td>9.52113</td><td>9.31037</td><td>10.829</td><td>9.17035</td><td>Recursion</td></tr>
+<tr><td>5</td><td>16242</td><td>11927</td><td>68208</td><td>11720</td><td>9.69536</td><td>9.38656</td><td>11.1303</td><td>9.36905</td><td>Recursion</td></tr>
+<tr><td>6</td><td>113054</td><td>19069</td><td>115477</td><td>24407</td><td>11.6356</td><td>9.85582</td><td>11.6568</td><td>10.1026</td><td>Bottom-up</td></tr>
+<tr><td>7</td><td>27275</td><td>20290</td><td>147861</td><td>33960</td><td>10.2137</td><td>9.91788</td><td>11.904</td><td>10.4329</td><td>Bottom-up</td></tr>
+<tr><td>8</td><td>24092</td><td>21890</td><td>158735</td><td>50019</td><td>10.0896</td><td>9.99379</td><td>11.975</td><td>10.8202</td><td>Bottom-up</td></tr>
+<tr><td>9</td><td>27424</td><td>23129</td><td>221669</td><td>80795</td><td>10.2192</td><td>10.0488</td><td>12.3089</td><td>11.2997</td><td>Bottom-up</td></tr>
+<tr><td>10</td><td>27408</td><td>24460</td><td>204569</td><td>125684</td><td>10.2186</td><td>10.1048</td><td>12.2287</td><td>11.7415</td><td>Bottom-up</td></tr>
+<tr><td>11</td><td>30427</td><td>26093</td><td>229421</td><td>236295</td><td>10.3231</td><td>10.1694</td><td>12.3433</td><td>12.3728</td><td>Bottom-up</td></tr>
+<tr><td>12</td><td>27203</td><td>27240</td><td>258010</td><td>333141</td><td>10.2111</td><td>10.2124</td><td>12.4608</td><td>12.7163</td><td>Mathematical</td></tr>
+<tr><td>13</td><td>52887</td><td>28886</td><td>285534</td><td>656058</td><td>10.8759</td><td>10.2711</td><td>12.5621</td><td>13.394</td><td>Bottom-up</td></tr>
+<tr><td>14</td><td>31111</td><td>31448</td><td>332717</td><td>921344</td><td>10.3453</td><td>10.3561</td><td>12.715</td><td>13.7336</td><td>Mathematical</td></tr>
+<tr><td>15</td><td>34203</td><td>31631</td><td>343148</td><td>1411580</td><td>10.4401</td><td>10.3619</td><td>12.7459</td><td>14.1602</td><td>Bottom-up</td></tr>
+<tr><td>16</td><td>27148</td><td>32943</td><td>351717</td><td>1568424</td><td>10.2091</td><td>10.4025</td><td>12.7706</td><td>14.2656</td><td>Mathematical</td></tr>
+<tr><td>17</td><td>20980</td><td>23182</td><td>263037</td><td>2547217</td><td>9.95132</td><td>10.0511</td><td>12.48</td><td>14.7505</td><td>Mathematical</td></tr>
+<tr><td>18</td><td>20869</td><td>24611</td><td>340437</td><td>4060424</td><td>9.94602</td><td>10.1109</td><td>12.738</td><td>15.2168</td><td>Mathematical</td></tr>
+<tr><td>19</td><td>22926</td><td>25102</td><td>261359</td><td>6465351</td><td>10.04</td><td>10.1307</td><td>12.4737</td><td>15.682</td><td>Mathematical</td></tr>
+<tr><td>20</td><td>20667</td><td>25864</td><td>280550</td><td>10501118</td><td>9.93629</td><td>10.1606</td><td>12.5445</td><td>16.167</td><td>Mathematical</td></tr>
+<tr><td>21</td><td>22812</td><td>27024</td><td>293402</td><td>16985438</td><td>10.035</td><td>10.2045</td><td>12.5893</td><td>16.6479</td><td>Mathematical</td></tr>
+<tr><td>22</td><td>23184</td><td>27835</td><td>301326</td><td>27372387</td><td>10.0512</td><td>10.234</td><td>12.6159</td><td>17.125</td><td>Mathematical</td></tr>
+<tr><td>23</td><td>25186</td><td>28832</td><td>324435</td><td>44110219</td><td>10.134</td><td>10.2692</td><td>12.6898</td><td>17.6022</td><td>Mathematical</td></tr>
+<tr><td>24</td><td>20888</td><td>29794</td><td>348050</td><td>71377722</td><td>9.94693</td><td>10.3021</td><td>12.7601</td><td>18.0835</td><td>Mathematical</td></tr>
+<tr><td>25</td><td>22866</td><td>30591</td><td>354694</td><td>115484831</td><td>10.0374</td><td>10.3285</td><td>12.779</td><td>18.5646</td><td>Mathematical</td></tr>
+<tr><td>26</td><td>23669</td><td>31610</td><td>359434</td><td>186855345</td><td>10.0719</td><td>10.3612</td><td>12.7923</td><td>19.0458</td><td>Mathematical</td></tr>
+<tr><td>27</td><td>25091</td><td>32482</td><td>400048</td><td>302109566</td><td>10.1303</td><td>10.3884</td><td>12.8993</td><td>19.5263</td><td>Mathematical</td></tr>
+<tr><td>28</td><td>22717</td><td>33741</td><td>386085</td><td>488550062</td><td>10.0309</td><td>10.4265</td><td>12.8638</td><td>20.007</td><td>Mathematical</td></tr>
+<tr><td>29</td><td>24668</td><td>34483</td><td>412932</td><td>790141936</td><td>10.1133</td><td>10.4482</td><td>12.931</td><td>20.4877</td><td>Mathematical</td></tr>
+<tr><td>30</td><td>25461</td><td>35500</td><td>423788</td><td>1279290871</td><td>10.1449</td><td>10.4773</td><td>12.957</td><td>20.9696</td><td>Mathematical</td></tr>
+<tr><td>31</td><td>27316</td><td>38959</td><td>443156</td><td>...</td><td>10.2152</td><td>10.5703</td><td>13.0017</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>32</td><td>19889</td><td>37064</td><td>449541</td><td>...</td><td>9.89792</td><td>10.5204</td><td>13.016</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>33</td><td>22591</td><td>38108</td><td>487450</td><td>...</td><td>10.0253</td><td>10.5482</td><td>13.0969</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>34</td><td>22462</td><td>38795</td><td>478228</td><td>...</td><td>10.0196</td><td>10.566</td><td>13.0778</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>35</td><td>24950</td><td>41350</td><td>479806</td><td>...</td><td>10.1246</td><td>10.6298</td><td>13.0811</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>36</td><td>22503</td><td>42648</td><td>523592</td><td>...</td><td>10.0214</td><td>10.6607</td><td>13.1685</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>37</td><td>23147</td><td>43608</td><td>518030</td><td>...</td><td>10.0496</td><td>10.683</td><td>13.1578</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>38</td><td>24591</td><td>44482</td><td>555361</td><td>...</td><td>10.1101</td><td>10.7028</td><td>13.2274</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>39</td><td>27352</td><td>45739</td><td>638874</td><td>...</td><td>10.2165</td><td>10.7307</td><td>13.3675</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>40</td><td>22703</td><td>46887</td><td>647076</td><td>...</td><td>10.0303</td><td>10.7555</td><td>13.3802</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>41</td><td>24591</td><td>47835</td><td>624376</td><td>...</td><td>10.1101</td><td>10.7755</td><td>13.3445</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>42</td><td>24330</td><td>47897</td><td>596579</td><td>...</td><td>10.0995</td><td>10.7768</td><td>13.299</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>43</td><td>26275</td><td>48889</td><td>591725</td><td>...</td><td>10.1764</td><td>10.7973</td><td>13.2908</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>44</td><td>24497</td><td>49961</td><td>767949</td><td>...</td><td>10.1063</td><td>10.819</td><td>13.5515</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>45</td><td>26834</td><td>51646</td><td>648048</td><td>...</td><td>10.1974</td><td>10.8522</td><td>13.3817</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>46</td><td>26837</td><td>51758</td><td>739262</td><td>...</td><td>10.1975</td><td>10.8543</td><td>13.5134</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>47</td><td>29034</td><td>53703</td><td>679719</td><td>...</td><td>10.2762</td><td>10.8912</td><td>13.4294</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>48</td><td>22369</td><td>54462</td><td>698451</td><td>...</td><td>10.0154</td><td>10.9053</td><td>13.4566</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>49</td><td>24981</td><td>55278</td><td>719724</td><td>...</td><td>10.1259</td><td>10.9201</td><td>13.4866</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>50</td><td>24888</td><td>55849</td><td>704200</td><td>...</td><td>10.1221</td><td>10.9304</td><td>13.4648</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>51</td><td>26757</td><td>73331</td><td>797662</td><td>...</td><td>10.1946</td><td>11.2027</td><td>13.5894</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>52</td><td>24335</td><td>58261</td><td>738002</td><td>...</td><td>10.0997</td><td>10.9727</td><td>13.5117</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>53</td><td>26326</td><td>59784</td><td>785202</td><td>...</td><td>10.1783</td><td>10.9985</td><td>13.5737</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>54</td><td>26508</td><td>59313</td><td>856402</td><td>...</td><td>10.1852</td><td>10.9906</td><td>13.6605</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>55</td><td>28536</td><td>61089</td><td>791912</td><td>...</td><td>10.2589</td><td>11.0201</td><td>13.5822</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>56</td><td>24465</td><td>61904</td><td>788354</td><td>...</td><td>10.105</td><td>11.0333</td><td>13.5777</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>57</td><td>26499</td><td>100568</td><td>803439</td><td>...</td><td>10.1849</td><td>11.5186</td><td>13.5967</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>58</td><td>26163</td><td>63054</td><td>841987</td><td>...</td><td>10.1721</td><td>11.0517</td><td>13.6435</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>59</td><td>28944</td><td>63964</td><td>920700</td><td>...</td><td>10.2731</td><td>11.0661</td><td>13.7329</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>60</td><td>27185</td><td>65499</td><td>957073</td><td>...</td><td>10.2104</td><td>11.0898</td><td>13.7716</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>61</td><td>28128</td><td>66336</td><td>866843</td><td>...</td><td>10.2445</td><td>11.1025</td><td>13.6726</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>62</td><td>29034</td><td>67246</td><td>904581</td><td>...</td><td>10.2762</td><td>11.1161</td><td>13.7152</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>63</td><td>31755</td><td>144641</td><td>918552</td><td>...</td><td>10.3658</td><td>11.882</td><td>13.7306</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>64</td><td>22648</td><td>77184</td><td>912849</td><td>...</td><td>10.0278</td><td>11.2539</td><td>13.7243</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>65</td><td>24447</td><td>69598</td><td>929568</td><td>...</td><td>10.1043</td><td>11.1505</td><td>13.7425</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>66</td><td>24536</td><td>79183</td><td>919052</td><td>...</td><td>10.1079</td><td>11.2795</td><td>13.7311</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>67</td><td>27028</td><td>71351</td><td>940495</td><td>...</td><td>10.2046</td><td>11.1754</td><td>13.7542</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>68</td><td>41882</td><td>72961</td><td>955236</td><td>...</td><td>10.6426</td><td>11.1977</td><td>13.7697</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>69</td><td>27450</td><td>74149</td><td>989970</td><td>...</td><td>10.2201</td><td>11.2138</td><td>13.8054</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>70</td><td>26940</td><td>74165</td><td>987940</td><td>...</td><td>10.2014</td><td>11.214</td><td>13.8034</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>71</td><td>29203</td><td>84665</td><td>1004979</td><td>...</td><td>10.282</td><td>11.3465</td><td>13.8205</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>72</td><td>25054</td><td>76011</td><td>1133138</td><td>...</td><td>10.1288</td><td>11.2386</td><td>13.9405</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>73</td><td>26823</td><td>86682</td><td>1028957</td><td>...</td><td>10.197</td><td>11.37</td><td>13.8441</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>74</td><td>26832</td><td>87921</td><td>1043417</td><td>...</td><td>10.1974</td><td>11.3842</td><td>13.858</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>75</td><td>28852</td><td>88849</td><td>1165512</td><td>...</td><td>10.2699</td><td>11.3947</td><td>13.9687</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>76</td><td>27107</td><td>89961</td><td>1071402</td><td>...</td><td>10.2075</td><td>11.4071</td><td>13.8845</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>77</td><td>28693</td><td>90888</td><td>1079024</td><td>...</td><td>10.2644</td><td>11.4174</td><td>13.8916</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>78</td><td>29072</td><td>91962</td><td>1123328</td><td>...</td><td>10.2775</td><td>11.4291</td><td>13.9318</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>79</td><td>30962</td><td>83407</td><td>1174810</td><td>...</td><td>10.3405</td><td>11.3315</td><td>13.9766</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>80</td><td>24316</td><td>84163</td><td>1141752</td><td>...</td><td>10.0989</td><td>11.3405</td><td>13.9481</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>81</td><td>26752</td><td>96053</td><td>1272064</td><td>...</td><td>10.1944</td><td>11.4727</td><td>14.0562</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>82</td><td>27068</td><td>96959</td><td>1178098</td><td>...</td><td>10.2061</td><td>11.482</td><td>13.9794</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>83</td><td>28685</td><td>98479</td><td>1262305</td><td>...</td><td>10.2641</td><td>11.4976</td><td>14.0484</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>84</td><td>26923</td><td>98463</td><td>1290894</td><td>...</td><td>10.2007</td><td>11.4974</td><td>14.0708</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>85</td><td>29018</td><td>89035</td><td>1187264</td><td>...</td><td>10.2757</td><td>11.3968</td><td>13.9872</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>86</td><td>28239</td><td>101275</td><td>1243807</td><td>...</td><td>10.2485</td><td>11.5256</td><td>14.0337</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>87</td><td>30981</td><td>101661</td><td>1282043</td><td>...</td><td>10.3411</td><td>11.5294</td><td>14.064</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>88</td><td>26910</td><td>103627</td><td>1273582</td><td>...</td><td>10.2003</td><td>11.5486</td><td>14.0573</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>89</td><td>28589</td><td>91962</td><td>1242803</td><td>...</td><td>10.2608</td><td>11.4291</td><td>14.0329</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>90</td><td>28759</td><td>104886</td><td>1352592</td><td>...</td><td>10.2667</td><td>11.5606</td><td>14.1175</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>91</td><td>30796</td><td>106685</td><td>1380392</td><td>...</td><td>10.3351</td><td>11.5776</td><td>14.1379</td><td>...</td><td>Mathematical</td></tr>
+<tr><td>92</td><td>28222</td><td>107592</td><td>1310485</td><td>...</td><td>10.2479</td><td>11.5861</td><td>14.0859</td><td>...</td><td>Mathematical</td></tr>
+</tbody>
+</table>
+
+
+      
+    </div>
+    
+    <div class="references">
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      Programelot
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" title="Fibonacci sequence">https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm/2023/01/30/Sum-of-beatty-sequence/" rel="prev" title="Sum of beatty sequence">
+                Sum of beatty sequence <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="Programelot" />
+          <p class="site-author-name" itemprop="name">Programelot</p>
+           
+              <p class="site-description motion-element" itemprop="description">I am Programelot who is researching about optimization.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#definition"> <span class="nav-number">1</span> <span class="nav-text">Definition</span> </a> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#implementation"> <span class="nav-number">2</span> <span class="nav-text">Implementation</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#recursion"> <span class="nav-number">2.1</span> <span class="nav-text">Recursion</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#dynamic-programming"> <span class="nav-number">2.2</span> <span class="nav-text">Dynamic programming</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#top-down-approach"> <span class="nav-number">2.2.1</span> <span class="nav-text">Top-down approach</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#bottom-up-approach"> <span class="nav-number">2.2.2</span> <span class="nav-text">Bottom-up approach</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#mathematical-analysis"> <span class="nav-number">2.3</span> <span class="nav-text">Mathematical analysis</span> </a> </li> </ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#performance-comparison"> <span class="nav-number">3</span> <span class="nav-text">Performance comparison</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Programelot</span>
+  <br>
+  
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+               SVG: { linebreaks: { automatic: true } }
+      });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+

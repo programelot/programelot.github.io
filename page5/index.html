@@ -355,6 +355,199 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/QuickAlgorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+                
+                <a class="post-title-link" href="/algorithm/2020/11/14/QuickAlgorithms/" itemprop="url">
+                Quick sort and quick select
+              </a>
+            
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+            
+              <span>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Posted on</span>
+                
+                <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-14T00:00:00+09:00">
+                  2020-11-14
+                </time>
+              
+
+              
+
+              
+              </span>
+            
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithm" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>Quick sort and quick selection are algorithms based on the partition algorithm.
+Partition algorithm makes a two sublist($\mathcal{A},\mathcal{B}$) and one value(pivot$ = \gamma$).
+Every element in $\mathcal{A}$ is less or equal than $\gamma$.
+Every element in $\mathcal{B}$ is greater than $\gamma$.
+Notice that $\mathcal{A}$ can have some elements which have the same value with $\gamma$ but not $\gamma$ itself and $\mathcal{A},\mathcal{B}$ may be $\emptyset$.
+As a result, partition function makes $\gamma$ is the highest value of $\mathcal{A}$.
+Quick sort uses this property to sort the list.
+After partition function, $\mathcal{A}$ and $\mathcal{B}$ is sorted to each other by $\gamma$.
+Therefore, quick sort just sort recursively in $\mathcal{A}$ and $\mathcal{B}$.
+Quick selection do the simillar thing.
+Quick selection is an algorithm to find a $n$th element in the entire list.
+If the order of $\gamma$ is equal with what you seek for, it’s done.
+If the order of $\gamma$ is less than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{B}$ again.
+If the order of $\gamma$ is greater than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{A}$ again.
+It works like semi-quick sort, it sorts a little bit and tries to find the elements in $n$th order and keep going on.</p>
+
+
+
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/algorithm/2020/11/14/QuickAlgorithms/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    <div class="references">
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+        
+        
+        
+        
+          <div class="post-eof"></div>
+        
+      
+    </footer>
+  </article>
+  
+    
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/MergeSort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -583,7 +776,7 @@ However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

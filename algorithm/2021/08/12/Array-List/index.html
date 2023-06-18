@@ -474,6 +474,8 @@
 Some of algorithms even works based on a specific data structure that optimizes the algorithm.
 In this chapter, I’ll explain the most common data structures only.</p>
 
+<h1 id="array-and-list">Array and list</h1>
+
 <h2 id="array">Array</h2>
 
 <p>To store a number of data, there should be some data structure that can give a specific data you want anytime and store a data in to the storage either.
@@ -655,13 +657,17 @@ At the same time, it has an advantage to merge two lists because it can connect 
 <p>However, it still has $O(n)$ complexity for read/change operation.
 Therefore, it usually doesn’t be used in actual implementation however the notation of the list is typically used for many other data structures.</p>
 
-<h2 id="vector">Vector</h2>
+<h1 id="other-lists">Other lists</h1>
 
-<p>Last implementation is which standard c++ language uses.
-It works like an ordinary array but it increases its size by double the size.
+<p>There are another way to implement the list.
+Followings are the common thing that could be tried.</p>
+
+<h2 id="double-sizing-array">Double sizing array</h2>
+
+<p>Double sizing array works like an ordinary array but it increases its size by double when it requires a bigger size.
 It gives a nice performance because it gives a constant complexity for adding and deleting data at the back of the array.
 Notice that this is amortized analysis.
-Therefore, it sometimes cause long term process.</p>
+Therefore, it sometimes takes long to add elements.</p>
 
 <table>
   <thead>
@@ -710,7 +716,70 @@ Therefore, it sometimes cause long term process.</p>
   </tbody>
 </table>
 
-<h2 id="comparison">Comparison</h2>
+<h2 id="circular-array">Circular array</h2>
+
+<p>To access the data, we can use virtual indexing map instead of accessing data by index directly.
+In other world, just use $a[f(i)]$ instead of $a[i]$ when accessing array $a$ at index $i$.
+Please notice that $f$ is a virtual map function.
+There are many potential for this virtual map.
+However, let’s just think about one of the simplest one.
+Let’s use $f(i) = (i + from) \mod size$.
+Notice that $from$ is a constant that can changes.
+In such a case, we can easily remove and insert the data at the front and the end like list 2 above.
+In this case, complexity works like below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time complexity</th>
+      <th>Array</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Search/Change</td>
+      <td>$O(1)$</td>
+    </tr>
+    <tr>
+      <td>Add (Front)</td>
+      <td>$O(1)$</td>
+    </tr>
+    <tr>
+      <td>Add (Random)</td>
+      <td>$O(n)$</td>
+    </tr>
+    <tr>
+      <td>Add (Back)</td>
+      <td>$O(1)$</td>
+    </tr>
+    <tr>
+      <td>Delete (Front)</td>
+      <td>$O(1)$</td>
+    </tr>
+    <tr>
+      <td>Delete (Random)</td>
+      <td>$O(n)$</td>
+    </tr>
+    <tr>
+      <td>Delete (Back)</td>
+      <td>$O(1)$</td>
+    </tr>
+    <tr>
+      <td>Merge</td>
+      <td>$O(n)$</td>
+    </tr>
+    <tr>
+      <td>Space complexity</td>
+      <td>$O(n)$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="comparison">Comparison</h1>
+
+<h2 id="complexity">Complexity</h2>
+
+<p>DSA means the Double sizing array and CA means Circular array.</p>
 
 <table>
   <thead>
@@ -719,7 +788,8 @@ Therefore, it sometimes cause long term process.</p>
       <th>Array</th>
       <th>List 1</th>
       <th>List 2</th>
-      <th>Vector</th>
+      <th>DSA</th>
+      <th>CA</th>
     </tr>
   </thead>
   <tbody>
@@ -729,6 +799,7 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(1)$</td>
+      <td>$O(1)$</td>
     </tr>
     <tr>
       <td>Add (Front)</td>
@@ -736,9 +807,11 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(1)$</td>
       <td>$O(1)$</td>
       <td>$O(n)$</td>
+      <td>$O(1)$</td>
     </tr>
     <tr>
       <td>Add (Random)</td>
+      <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
@@ -750,6 +823,7 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(n)$</td>
       <td>$O(1)$</td>
       <td>Amortized $O(1)$</td>
+      <td>$O(1)$</td>
     </tr>
     <tr>
       <td>Delete (Front)</td>
@@ -757,9 +831,11 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(1)$</td>
       <td>$O(1)$</td>
       <td>$O(n)$</td>
+      <td>$O(1)$</td>
     </tr>
     <tr>
       <td>Delete (Random)</td>
+      <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
@@ -771,12 +847,14 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(n)$</td>
       <td>$O(1)$</td>
       <td>Amortized $O(1)$</td>
+      <td>$O(1)$</td>
     </tr>
     <tr>
       <td>Merge</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(1)$</td>
+      <td>$O(n)$</td>
       <td>$O(n)$</td>
     </tr>
     <tr>
@@ -785,10 +863,742 @@ Therefore, it sometimes cause long term process.</p>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
       <td>$O(n)$</td>
+      <td>$O(n)$</td>
     </tr>
   </tbody>
 </table>
 
+<h2 id="example-code">Example code</h2>
+
+<p>Here is the simple example of arrays.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49<br/>50<br/>51<br/>52<br/>53<br/>54<br/>55<br/>56<br/>57<br/>58<br/>59<br/>60<br/>61<br/>62<br/>63<br/>64<br/>65<br/>66<br/>67<br/>68<br/>69<br/>70<br/>71<br/>72<br/>73<br/>74<br/>75<br/>76<br/>77<br/>78<br/>79<br/>80<br/>81<br/>82<br/>83<br/>84<br/>85<br/>86<br/>87<br/>88<br/>89<br/>90<br/>91<br/>92<br/>93<br/>94<br/>95<br/>96<br/>97<br/>98<br/>99<br/>100<br/>101<br/>102<br/>103<br/>104<br/>105<br/>106<br/>107<br/>108<br/>109<br/>110<br/>111<br/>112<br/>113<br/>114<br/>115<br/>116<br/>117<br/>118<br/>119<br/>120<br/>121<br/>122<br/>123<br/>124<br/>125<br/>126<br/>127<br/>128<br/>129<br/>130<br/>131<br/>132<br/>133<br/>134<br/>135<br/>136<br/>137<br/>138<br/>139<br/>140<br/>141<br/>142<br/>143<br/>144<br/>145<br/>146<br/>147<br/>148<br/>149<br/>150<br/>151<br/>152<br/>153<br/>154<br/>155<br/>156<br/>157<br/>158<br/>159<br/>160<br/>161<br/>162<br/>163<br/>164<br/>165<br/>166<br/>167<br/>168<br/>169<br/>170<br/>171<br/>172<br/>173<br/>174<br/>175<br/>176<br/>177<br/>178<br/>179<br/>180<br/>181<br/>182<br/>183<br/>184<br/>185<br/>186<br/>187<br/>188<br/>189<br/>190<br/>191<br/>192<br/>193<br/>194<br/>195<br/>196<br/>197<br/>198<br/>199<br/>200<br/>201<br/>202<br/>203<br/>204<br/>205<br/>206<br/>207<br/>208<br/>209<br/>210<br/>211<br/>212<br/>213<br/>214<br/>215<br/>216<br/>217<br/>218<br/>219<br/>220<br/>221<br/>222<br/>223<br/>224<br/>225<br/>226<br/>227<br/>228<br/>229<br/>230<br/>231<br/>232<br/>233<br/>234<br/>235<br/>236<br/>237<br/>238<br/>239<br/>240<br/>241<br/>242<br/>243<br/>244<br/>245<br/>246<br/>247<br/>248<br/>249<br/>250<br/>251<br/>252<br/>253<br/>254<br/>255<br/>256<br/>257<br/>258<br/>259<br/>260<br/>261<br/>262<br/>263<br/>264<br/>265<br/>266<br/>267<br/>268<br/>269<br/>270<br/>271<br/>272<br/>273<br/>274<br/>275<br/>276<br/>277<br/>278<br/>279<br/>280<br/>281<br/>282<br/>283<br/>284<br/>285<br/>286<br/>287<br/>288<br/>289<br/>290<br/>291<br/>292<br/>293<br/>294<br/>295<br/>296<br/>297<br/>298<br/>299<br/>300<br/>301<br/>302<br/>303<br/>304<br/>305<br/>306<br/>307<br/>308<br/>309<br/>310<br/>311<br/>312<br/>313<br/>314<br/>315<br/>316<br/>317<br/>318<br/>319<br/>320<br/>321<br/>322<br/>323<br/>324<br/>325<br/>326<br/>327<br/>328<br/>329<br/>330<br/>331<br/>332<br/>333<br/>334<br/>335<br/>336<br/>337<br/>338<br/>339<br/>340<br/>341<br/>342<br/>343<br/>344<br/>345<br/>346<br/>347<br/>348<br/>349<br/>350<br/>351<br/>352<br/>353<br/>354<br/>355<br/>356<br/>357<br/>358<br/>359<br/>360<br/>361<br/>362<br/>363<br/>364<br/>365<br/>366<br/>367<br/>368<br/>369<br/>370<br/>371<br/>372<br/>373<br/>374<br/>375<br/>376<br/>377<br/>378<br/>379<br/>380<br/>381<br/>382<br/>383<br/>384<br/>385<br/>386<br/>387<br/>388<br/>389<br/>390<br/>391<br/>392<br/>393<br/>394<br/>395<br/>396<br/>397<br/>398<br/>399<br/>400<br/>401<br/>402<br/>403<br/>404<br/>405<br/>406<br/>407<br/>408<br/>409<br/>410<br/>411<br/>412<br/>413<br/>414<br/>415<br/>416<br/>417<br/>418<br/>419<br/>420<br/>421<br/>422<br/>423<br/>424<br/>425<br/>426<br/>427<br/>428<br/>429<br/>430<br/>431<br/>432<br/>433<br/>434<br/>435<br/>436<br/>437<br/>438<br/>439<br/>440<br/>441<br/>442<br/>443<br/>444<br/>445<br/>446<br/>447<br/>448<br/>449<br/>450<br/>451<br/>452<br/>453<br/>454<br/>455<br/>456<br/>457<br/>458<br/>459<br/>460<br/>461<br/>462<br/>463<br/>464<br/>465<br/>466<br/>467<br/>468<br/>469<br/>470<br/>471<br/>472<br/>473<br/>474<br/>475<br/>476<br/>477<br/>478<br/>479<br/>480<br/>481<br/>482<br/>483<br/>484<br/>485<br/>486<br/>487<br/>488<br/>489<br/>490<br/>491<br/>492<br/>493<br/>494<br/>495<br/>496<br/>497<br/>498<br/>499<br/>500<br/>501<br/>502<br/>503<br/>504<br/>505<br/>506<br/>507<br/>508<br/>509<br/>510<br/>511<br/>512<br/>513<br/>514<br/>515<br/>516<br/>517<br/>518<br/>519<br/>520<br/>521<br/>522<br/>523<br/>524<br/>525<br/>526<br/>527<br/>528<br/>529<br/>530<br/>531<br/>532<br/>533<br/>534<br/>535<br/>536<br/>537<br/>538<br/>539<br/>540<br/>541<br/>542<br/>543<br/>544<br/>545<br/>546<br/>547<br/>548<br/>549<br/>550<br/>551<br/>552<br/>553<br/>554<br/>555<br/>556<br/>557<br/>558<br/>559<br/>560<br/>561<br/>562<br/>563<br/>564<br/>565<br/>566<br/>567<br/>568<br/>569<br/>570<br/>571<br/>572<br/>573<br/>574<br/>575<br/>576<br/>577<br/>578<br/>579<br/>580<br/>581<br/>582<br/>583<br/>584<br/>585<br/>586<br/>587<br/>588<br/>589<br/>590<br/>591</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;chrono&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">linearArray</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">circularArray</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">using</span> <span class="n">array</span> <span class="o">=</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">linearArray</span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">_size</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_capacity</span><span class="p">;</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_data</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span> 
+    <span class="n">linearArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">);</span>
+
+    <span class="o">~</span><span class="n">linearArray</span><span class="p">();</span>
+
+    <span class="kt">bool</span> <span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">ret</span><span class="p">);</span>        
+
+    <span class="kt">int</span> <span class="n">capacity</span><span class="p">();</span>
+
+    <span class="kt">int</span> <span class="n">size</span><span class="p">();</span>
+
+    <span class="kt">bool</span> <span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">erase</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">circularArray</span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">_size</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_capacity</span><span class="p">;</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_data</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_from</span><span class="p">;</span>
+    <span class="kr">inline</span> <span class="kt">int</span> <span class="n">vmap</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">_push</span><span class="p">(</span><span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">left</span><span class="p">);</span>
+<span class="k">public</span><span class="o">:</span> 
+    <span class="n">circularArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">);</span>
+
+    <span class="o">~</span><span class="n">circularArray</span><span class="p">();</span>
+
+    <span class="kt">bool</span> <span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">ret</span><span class="p">);</span>
+    
+    <span class="kt">int</span> <span class="n">capacity</span><span class="p">();</span>
+
+    <span class="kt">int</span> <span class="n">size</span><span class="p">();</span>
+
+    <span class="kt">bool</span> <span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">erase</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">linearArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">){</span>
+    <span class="n">_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">capacity</span><span class="p">];</span>
+    <span class="n">_capacity</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">;</span>
+    <span class="n">_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::~</span><span class="n">linearArray</span><span class="p">(){</span>
+    <span class="k">delete</span><span class="p">[]</span> <span class="n">_data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">ret</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">((</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">_capacity</span><span class="p">)){</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span> 
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">capacity</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="n">_capacity</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">size</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="n">_size</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">&gt;=</span> <span class="n">_capacity</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">idx</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="o">++</span><span class="n">_size</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">&gt;=</span> <span class="n">_capacity</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">linearArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">erase</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">idx</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="o">--</span><span class="n">_size</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kr">inline</span> <span class="kt">int</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">vmap</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="n">_from</span> <span class="o">+</span> <span class="n">_capacity</span><span class="p">)</span> <span class="o">%</span> <span class="n">_capacity</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">_push</span><span class="p">(</span><span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">left</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">from</span> <span class="o">==</span> <span class="n">to</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="c1">//push array[from:to] to left if  is true, right if  is false
+</span>    <span class="c1">//It assumed to be circular
+</span>    <span class="kt">int</span> <span class="n">_from</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="n">from</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">_to</span> <span class="o">=</span> <span class="n">vmap</span><span class="p">(</span><span class="n">to</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">left</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">_from</span> <span class="o">&lt;</span> <span class="n">_to</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">_from</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">_data</span><span class="p">[</span><span class="n">_capacity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="k">else</span>
+                <span class="n">_data</span><span class="p">[</span><span class="n">_from</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">_from</span><span class="p">];</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_from</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_to</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//if(_from &gt; _to)
+</span>        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_from</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_capacity</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">_to</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">_capacity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_to</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">_from</span> <span class="o">&lt;</span> <span class="n">_to</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">_to</span> <span class="o">==</span> <span class="n">_capacity</span><span class="p">)</span>
+                <span class="n">_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">_capacity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="k">else</span>
+                <span class="n">_data</span><span class="p">[</span><span class="n">_to</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">_to</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_to</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">_from</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//if(_from &gt; _to)
+</span>        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_to</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">_to</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">_capacity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_capacity</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">_from</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">return</span><span class="p">;</span>
+
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">to</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">from</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">i</span><span class="p">)];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">circularArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">){</span>
+    <span class="n">_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">capacity</span><span class="p">];</span>
+    <span class="n">_capacity</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">;</span>
+    <span class="n">_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">_from</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::~</span><span class="n">circularArray</span><span class="p">(){</span>
+    <span class="k">delete</span><span class="p">[]</span> <span class="n">_data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">ret</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">((</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">_capacity</span><span class="p">)){</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)];</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span> 
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">capacity</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="n">_capacity</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">size</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="n">_size</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">&gt;=</span> <span class="n">_capacity</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">mid</span><span class="p">){</span>
+        <span class="n">_push</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+        <span class="n">_from</span> <span class="o">=</span> <span class="p">(</span><span class="n">_from</span> <span class="o">+</span> <span class="n">_capacity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">_capacity</span><span class="p">;</span>
+        <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+        <span class="o">++</span><span class="n">_size</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">_push</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">_size</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="o">++</span><span class="n">_size</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">,</span> <span class="n">T</span> <span class="n">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">&gt;=</span> <span class="n">_capacity</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">_data</span><span class="p">[</span><span class="n">vmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">circularArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">erase</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">_size</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">mid</span><span class="p">){</span>
+        <span class="n">_push</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="n">_from</span> <span class="o">=</span> <span class="p">(</span><span class="n">_from</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">_capacity</span><span class="p">;</span>
+        <span class="o">--</span><span class="n">_size</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">_push</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">_size</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="o">--</span><span class="n">_size</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Basic array   </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">lst1</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst1</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst1</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst1</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst1</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst1</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Circular array   </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    
+    <span class="p">{</span>    
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">lst2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst2</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst2</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst2</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst2</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst2</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">lst2</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+        <span class="p">}</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Performance    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Insert first    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Erase first    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Insert middle    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Erase  middle    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Insert random    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"====================</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"    Erase  random    </span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="n">linearArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="mi">10000</span> <span class="o">-</span> <span class="n">i</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Regular array  : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">circularArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="mi">10000</span> <span class="o">-</span> <span class="n">i</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Circular array : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">array</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="p">(</span><span class="mi">10000</span> <span class="o">-</span> <span class="n">i</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" std::vector : "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="p">).</span><span class="n">count</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h2 id="performance">Performance</h2>
+
+<p>Performance depends on the experiment environment.
+I tested in my raspberry PI and results looks like as belows.</p>
+
+<h3 id="without-compiler-optimization-option">Without compiler optimization option</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time consumption</th>
+      <th>Basic array</th>
+      <th>Circular array</th>
+      <th>std::vector</th>
+      <th>Basic/Circular</th>
+      <th>std/circular</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Insert first</td>
+      <td>5.43E+08</td>
+      <td>730299</td>
+      <td>80218289</td>
+      <td>743.5641</td>
+      <td>109.8431</td>
+    </tr>
+    <tr>
+      <td>Erase first</td>
+      <td>5.07E+08</td>
+      <td>249735</td>
+      <td>77053027</td>
+      <td>2030.535</td>
+      <td>308.5392</td>
+    </tr>
+    <tr>
+      <td>Insert middle</td>
+      <td>2.72E+08</td>
+      <td>2.63E+08</td>
+      <td>64868023</td>
+      <td>1.03441</td>
+      <td>0.246638</td>
+    </tr>
+    <tr>
+      <td>Erase middle</td>
+      <td>3.69E+08</td>
+      <td>93046427</td>
+      <td>60962537</td>
+      <td>3.963127</td>
+      <td>0.655184</td>
+    </tr>
+    <tr>
+      <td>Insert random</td>
+      <td>2.69E+08</td>
+      <td>1.32E+08</td>
+      <td>67554999</td>
+      <td>2.028211</td>
+      <td>0.510193</td>
+    </tr>
+    <tr>
+      <td>Erase random</td>
+      <td>2.79E+08</td>
+      <td>1.34E+08</td>
+      <td>61448193</td>
+      <td>2.081033</td>
+      <td>0.457566</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="with-compiler-optimization-option">With compiler optimization option</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time consumption</th>
+      <th>Basic array</th>
+      <th>Circular array</th>
+      <th>std::vector</th>
+      <th>Basic/Circular</th>
+      <th>std/circular</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Insert first</td>
+      <td>69745452</td>
+      <td>243124</td>
+      <td>72715663</td>
+      <td>286.8719</td>
+      <td>299.0888</td>
+    </tr>
+    <tr>
+      <td>Erase first</td>
+      <td>19728613</td>
+      <td>352</td>
+      <td>70335698</td>
+      <td>56047.2</td>
+      <td>199817.3</td>
+    </tr>
+    <tr>
+      <td>Insert middle</td>
+      <td>28044463</td>
+      <td>33800611</td>
+      <td>58150249</td>
+      <td>0.829703</td>
+      <td>1.72039</td>
+    </tr>
+    <tr>
+      <td>Erase middle</td>
+      <td>13088558</td>
+      <td>7911878</td>
+      <td>58191397</td>
+      <td>1.654292</td>
+      <td>7.354941</td>
+    </tr>
+    <tr>
+      <td>Insert random</td>
+      <td>29029662</td>
+      <td>11617777</td>
+      <td>59405666</td>
+      <td>2.498728</td>
+      <td>5.113342</td>
+    </tr>
+    <tr>
+      <td>Erase random</td>
+      <td>9968517</td>
+      <td>11553333</td>
+      <td>57890608</td>
+      <td>0.862826</td>
+      <td>5.010728</td>
+    </tr>
+  </tbody>
+</table>
 
 
       
@@ -943,7 +1753,7 @@ Therefore, it sometimes cause long term process.</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1010,7 +1820,7 @@ Therefore, it sometimes cause long term process.</p>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#array"> <span class="nav-number">1</span> <span class="nav-text">Array</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#list-1"> <span class="nav-number">2</span> <span class="nav-text">List 1</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#list-2"> <span class="nav-number">3</span> <span class="nav-text">List 2</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#vector"> <span class="nav-number">4</span> <span class="nav-text">Vector</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#comparison"> <span class="nav-number">5</span> <span class="nav-text">Comparison</span> </a> </li>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#array-and-list"> <span class="nav-number">1</span> <span class="nav-text">Array and list</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#array"> <span class="nav-number">1.1</span> <span class="nav-text">Array</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#list-1"> <span class="nav-number">1.2</span> <span class="nav-text">List 1</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#list-2"> <span class="nav-number">1.3</span> <span class="nav-text">List 2</span> </a> </li> </ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#other-lists"> <span class="nav-number">2</span> <span class="nav-text">Other lists</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#double-sizing-array"> <span class="nav-number">2.1</span> <span class="nav-text">Double sizing array</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#circular-array"> <span class="nav-number">2.2</span> <span class="nav-text">Circular array</span> </a> </li> </ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#comparison"> <span class="nav-number">3</span> <span class="nav-text">Comparison</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#complexity"> <span class="nav-number">3.1</span> <span class="nav-text">Complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#example-code"> <span class="nav-number">3.2</span> <span class="nav-text">Example code</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#performance"> <span class="nav-number">3.3</span> <span class="nav-text">Performance</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#without-compiler-optimization-option"> <span class="nav-number">3.3.1</span> <span class="nav-text">Without compiler optimization option</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#with-compiler-optimization-option"> <span class="nav-number">3.3.2</span> <span class="nav-text">With compiler optimization option</span> </a> </li> </ol> </li> </ol> </li>
     </ol>
   </div>
             
