@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta name="description" content="Definition Master’s theorem is a theorem that uses for algorithm analysis. This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
-<meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
+<meta property="og:title" content="Master's Theorem">
+<meta property="og:url" content="https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta property="og:description" content="Definition Master’s theorem is a theorem that uses for algorithm analysis. This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
-<meta name="twitter:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta name="twitter:title" content="Master's Theorem">
+<meta name="twitter:description" content="Definition Master’s theorem is a theorem that uses for algorithm analysis. This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(6) - Minimum-degree spanning tree | REAL</title>
+  <title>Master's Theorem | REAL</title>
   
 
 
@@ -352,7 +352,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(6) - Minimum-degree spanning tree
+            Master's Theorem
           
         </h1>
         
@@ -388,8 +388,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-24T00:00:00+09:00">
-                2021-03-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00+09:00">
+                2023-06-18
               </time>
             
 
@@ -415,18 +415,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/category/#/algorithm" itemprop="url" rel="index">
                     <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/approximation" itemprop="url" rel="index">
-                    <span itemprop="name">approximation</span>
                   </a>
                 </span>
 
@@ -482,71 +470,35 @@
 
 
 
-  <p>Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph.
-Formally, problem is like below.
-Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$.
-Notice that this is a NP-hard problem.</p>
+  <h1 id="definition">Definition</h1>
+<p>Master’s theorem is a theorem that uses for algorithm analysis.
+This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.</p>
 
-<p>There is an approximation algorithm for this problem.
-Approximation algorithm will work with a local search.
-Let $l = \left[ log_2 n \right]$, $d_T(u)$ denotes the degree of $u$ in $T$ and $\Delta(T) = max_{u \in V} d_T(u)$</p>
-<div class="algTab">
-    Make an arbitrary spanning tree of $G$.<br />
-    $\operatorname{while} \exists (v,w) \not\in T.E$ but $(v,w) \in G.E$
-        such that there is a $u$ such that $u$ is a vertex in a cycle $C$ of $T.E$ + $(v,w)$,
-            $d_T(u) \ge \Delta(T) - l$ and $max(d_T(v), d_T(w)) \le d_T(u) - 2$<div class="algTab">
-        $T \leftarrow T + (v,w) - $ an edge which is incident to $u$ in a cycle $C$.
-    </div>
-    return $T$
-</div>
+<h1 id="formal-theorem">Formal theorem</h1>
+<p>Let $a \ge 1$ and $b \ge 1$ be constants, $f(n)$ be a non negative function and $T(n)$ be a function defined on the nonnegative intergers by the recurrence $T(n) = aT(n/b) + f(n)$ along with sufficient base cases, where we interpret $n/b$ to mean either $ceil(n/b)$ or $floor(n/b)$.</p>
 
-<p>From the algorithm above, it guarantess that a local search will imporve the solution and it will terminates.
-Notice that “$max(d_T(v), d_T(W)) \le d_T(u) - 2$” gurantees that “a local search will imporve the solution” and
-“$\operatorname{while} \exists (v,w) \not\in T.E$ but $(v,w) \in G.E$
-        such that there is a $u$ such that $u$ is a vertex in a cycle $C$ of $T.E$ + $(v,w)$,
-            $d_T(u) \ge \Delta(T) - l$ and $max(d_T(v), d_T(w)) \le d_T(u) - 2$” gurantees that “it will terminates”.</p>
-
-<p>Now, let’s prove that $\Delta(T) \le 2\operatorname{OPT} + l$ which $\operatorname{OPT}$ is an optimal solution.</p>
-
-<p>Let’s assume that we removes $k$ edges from any spanning tree $T$ and re-connecting them again to be a connected graph.
-Notice that it will become $k + 1$ distinct components after removing $k$ edges because it is a tree.
-Now, let’s define the set of one end point of inter-connecting edges between distinct components to $S$.
-Then, we have $\operatorname{OPT} \ge \frac{k}{|S|}$.
-The reason is like follow.
-It should be connected after re-connecting them again and this requires $k$ edges at least.
-However, edges can be choosesn in the $S$ only.
-Which means each components need to have at least $\frac{k}{|S|}$ edges.</p>
-
-<p>Now, let’s think about an output of algorithm $T$ from above.
-Let $S_i$ denote the set of nodes of $deg(v) \ge i$ in $T$.
-Then there is some $i^{\star}$ $\ge$ $\Delta(T) - l + 1$ such that $|S_{i^{\star}-1}|$ $\le$ $2|S_i^{\star}|$.
-The reason is like follow.
-If we don’t have any $i^{\star}$ such fits above then $|S_{\Delta(T)} - l|$ $&gt;$ $2|S_{\Delta(T)} - l + 1|$ $&gt;$ $2^2|S_{\Delta(T)} - l + 2|$ $&gt;$ $\cdots$ $&gt;$ $2^l|S_{\Delta(T)}|$.
-However it can’t be ture because $|S_{\Delta(T)} - l|$ $&gt;$ $2^l|S_{\Delta(T)}|$ $\ge$ $2^l$ $\ge$ $n$ from the fact “$|S_{\Delta(T)}| \ge 1$”.</p>
-
-<p>Now, let’s think about $i \ge \Delta(T) - l + 1$, then we have at leat $(i - 1)|S_i| + 1$ distinct edges of $T$ which are incident to $v \in S_i$.
-The reason is like follow.
-Since, they have at least $i$ edges for each node.
-They will have at least $i|S_i|$ edges.
-However, they may have some edges in share which is at most $|S_i| - 1$ because it is a tree.
-Therefore, they need to have at least $i|S_i| - (|S_i| - 1)$ $=$ $(i - 1)|S_i| + 1$ edges.</p>
-
-<p>Now, let’s think about the situation that we remove all the edges which are incident to $v \in S_i$ from $T$ then all vetices which one end point of vertex’s edge is connecting different components are in $S_{i-1}$.
-If any edges that connecting different components doesn’t incident to $S_{i-1}$ then it should have less than $i - 2$ degree which means that it should be removed from the algorithm.
-Notice that we can make a cycle with this edge and one of edges in $S_i$ because each componenets are connected in itself.</p>
-
-<p>From the facts above, $\operatorname{OPT}$ $\ge$ $\frac{k}{\mid S\mid}$ $\ge$ $\frac{(i^{\star}-1)\mid S_{i^{\star}} + 1\mid}{\mid S_{i^{\star}-1} \mid}$ $\ge$ $\frac{(i^{\star}-1)\mid S_{i^{\star}} + 1 \mid}{2\mid S_{i^{\star}}\mid}$ $\ge$ $\frac{i^{\star}-1}{2}$ $\ge$ $\frac{\Delta(T) - l}{2}$.</p>
-
-<p>Let’s prove that this algorithm runs in polynomial time.
-Let’s define a potential function $\Phi$ of tree $T$ such that $\Phi(T)$ $=$ $\sum\limits_{v \in V} 3^{d_T(v)}$.
-Notice that $n$ $&lt;$ $\Phi(T)$ $\le$ $n3^{\Delta(T)}\le n3^n$.
-After doing a local search once, degree of $v$ and $w$ will increase and $u$ will decrease.
-Let’s assume that $u$ has a degree $i \ge \Delta(T) -l$.
-As a result, potential of $T$ will increase no more than $2(3^{i-1} - 3^{i-2})$ $=$ $4 \times 3^{i-2}$ and will decrease $3^i - 3^{i - 1} = 2 \times 3^{i - 1}$.
-Which means potential of $T$ will decrease at least $\frac{2}{9}3^i$ $\ge$ $\frac{2}{9}3^{\Delta(T) - l}$ $=$ $\frac{2}{9 \times 3^{l}}3^{\Delta(T)}$ $\ge$ $\frac{2}{27 \times 3^{log_2 n}}3^{\Delta(T)}$ $\ge$ $\frac{2}{27 \times 4^{log_2 n}}3^{\Delta(T)}$ $=$ $\frac{2}{27n^2}3^{\Delta(T)}$ $\ge$ $\frac{2}{27n^3}\Phi(T)$.
-Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each iteration.</p>
-
-<p>From the fact above, potential function will be $n$ after at most $\frac{27}{2}n^4 ln 3$ iteration because $(1-\frac{2}{27n^3})^{\frac{27}{2}n^4 ln 3} \times (n3^n)$ $\le$ $e^{-n ln 3} \times (n3^n)$ $=$ $n$.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Form</th>
+      <th>Complexity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$f(n)=O(n^{(log_b a - \epsilon)})$ for some constant $\epsilon&gt;0$</td>
+      <td>$T(n)=\Theta(n^{log_b a})$</td>
+    </tr>
+    <tr>
+      <td>$f(n)=\Theta(n^{log_b a} log^k n)$ for some constant $k\ge0$</td>
+      <td>$T(n)=\Theta(n^{log_b a} log^{k+1}n)$</td>
+    </tr>
+    <tr>
+      <td>$f(n)=\Omega(n^{(log_b a + \epsilon)})$ for some constant $\epsilon&gt;0$ and $\exists c &lt; 1, N &gt; 0$ such that $af(n/b) \le cf(n)$ for all $n \ge N$</td>
+      <td>$T(n)=\Theta(f(n))$</td>
+    </tr>
+  </tbody>
+</table>
 
 
       
@@ -554,10 +506,6 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
     
     <div class="references">
       
-        
-          <p class="reference"><strong>Reference :</strong>David P. Williamson and David B. Shmoys, The Design of Approximation Algorithms</p>
-        
-          <p class="reference"><strong>Reference :</strong>CSI6107 lecture at Yonsei University</p>
         
       
     </div>
@@ -586,7 +534,7 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" title="Approximation algorithm(6) - Minimum-degree spanning tree">https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/</a>
+      <a href="https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/" title="Master's Theorem">https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -612,8 +560,8 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/lp/2021/03/24/Linear-programming/" rel="next" title="Linear programming">
-                <i class="fa fa-chevron-left"></i> Linear programming
+              <a href="/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="next" title="Maximum sum of a contiguous subsequence">
+                <i class="fa fa-chevron-left"></i> Maximum sum of a contiguous subsequence
               </a>
             
           </div>
@@ -622,8 +570,8 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" rel="prev" title="Parallel Page rank/BFS">
-                Parallel Page rank/BFS <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/2023/06/18/Fibonacci-sequence/" rel="prev" title="Fibonacci sequence">
+                Fibonacci sequence <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -680,8 +628,17 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.gif"
@@ -743,6 +700,34 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#definition"> <span class="nav-number">1</span> <span class="nav-text">Definition</span> </a> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#formal-theorem"> <span class="nav-number">2</span> <span class="nav-text">Formal theorem</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

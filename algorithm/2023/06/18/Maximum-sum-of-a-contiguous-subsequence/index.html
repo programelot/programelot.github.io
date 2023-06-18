@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta name="description" content="Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
-<meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
+<meta property="og:title" content="Maximum sum of a contiguous subsequence">
+<meta property="og:url" content="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta property="og:description" content="Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
-<meta name="twitter:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
+<meta name="twitter:title" content="Maximum sum of a contiguous subsequence">
+<meta name="twitter:description" content="Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(6) - Minimum-degree spanning tree | REAL</title>
+  <title>Maximum sum of a contiguous subsequence | REAL</title>
   
 
 
@@ -352,7 +352,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(6) - Minimum-degree spanning tree
+            Maximum sum of a contiguous subsequence
           
         </h1>
         
@@ -388,8 +388,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-24T00:00:00+09:00">
-                2021-03-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00+09:00">
+                2023-06-18
               </time>
             
 
@@ -415,18 +415,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/category/#/algorithm" itemprop="url" rel="index">
                     <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/approximation" itemprop="url" rel="index">
-                    <span itemprop="name">approximation</span>
                   </a>
                 </span>
 
@@ -482,71 +470,144 @@
 
 
 
-  <p>Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph.
-Formally, problem is like below.
-Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$.
-Notice that this is a NP-hard problem.</p>
+  <h1 id="definition">Definition</h1>
+<p>The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</p>
 
-<p>There is an approximation algorithm for this problem.
-Approximation algorithm will work with a local search.
-Let $l = \left[ log_2 n \right]$, $d_T(u)$ denotes the degree of $u$ in $T$ and $\Delta(T) = max_{u \in V} d_T(u)$</p>
-<div class="algTab">
-    Make an arbitrary spanning tree of $G$.<br />
-    $\operatorname{while} \exists (v,w) \not\in T.E$ but $(v,w) \in G.E$
-        such that there is a $u$ such that $u$ is a vertex in a cycle $C$ of $T.E$ + $(v,w)$,
-            $d_T(u) \ge \Delta(T) - l$ and $max(d_T(v), d_T(w)) \le d_T(u) - 2$<div class="algTab">
-        $T \leftarrow T + (v,w) - $ an edge which is incident to $u$ in a cycle $C$.
-    </div>
-    return $T$
-</div>
+<h1 id="solution">Solution</h1>
+<h2 id="naive-solution">Naive solution</h2>
+<p>In the naive method, every subarray can be computed as it is.
+Computing sum of subarray takes at most <script type="math/tex">O(n)</script> and there could be <script type="math/tex">O(n^2)</script> possible subarrays.
+As a result, it takes at most $O(n^3)$.</p>
 
-<p>From the algorithm above, it guarantess that a local search will imporve the solution and it will terminates.
-Notice that “$max(d_T(v), d_T(W)) \le d_T(u) - 2$” gurantees that “a local search will imporve the solution” and
-“$\operatorname{while} \exists (v,w) \not\in T.E$ but $(v,w) \in G.E$
-        such that there is a $u$ such that $u$ is a vertex in a cycle $C$ of $T.E$ + $(v,w)$,
-            $d_T(u) \ge \Delta(T) - l$ and $max(d_T(v), d_T(w)) \le d_T(u) - 2$” gurantees that “it will terminates”.</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<p>Now, let’s prove that $\Delta(T) \le 2\operatorname{OPT} + l$ which $\operatorname{OPT}$ is an optimal solution.</p>
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">){</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
+                <span class="n">max</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>Let’s assume that we removes $k$ edges from any spanning tree $T$ and re-connecting them again to be a connected graph.
-Notice that it will become $k + 1$ distinct components after removing $k$ edges because it is a tree.
-Now, let’s define the set of one end point of inter-connecting edges between distinct components to $S$.
-Then, we have $\operatorname{OPT} \ge \frac{k}{|S|}$.
-The reason is like follow.
-It should be connected after re-connecting them again and this requires $k$ edges at least.
-However, edges can be choosesn in the $S$ only.
-Which means each components need to have at least $\frac{k}{|S|}$ edges.</p>
 
-<p>Now, let’s think about an output of algorithm $T$ from above.
-Let $S_i$ denote the set of nodes of $deg(v) \ge i$ in $T$.
-Then there is some $i^{\star}$ $\ge$ $\Delta(T) - l + 1$ such that $|S_{i^{\star}-1}|$ $\le$ $2|S_i^{\star}|$.
-The reason is like follow.
-If we don’t have any $i^{\star}$ such fits above then $|S_{\Delta(T)} - l|$ $&gt;$ $2|S_{\Delta(T)} - l + 1|$ $&gt;$ $2^2|S_{\Delta(T)} - l + 2|$ $&gt;$ $\cdots$ $&gt;$ $2^l|S_{\Delta(T)}|$.
-However it can’t be ture because $|S_{\Delta(T)} - l|$ $&gt;$ $2^l|S_{\Delta(T)}|$ $\ge$ $2^l$ $\ge$ $n$ from the fact “$|S_{\Delta(T)}| \ge 1$”.</p>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
 
-<p>Now, let’s think about $i \ge \Delta(T) - l + 1$, then we have at leat $(i - 1)|S_i| + 1$ distinct edges of $T$ which are incident to $v \in S_i$.
-The reason is like follow.
-Since, they have at least $i$ edges for each node.
-They will have at least $i|S_i|$ edges.
-However, they may have some edges in share which is at most $|S_i| - 1$ because it is a tree.
-Therefore, they need to have at least $i|S_i| - (|S_i| - 1)$ $=$ $(i - 1)|S_i| + 1$ edges.</p>
+<h2 id="divide-and-conquer">Divide and conquer</h2>
+<p>Divide and conquer can be applied to this problem either.
+Notice that to compute optimal solution, the solution that contain middle point should be reconsidered.
+Therefore, it needs $O(n)$ time for it at each level.
+As a result, it takses at most $O(n \log n)$.
+Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.</p>
 
-<p>Now, let’s think about the situation that we remove all the edges which are incident to $v \in S_i$ from $T$ then all vetices which one end point of vertex’s edge is connecting different components are in $S_{i-1}$.
-If any edges that connecting different components doesn’t incident to $S_{i-1}$ then it should have less than $i - 2$ degree which means that it should be removed from the algorithm.
-Notice that we can make a cycle with this edge and one of edges in $S_i$ because each componenets are connected in itself.</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<p>From the facts above, $\operatorname{OPT}$ $\ge$ $\frac{k}{\mid S\mid}$ $\ge$ $\frac{(i^{\star}-1)\mid S_{i^{\star}} + 1\mid}{\mid S_{i^{\star}-1} \mid}$ $\ge$ $\frac{(i^{\star}-1)\mid S_{i^{\star}} + 1 \mid}{2\mid S_{i^{\star}}\mid}$ $\ge$ $\frac{i^{\star}-1}{2}$ $\ge$ $\frac{\Delta(T) - l}{2}$.</p>
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">t</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">leftMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">rightMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">f</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">leftMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
+            <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">rightMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
+            <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">leftMax</span><span class="p">,</span> <span class="n">rightMax</span><span class="p">),</span> <span class="n">leftMiddleMax</span> <span class="o">+</span> <span class="n">rightMiddleMax</span><span class="p">);</span>
+<span class="p">}</span>
 
-<p>Let’s prove that this algorithm runs in polynomial time.
-Let’s define a potential function $\Phi$ of tree $T$ such that $\Phi(T)$ $=$ $\sum\limits_{v \in V} 3^{d_T(v)}$.
-Notice that $n$ $&lt;$ $\Phi(T)$ $\le$ $n3^{\Delta(T)}\le n3^n$.
-After doing a local search once, degree of $v$ and $w$ will increase and $u$ will decrease.
-Let’s assume that $u$ has a degree $i \ge \Delta(T) -l$.
-As a result, potential of $T$ will increase no more than $2(3^{i-1} - 3^{i-2})$ $=$ $4 \times 3^{i-2}$ and will decrease $3^i - 3^{i - 1} = 2 \times 3^{i - 1}$.
-Which means potential of $T$ will decrease at least $\frac{2}{9}3^i$ $\ge$ $\frac{2}{9}3^{\Delta(T) - l}$ $=$ $\frac{2}{9 \times 3^{l}}3^{\Delta(T)}$ $\ge$ $\frac{2}{27 \times 3^{log_2 n}}3^{\Delta(T)}$ $\ge$ $\frac{2}{27 \times 4^{log_2 n}}3^{\Delta(T)}$ $=$ $\frac{2}{27n^2}3^{\Delta(T)}$ $\ge$ $\frac{2}{27n^3}\Phi(T)$.
-Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each iteration.</p>
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
 
-<p>From the fact above, potential function will be $n$ after at most $\frac{27}{2}n^4 ln 3$ iteration because $(1-\frac{2}{27n^3})^{\frac{27}{2}n^4 ln 3} \times (n3^n)$ $\le$ $e^{-n ln 3} \times (n3^n)$ $=$ $n$.</p>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h2 id="dynamic-programming">Dynamic programming</h2>
+<h3 id="prefix-sum">Prefix sum</h3>
+<p>Instead of compute the actual problem, this problem can be converted into the smaller problem.
+Let’s assume that answer is $\sum\limits_{k=x}^{y} a_k$.
+Then, answer is $\sum\limits_{k=x}^{y} a_k = \sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x} a_k$.
+Which means it’s enough to solve maximum difference in the Prefix sum array.
+Which is much easier to be solved.
+Notice that to save space, there is no physical Prefix sum array in the code below.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">prefix_i</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">prefix_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">prefix_i</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">min</span> <span class="o">&gt;</span> <span class="n">prefix_i</span><span class="p">){</span>
+            <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">sol</span> <span class="o">&lt;</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">){</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
+
+<h3 id="max-ends-at">Max Ends At</h3>
+<p>Instead of using Prefix sum, algorithm can compute the maximum value that will ends at $i$th elements.
+In this case, it is obvious that it just decide whether it will expend to the next element or not because advantage of choosing subarray from ahead should be positive.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">maxEnds_i</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">maxEnds_i</span> <span class="o">+</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">maxEnds_i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></tbody></table></div></div>
 
 
       
@@ -554,10 +615,6 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
     
     <div class="references">
       
-        
-          <p class="reference"><strong>Reference :</strong>David P. Williamson and David B. Shmoys, The Design of Approximation Algorithms</p>
-        
-          <p class="reference"><strong>Reference :</strong>CSI6107 lecture at Yonsei University</p>
         
       
     </div>
@@ -586,7 +643,7 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" title="Approximation algorithm(6) - Minimum-degree spanning tree">https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/</a>
+      <a href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" title="Maximum sum of a contiguous subsequence">https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -612,18 +669,14 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/lp/2021/03/24/Linear-programming/" rel="next" title="Linear programming">
-                <i class="fa fa-chevron-left"></i> Linear programming
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" rel="prev" title="Parallel Page rank/BFS">
-                Parallel Page rank/BFS <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/2023/06/18/Master's-Theorem/" rel="prev" title="Master's Theorem">
+                Master's Theorem <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -680,8 +733,17 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.gif"
@@ -743,6 +805,34 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#definition"> <span class="nav-number">1</span> <span class="nav-text">Definition</span> </a> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#solution"> <span class="nav-number">2</span> <span class="nav-text">Solution</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#naive-solution"> <span class="nav-number">2.1</span> <span class="nav-text">Naive solution</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#divide-and-conquer"> <span class="nav-number">2.2</span> <span class="nav-text">Divide and conquer</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#dynamic-programming"> <span class="nav-number">2.3</span> <span class="nav-text">Dynamic programming</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#prefix-sum"> <span class="nav-number">2.3.1</span> <span class="nav-text">Prefix sum</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#max-ends-at"> <span class="nav-number">2.3.2</span> <span class="nav-text">Max Ends At</span> </a> </li> </ol> </li> </ol> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

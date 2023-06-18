@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2023-06-18T14:37:29+09:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Fibonacci sequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci sequence" /><published>2023-06-18T00:00:00+09:00</published><updated>2023-06-18T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/">&lt;h1 id=&quot;definition&quot;&gt;Definition&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2023-06-18T15:20:20+09:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Fibonacci sequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci sequence" /><published>2023-06-18T00:00:00+09:00</published><updated>2023-06-18T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/">&lt;h1 id=&quot;definition&quot;&gt;Definition&lt;/h1&gt;
 &lt;p&gt;Fibonacci sequence is a sequence that generats numbers from previous two numbers.
 In other world, Fibonacci sequence $a$ is a a sequence defined by follows.&lt;/p&gt;
 
@@ -148,9 +148,8 @@ In other world to compute $a^x$, it computes $a^1 + a^2 + a^4 + a^8 + \cdots$ de
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;performance-comparison&quot;&gt;Performance comparison&lt;/h1&gt;
-&lt;p&gt;The mathematical approach is the fastest, the bottom-up approach is the second, top-down is the third, recursion is the last.&lt;/p&gt;
-
-&lt;p&gt;Detailed test results are below.&lt;/p&gt;
+&lt;p&gt;The mathematical approach is the fastest, the bottom-up approach is the second, top-down is the third, recursion is the last.
+Detailed test results are below.&lt;/p&gt;
 
 &lt;table&gt;
 &lt;tbody&gt;
@@ -249,7 +248,172 @@ In other world to compute $a^x$, it computes $a^1 + a^2 + a^4 + a^8 + \cdots$ de
 &lt;tr&gt;&lt;td&gt;91&lt;/td&gt;&lt;td&gt;30796&lt;/td&gt;&lt;td&gt;106685&lt;/td&gt;&lt;td&gt;1380392&lt;/td&gt;&lt;td&gt;...&lt;/td&gt;&lt;td&gt;10.3351&lt;/td&gt;&lt;td&gt;11.5776&lt;/td&gt;&lt;td&gt;14.1379&lt;/td&gt;&lt;td&gt;...&lt;/td&gt;&lt;td&gt;Mathematical&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;92&lt;/td&gt;&lt;td&gt;28222&lt;/td&gt;&lt;td&gt;107592&lt;/td&gt;&lt;td&gt;1310485&lt;/td&gt;&lt;td&gt;...&lt;/td&gt;&lt;td&gt;10.2479&lt;/td&gt;&lt;td&gt;11.5861&lt;/td&gt;&lt;td&gt;14.0859&lt;/td&gt;&lt;td&gt;...&lt;/td&gt;&lt;td&gt;Mathematical&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>Programelot</name></author><summary type="html">Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</summary></entry><entry><title type="html">Rayleigh’s theorem(Beatty’s theorem)</title><link href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh's theorem(Beatty's theorem)" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/">&lt;h2 id=&quot;theorem&quot;&gt;Theorem&lt;/h2&gt;
+&lt;/table&gt;</content><author><name>Programelot</name></author><summary type="html">Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</summary></entry><entry><title type="html">Master’s Theorem</title><link href="https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/" rel="alternate" type="text/html" title="Master's Theorem" /><published>2023-06-18T00:00:00+09:00</published><updated>2023-06-18T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Master's%20Theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Master's-Theorem/">&lt;h1 id=&quot;definition&quot;&gt;Definition&lt;/h1&gt;
+&lt;p&gt;Master’s theorem is a theorem that uses for algorithm analysis.
+This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.&lt;/p&gt;
+
+&lt;h1 id=&quot;formal-theorem&quot;&gt;Formal theorem&lt;/h1&gt;
+&lt;p&gt;Let $a \ge 1$ and $b \ge 1$ be constants, $f(n)$ be a non negative function and $T(n)$ be a function defined on the nonnegative intergers by the recurrence $T(n) = aT(n/b) + f(n)$ along with sufficient base cases, where we interpret $n/b$ to mean either $ceil(n/b)$ or $floor(n/b)$.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Form&lt;/th&gt;
+      &lt;th&gt;Complexity&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$f(n)=O(n^{(log_b a - \epsilon)})$ for some constant $\epsilon&amp;gt;0$&lt;/td&gt;
+      &lt;td&gt;$T(n)=\Theta(n^{log_b a})$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$f(n)=\Theta(n^{log_b a} log^k n)$ for some constant $k\ge0$&lt;/td&gt;
+      &lt;td&gt;$T(n)=\Theta(n^{log_b a} log^{k+1}n)$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$f(n)=\Omega(n^{(log_b a + \epsilon)})$ for some constant $\epsilon&amp;gt;0$ and $\exists c &amp;lt; 1, N &amp;gt; 0$ such that $af(n/b) \le cf(n)$ for all $n \ge N$&lt;/td&gt;
+      &lt;td&gt;$T(n)=\Theta(f(n))$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Programelot</name></author><summary type="html">Definition Master’s theorem is a theorem that uses for algorithm analysis. This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.</summary></entry><entry><title type="html">Maximum sum of a contiguous subsequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="alternate" type="text/html" title="Maximum sum of a contiguous subsequence" /><published>2023-06-18T00:00:00+09:00</published><updated>2023-06-18T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Maximum%20sum%20of%20a%20contiguous%20subsequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/">&lt;h1 id=&quot;definition&quot;&gt;Definition&lt;/h1&gt;
+&lt;p&gt;The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.&lt;/p&gt;
+
+&lt;h1 id=&quot;solution&quot;&gt;Solution&lt;/h1&gt;
+&lt;h2 id=&quot;naive-solution&quot;&gt;Naive solution&lt;/h2&gt;
+&lt;p&gt;In the naive method, every subarray can be computed as it is.
+Computing sum of subarray takes at most &lt;script type=&quot;math/tex&quot;&gt;O(n)&lt;/script&gt; and there could be &lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt; possible subarrays.
+As a result, it takes at most $O(n^3)$.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;divide-and-conquer&quot;&gt;Divide and conquer&lt;/h2&gt;
+&lt;p&gt;Divide and conquer can be applied to this problem either.
+Notice that to compute optimal solution, the solution that contain middle point should be reconsidered.
+Therefore, it needs $O(n)$ time for it at each level.
+As a result, it takses at most $O(n \log n)$.
+Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;leftMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rightMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;rightMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftMiddleMax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightMiddleMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;dynamic-programming&quot;&gt;Dynamic programming&lt;/h2&gt;
+&lt;h3 id=&quot;prefix-sum&quot;&gt;Prefix sum&lt;/h3&gt;
+&lt;p&gt;Instead of compute the actual problem, this problem can be converted into the smaller problem.
+Let’s assume that answer is $\sum\limits_{k=x}^{y} a_k$.
+Then, answer is $\sum\limits_{k=x}^{y} a_k = \sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x} a_k$.
+Which means it’s enough to solve maximum difference in the Prefix sum array.
+Which is much easier to be solved.
+Notice that to save space, there is no physical Prefix sum array in the code below.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prefix_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;max-ends-at&quot;&gt;Max Ends At&lt;/h3&gt;
+&lt;p&gt;Instead of using Prefix sum, algorithm can compute the maximum value that will ends at $i$th elements.
+In this case, it is obvious that it just decide whether it will expend to the next element or not because advantage of choosing subarray from ahead should be positive.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxEnds_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxEnds_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;maxEnds_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxEnds_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxEnds_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mscs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Programelot</name></author><summary type="html">Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</summary></entry><entry><title type="html">Rayleigh’s theorem(Beatty’s theorem)</title><link href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh's theorem(Beatty's theorem)" /><published>2023-01-30T00:00:00+09:00</published><updated>2023-01-30T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/">&lt;h2 id=&quot;theorem&quot;&gt;Theorem&lt;/h2&gt;
 &lt;p&gt;Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &amp;gt; 1$.
 For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
 Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
@@ -2163,319 +2327,4 @@ $(\frac{7}{8})k^{\star}$.&lt;/p&gt;
 
 &lt;p&gt;Now, we show that such $\alpha$-approximation for MAX 2SAT can be used to give $(\frac{7}{8} + \epsilon)$-approximation algorithm for MAX-E3SAT problem for some constant $\epsilon &amp;gt; 0$ and $\alpha &amp;gt; \frac{433}{440}$.
 Which is a contradiction.
-Therefore, there is no such an approximation algorithm.&lt;/p&gt;</content><author><name>Programelot</name></author><summary type="html">MAX-E3SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clause which contains exactly three literals.</summary></entry><entry><title type="html">Approximation algorithm(13) - Buy-at-bulk network design</title><link href="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" rel="alternate" type="text/html" title="Approximation algorithm(13) - Buy-at-bulk network design" /><published>2021-05-26T00:00:00+09:00</published><updated>2021-05-26T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation%20algorithm(13)</id><content type="html" xml:base="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/">&lt;p&gt;In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs.
-Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$.
-This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$.
-One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;$f(0)$ $=$ $0$&lt;/li&gt;
-  &lt;li&gt;$f$ is non-decreasing.&lt;/li&gt;
-  &lt;li&gt;$f$ is subadditive which means $f(x + y)$ $\le$ $f(x)$ $+$ $f(y)$ for all $x, y$ $\in$ $\mathbb{N}$&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Now problem asks to find $k$ paths from $s_i$ to $t_i$ with capacity $c:E \rightarrow \mathbb{N}$
-to minimize $\sum\limits_{e \in E}f(c_e)l_e$
-such that for any edge we can send $d_i$ units of commodity from $s_i$ to $t_i$ at the same time without violating $c$.&lt;/p&gt;
-
-&lt;p&gt;Notice that this algorithm can be solved in polynomial time if $G$ is a tree.
-The reason is like follow.
-If you think about any possible path on a tree, there is a unique path from $u$ to $v$ where $u,v$ $\in$ $V$.
-Therefore, solution is just find a unique path and set the capacity and that’s all.
-Notice that this means it’s not just in polynomial time but it gives a trivial unique solution.&lt;/p&gt;
-
-&lt;p&gt;Now, let’s consider the following algorithm.&lt;/p&gt;
-
-&lt;div class=&quot;algTab&quot;&gt;
-    $\operatorname{for}$ each pair of vertices $u,v$ in $V$&lt;div class=&quot;algTab&quot;&gt;
-        $P_{uv}$ be the shortest path from $u$ to $v$ in $E$
-    &lt;/div&gt;
-    $d_{uv}$ be the length of shortest path from $u$ to $v$.&lt;br /&gt;
-    Find a tree metric $(V',T)$ that approximates $d$&lt;br /&gt;
-    $\operatorname{for}$ each pair of vertices $u,v$ in $V$&lt;div class=&quot;algTab&quot;&gt;
-        $P'_{uv}$ be the shortest path from $u$ to $v$ in $T$
-    &lt;/div&gt;
-    $c_e \leftarrow 0$ for all $e$ $\in$ $E$&lt;br /&gt;
-    $\operatorname{for}$ each pair $s_i, t_i$&lt;div class=&quot;algTab&quot;&gt;
-        $\operatorname{for}$ each edge $(u,v)$ in $P'_{s_i t_i}$&lt;div class=&quot;algTab&quot;&gt;
-            $\operatorname{for}$ each edge $e$ in $P_{u v}$&lt;div class=&quot;algTab&quot;&gt;
-                Increase $c_e$ $\leftarrow$ $c_e$ $+$ $d_i$ 
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    return $c$
-&lt;/div&gt;
-
-&lt;p&gt;First of all, we need to show that there is a tree metric.
-Therefore we need to show that $d$ is a pseudometric.
-Notice that most of properties are trivial but only triangular inequality need to be more detial.
-Now, let’s think about any path between $(x,y)$ and $(y,z)$.
-Then, $d_{xy}$ $+$ $d_{yz}$ $=$
-$\sum\limits_{e \in P_{xy}}l_e$ $+$ $\sum\limits_{e \in P_{yz}}l_e$ $=$
-$\sum\limits_{e \in P_{xy} \cup P_{yz}}l_e$ $\ge$ 
-$\sum\limits_{e \in P_{xz}}l_e$ $=$ 
-$d_{xz}$.
-Notice that concatinating path from $x$ to $y$ and path from $y$ to $z$ is a path from $x$ to $z$.
-Which means at least longer or equal than “shortest” path from $x$ to $z$ in other world $P_{xy} \cup P_{yz}$ $\supseteq$ $P_{xz}$.&lt;/p&gt;
-
-&lt;p&gt;Now, problem is that we need to go through some $x$ that was not in $V$ but is in $V’$.
-Therefore, we need to remove every such vertices.&lt;/p&gt;
-
-&lt;p&gt;Here is another algorithm that gives a tree metric from a tree metric.&lt;/p&gt;
-&lt;div class=&quot;algTab&quot;&gt;
-    $\operatorname{fit}$(V, V', T)&lt;div class=&quot;algTab&quot;&gt;
-        $T' \leftarrow T$&lt;br /&gt;
-        $\operatorname{while}$ $\exists v \in V$ and $v$'s parent $w$ such that $w$ was not a left node of $T$&lt;div class=&quot;algTab&quot;&gt;
-            Merge $v$ and $w$ to $v$
-        &lt;/div&gt;
-        Multiply the length of every edge of $T'$ by 4&lt;br /&gt;
-        return $(V, T')$
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;If given a tree metric $T$ can be like follow.&lt;br /&gt;&lt;/p&gt;
-&lt;canvas id=&quot;canvas1&quot; width=&quot;200&quot; height=&quot;200&quot; style=&quot;border:1px solid #d3d3d3;&quot;&gt;
-    Your browser does not support the HTML canvas tag.&lt;/canvas&gt;
-&lt;p&gt;&lt;br /&gt;
-Then, other tree metric $T’$ can be like follow.&lt;br /&gt;&lt;/p&gt;
-&lt;canvas id=&quot;canvas2&quot; width=&quot;200&quot; height=&quot;200&quot; style=&quot;border:1px solid #d3d3d3;&quot;&gt;
-    Your browser does not support the HTML canvas tag.&lt;/canvas&gt;
-&lt;p&gt;&lt;br /&gt;
-&lt;script language=&quot;javascript&quot;&gt;
-    c = document.getElementById(&quot;canvas1&quot;);
-    ctx = c.getContext(&quot;2d&quot;);
-    ctx.fillStyle = &quot;white&quot;;
-    ctx.fillRect(0, 0, c.width, c.height);
-  	ctx.beginPath();
-    ctx.fillStyle = &quot;black&quot;;
-  	ctx.moveTo(175, 170);
-  	ctx.lineTo(125, 110);
-  	ctx.lineTo(100, 40);
-  	ctx.lineTo(75, 110);
-  	ctx.lineTo(25, 170);
-  	ctx.moveTo(75, 110);
-  	ctx.lineTo(75, 170);
-  	ctx.moveTo(75, 110);
-  	ctx.lineTo(125, 170);
-    ctx.stroke();
-    ctx.fillStyle = &quot;white&quot;;
-    ctx.beginPath();
-    ctx.arc(25, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(75, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(125, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(175, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(75, 110, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(125, 110, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(100, 40, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.textAlign = &quot;center&quot;;
-    ctx.fillStyle = &quot;red&quot;;
-    ctx.font = &quot;15px Arial&quot;;
-    ctx.fillText('4', 80, 80);
-    ctx.fillText('4', 120, 80);
-    ctx.fillText('2', 160, 140);
-    ctx.fillText('2', 110, 140);
-    ctx.fillText('2', 65, 145);
-    ctx.fillText('2', 45, 140);
-    ctx.fillText('{A,B,C,D}', 100, 40);
-    ctx.fillText('{A,B,C}', 75, 110);
-    ctx.fillText('{D}', 125, 110);
-    ctx.fillText('{A}', 25, 170);
-    ctx.fillText('{B}', 75, 170);
-    ctx.fillText('{C}', 125, 170);
-    ctx.fillText('{D}', 175, 170);
-    c = document.getElementById(&quot;canvas2&quot;);
-    ctx = c.getContext(&quot;2d&quot;);
-    ctx.fillStyle = &quot;white&quot;;
-    ctx.fillRect(0, 0, c.width, c.height);
-  	ctx.beginPath();
-    ctx.fillStyle = &quot;black&quot;;
-  	ctx.moveTo(100, 40);
-  	ctx.lineTo(75, 110);
-  	ctx.lineTo(25, 170);
-  	ctx.moveTo(75, 110);
-  	ctx.lineTo(125, 170);
-    ctx.stroke();
-    ctx.fillStyle = &quot;white&quot;;
-    ctx.beginPath();
-    ctx.arc(25, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(125, 170, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(75, 110, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(100, 40, 20, 0, 2*Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.textAlign = &quot;center&quot;;
-    ctx.fillStyle = &quot;red&quot;;
-    ctx.font = &quot;15px Arial&quot;;
-    ctx.fillText('16', 70, 80);
-    ctx.fillText('8', 110, 140);
-    ctx.fillText('8', 45, 140);
-    ctx.fillText('{A}', 25, 170);
-    ctx.fillText('{B}', 75, 110);
-    ctx.fillText('{C}', 125, 170);
-    ctx.fillText('{D}', 100, 40);
-&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Then, this algorithm returns a tree metric on $V$ such that $T_{uv}$ $\le$ 
-$T’_{uv}$ $\le$ 
-$4T_{uv}$ for all $u,v$ $\in$ $V$.
-Notice that $T$ above is a result of original tree metric approximation algorithm.
-Proof is like follow.&lt;/p&gt;
-
-&lt;p&gt;First, $T’_{uv}$ $\le$ $T_{uv}$ untill we multiply 4 because we only merge the vertices.
-Therefore, $T’_{uv}$ $\le$ $4T_{uv}$ is true at the end of the algorithm.&lt;/p&gt;
-
-&lt;p&gt;Now, let’s recap some facts from the tree metric $T$.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;$\mathcal{L}_n$ is the level of the $n$. Notice that level of root node is $\log_2 \Delta$ and level of leaf node is $0$.&lt;/li&gt;
-  &lt;li&gt;$\mathcal{A}_{uv}$ is the least common ancestor of $u$ and $v$.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Then, $T_{uv}$ $=$ 
-$2\sum_{k=1}^{\mathcal{L}_{\mathcal{A}_{uv}}}2^k$ $=$ 
-$2^{\mathcal{L}_{\mathcal{A}_{uv}} + 2} - 4$ is true.&lt;/p&gt;
-
-&lt;p&gt;Now, let’s think about the smallest possible length for $T’_{uv}$.
-Then, $u$ and $v$ will go only to the parent and the possible most go is right below $\mathcal{A}_{uv}$.
-One of $u$ and $v$ may be can be merged to $\mathcal{A}_{uv}$ but not other one of $u$ and $v$ can be $\mathcal{A}_{uv}$.
-As a result, one of edge from $\mathcal{A}_{uv}$ to child will still left to exist.
-Therefore, $T’_{uv}$ $\ge$
-$4 \cdot 2^{\mathcal{L}_{\mathcal{A}_{uv}}}$ $=$ 
-$2^{\mathcal{L}_{\mathcal{A}_{uv}} + 2}$ $\ge$
-$2^{\mathcal{L}_{\mathcal{A}_{uv}} + 2} - 4$ $=$
-$T_{uv}$
-Therefore, claim holds.&lt;/p&gt;
-
-&lt;p&gt;Notice that this means $d_{uv}$ $\le$ $T_{uv}$ $\le$ $T’_{uv}$ and $E[T’_{uv}]$ $\le$ $E[4T_{uv}]$ $=$ $4E[T_{uv}]$ $\le$ $O(\ln \left\vert V \right\vert)d_{uv}$.
-Therefore, $d_{uv}$ $\le$ $T’_{uv}$ and $E[T’_{uv}]$ $\le$ $O(\ln \left\vert V \right\vert)d_{uv}$.&lt;/p&gt;
-
-&lt;p&gt;Now, think about the algorithm follow.&lt;/p&gt;
-
-&lt;div class=&quot;algTab&quot;&gt;
-    $\operatorname{for}$ each pair of vertices $u,v$ in $V$&lt;div class=&quot;algTab&quot;&gt;
-        $P_{uv}$ be the shortest path from $u$ to $v$ in $E$
-    &lt;/div&gt;
-    $d_{uv}$ be the length of shortest path from $u$ to $v$.&lt;br /&gt;
-    Find a tree metric $(V',T)$ that approximates $d$&lt;br /&gt;
-    $(V,T')$ $\leftarrow$ $\operatorname{fit}(V, V', T)$&lt;br /&gt;
-    $\operatorname{for}$ each pair of vertices $u,v$ in $V$&lt;div class=&quot;algTab&quot;&gt;
-        $P'_{uv}$ be the shortest path from $u$ to $v$ in $T'$
-    &lt;/div&gt;
-    $c_e \leftarrow 0$ for all $e$ $\in$ $E$&lt;br /&gt;
-    $\operatorname{for}$ each pair $s_i, t_i$&lt;div class=&quot;algTab&quot;&gt;
-        $\operatorname{for}$ each edge $(u,v)$ in $P'_{s_i t_i}$&lt;div class=&quot;algTab&quot;&gt;
-            $\operatorname{for}$ each edge $e$ in $P_{u v}$&lt;div class=&quot;algTab&quot;&gt;
-                Increase $c_e$ $\leftarrow$ $c_e$ $+$ $d_i$ 
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    return $c$
-&lt;/div&gt;
-
-&lt;p&gt;Then this algorithm is a $O(\log n)$-approximation algorithm.
-Proof is like follow.&lt;/p&gt;
-
-&lt;p&gt;Let’s denote some terminologies.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;$P^{\star}_{u v}$ is the shortest path between $u$ and $v$ from the optimal solution.&lt;/li&gt;
-  &lt;li&gt;$c^{\star}_e$ for $e$ $\in$ $E$ is the capacity of $e$ from the optimal solution.&lt;/li&gt;
-  &lt;li&gt;$\operatorname{OPT}$ is the optimal solution; $\operatorname{OPT}$ $=$ 
-$\sum\limits_{e \in E}f(\sum\limits_{i = 1 : e \in P^{\star}_{s_i t_i}}^{k} d_i)l_e$ $=$ 
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1 : (u,v) \in P^{\star}_{s_i t_i}}^{k} d_i)d_{uv}$ $=$
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) d_{uv}$.&lt;/li&gt;
-  &lt;li&gt;$P’_{u v}$ is the unique shortest path between $u$ and $b$ from the $T’$.&lt;/li&gt;
-  &lt;li&gt;$P^{S}_{u v}$ is a path that changes each edge $(x,y)$ in $P^{\star}_{u v}$ to $P’_{x, y}$.&lt;/li&gt;
-  &lt;li&gt;$\operatorname{OPT’}$ is the solution from $P^{S}_{s_i t_i}$; $\operatorname{OPT’}$ $=$
-$\sum\limits_{e \in T’}f(\sum\limits_{i = 1 : e \in P^{S}_{s_i t_i}}^{k} d_i)l_e$ $=$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}$.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Notice that $P^{S}_{s_i t_i}$ may not be simple.
-Then, $E[\operatorname{OPT’}]$ $=$
-$E[\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}]$ $\le$
-$E[\sum\limits_{(x,y) \in T’} \sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k}d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}]$ $=$
-$E[\sum\limits_{(u,v) \in E} \sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k}d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}]$ $=$
-$E[\sum\limits_{(u,v) \in E} \sum\limits_{(x,y) \in P’_{u v}} f(\sum\limits_{i = 1}^{k}d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i}))T’_{xy}]$ $=$
-$\sum\limits_{(u,v) \in E} E[ \sum\limits_{(x,y) \in P’_{u v}} f(\sum\limits_{i = 1}^{k}d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i}))T’_{xy}]$ $=$
-$\sum\limits_{(u,v) \in E} E[ f(\sum\limits_{i = 1}^{k}d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) \sum\limits_{(x,y) \in P’_{u v}}T’_{xy}]$ $=$
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) E[ \sum\limits_{(x,y) \in P’_{u v}}T’_{xy}]$ $=$
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) E[T’_{uv}]$ $\le$
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) O(\ln \left\vert V \right\vert)d_{uv}$ $=$
-$O(\ln \left\vert V \right\vert) \sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i})) d_{uv}$ $=$
-$O(\ln \left\vert V \right\vert) \operatorname{OPT}$.&lt;/p&gt;
-
-&lt;p&gt;Notice that following facts.
-First inequality holds because $f$ is subadditive.
-Third equality holds because $P’_{uv}$ $\in$ $T’$.
-Sixth equality holds because $f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in P^{\star}_{s_i t_i}))$ is independent from $u,v$.
-Seventh equality holds because $\sum\limits_{(x,y) \in P’_{u v}}T’_{xy}$ is the distance from $u$ to $v$.
-Therefore claim holds.&lt;/p&gt;
-
-&lt;p&gt;Simiallary, following is true.&lt;/p&gt;
-
-&lt;p&gt;Now let’s denote $\operatorname{ALG}$ as the value of the output solution.
-Then, $\operatorname{ALG}$ $=$
-$\sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(x,y) \in T’} \mathbb{1}((x,y) \in P’_{s_i t_i} \text{ and } (u,v) \in P_{xy}))d_{uv}$ $\le$
-$\sum\limits_{(u,v) \in E} \sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i} \text{ and } (u,v) \in P_{xy}))d_{uv}$ $=$
-$\sum\limits_{(x,y) \in T’} \sum\limits_{(u,v) \in E} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i} \text{ and } (u,v) \in P_{xy}))d_{uv}$ $=$
-$\sum\limits_{(x,y) \in T’} \sum\limits_{(u,v) \in P_{xy}} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i}))d_{uv}$ $=$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i})) \sum\limits_{(u,v) \in P_{xy}}d_{uv}$ $=$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i})) d_{xy}$ $\le$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i})) T’_{xy}$ $\le$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}$ $=$
-$\operatorname{OPT’}$.&lt;/p&gt;
-
-&lt;p&gt;All eqaulities and inequalities except last ineuqality can be proven in the same way with above.
-Therefore, we need to show only last inequality holds.&lt;/p&gt;
-
-&lt;p&gt;Proof for “$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i})) T’_{xy}$ $\le$
-$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}$” is like follow.&lt;/p&gt;
-
-&lt;p&gt;Let’s think about “$\mathbb{1}((x,y) \in P’_{s_i t_i})$” and 
-“$\sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v})$” for some $x, y, i$.&lt;/p&gt;
-
-&lt;p&gt;Then first one is $1$ if $(x,y) \in P’_{s_i t_i}$ and $0$ otherwise.
-Therefore, there is nothing to show if $(x,y) \not\in P’_{s_i t_i}$.
-Now, let’s assume that $(x,y) \in P’_{s_i t_i}$.
-Then, $P^{\star}_{s_i t_i}$ should include at least $(s_i,t_i)$ or longer path from $s_i$ to $t_i$ for any $i$.
-Which means the cardinarity of $\{(u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}\}$ should be bigger or equal than $1$.
-Therefore, claim holds.
-Notice that concatinating $(u,v) \in P^{\star}_{s_i t_i}$ in $T’$ will be a valid path from $u$ to $v$.
-Therefore, $(x,y)$ should be in some where in there.&lt;/p&gt;
-
-&lt;p&gt;As a result, $\operatorname{ALG}$ $\le$ $\operatorname{OPT’}$ $\le$ $O(\ln \left\vert V \right\vert) \operatorname{OPT}$.
-Therefore claim holds.&lt;/p&gt;
-
-&lt;p&gt;Notice that algorithm runs in a polynomial time.&lt;/p&gt;</content><author><name>Programelot</name></author><summary type="html">In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.</summary></entry><entry><title type="html">Useful mathematical tools</title><link href="https://programelot.github.io/algorithm/approximation/2021/05/19/Useful-mathematical-tools/" rel="alternate" type="text/html" title="Useful mathematical tools" /><published>2021-05-19T00:00:00+09:00</published><updated>2021-05-19T00:00:00+09:00</updated><id>https://programelot.github.io/algorithm/approximation/2021/05/19/Useful%20mathematical%20tools</id><content type="html" xml:base="https://programelot.github.io/algorithm/approximation/2021/05/19/Useful-mathematical-tools/">&lt;ol&gt;
-  &lt;li&gt;$\ln n$ $\le$ $\sum\limits_{k = 1}^{n} \frac{1}{k}$ $\le$ $\ln n$ $+$ $1$ for $n$ $\in$ $\mathbb{Z}^{+}$&lt;/li&gt;
-  &lt;li&gt;$\sum\limits_{k = 1}^{n}ar^{k-1}$ $=$ $a\frac{r^{n} - 1}{r - 1}$ if $r$ $\neq$ $1$, $n$ $\in$ $\mathbb{Z}$&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Programelot</name></author><summary type="html">$\ln n$ $\le$ $\sum\limits_{k = 1}^{n} \frac{1}{k}$ $\le$ $\ln n$ $+$ $1$ for $n$ $\in$ $\mathbb{Z}^{+}$ $\sum\limits_{k = 1}^{n}ar^{k-1}$ $=$ $a\frac{r^{n} - 1}{r - 1}$ if $r$ $\neq$ $1$, $n$ $\in$ $\mathbb{Z}$</summary></entry></feed>
+Therefore, there is no such an approximation algorithm.&lt;/p&gt;</content><author><name>Programelot</name></author><summary type="html">MAX-E3SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clause which contains exactly three literals.</summary></entry></feed>
