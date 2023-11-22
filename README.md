@@ -1,2 +1,3 @@
 # programelot.github.io
-Programelot's personal blog
+Programelot's blog.
+https://programelot.github.io
