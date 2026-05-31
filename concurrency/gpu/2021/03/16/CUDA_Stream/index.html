@@ -388,7 +388,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-16T00:00:00+09:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-16T00:00:00-05:00">
                 2021-03-16
               </time>
             
@@ -528,55 +528,55 @@ Notice that kernel call passes three parameters.</p>
 <p>With the function above, it needs some kernel function to be used.
 Example code is like below.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49<br/>50<br/>51<br/>52<br/>53<br/>54<br/>55</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
-#include &lt;time.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49<br/>50<br/>51<br/>52<br/>53<br/>54<br/>55</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
 </span>
-<span class="n">__global__</span> <span class="kt">void</span> <span class="n">_vectorAdd</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">data1</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">data2</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">result</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">_vectorAdd</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">data1</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">data2</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">result</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
     <span class="kt">int</span> <span class="n">globalIdx</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">globalIdx</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span><span class="c1">//Thread index overflow
-</span>        <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">globalIdx</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span><span class="c1">//Thread index overflow</span>
+        <span class="k">return</span><span class="p">;</span>
 
-    <span class="c1">//Vector addition
-</span>    <span class="n">result</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">]</span> <span class="o">+</span> <span class="n">data2</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">];</span>
+    <span class="c1">//Vector addition</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">]</span> <span class="o">+</span> <span class="n">data2</span><span class="p">[</span><span class="n">globalIdx</span><span class="p">];</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">vectorAdd</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">data2</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">result</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-    <span class="c1">//Memory spaces in the GPU device
-</span>    <span class="kt">int</span> <span class="o">*</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="o">*</span><span class="n">dataAtGpu2</span><span class="p">,</span> <span class="o">*</span><span class="n">resultAtGpu</span><span class="p">;</span>
+    <span class="c1">//Memory spaces in the GPU device</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="o">*</span><span class="n">dataAtGpu2</span><span class="p">,</span> <span class="o">*</span><span class="n">resultAtGpu</span><span class="p">;</span>
     <span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">);</span>
     <span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dataAtGpu2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">);</span>
     <span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">resultAtGpu</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">);</span>
 
-    <span class="c1">//Memory transfer from CPU to GPU
-</span>    <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+    <span class="c1">//Memory transfer from CPU to GPU</span>
+    <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
     <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">dataAtGpu2</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
 
-    <span class="c1">//Kernel call
-</span>    <span class="n">_vectorAdd</span><span class="o">&lt;&lt;&lt;</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1023</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span> <span class="n">n</span><span class="o">%</span><span class="mi">1024</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="n">dataAtGpu2</span><span class="p">,</span> <span class="n">resultAtGpu</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="c1">//Kernel call</span>
+    <span class="n">_vectorAdd</span><span class="o">&lt;&lt;&lt;</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1023</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span> <span class="n">n</span><span class="o">%</span><span class="mi">1024</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">dataAtGpu1</span><span class="p">,</span> <span class="n">dataAtGpu2</span><span class="p">,</span> <span class="n">resultAtGpu</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
 
-    <span class="c1">//Result transfer from GPU to CPU
-</span>    <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">resultAtGpu</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">cudaMemcpyDeviceToHost</span><span class="p">);</span>
+    <span class="c1">//Result transfer from GPU to CPU</span>
+    <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">resultAtGpu</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">cudaMemcpyDeviceToHost</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
     <span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
     <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">numVector</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">data1</span><span class="p">[</span><span class="n">numVector</span><span class="p">],</span> <span class="n">data2</span><span class="p">[</span><span class="n">numVector</span><span class="p">];</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numVector</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="c1">//Initialize vector1, vector2 to some random values
-</span>        <span class="n">data1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numVector</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="c1">//Initialize vector1, vector2 to some random values</span>
+        <span class="n">data1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">;</span>
         <span class="n">data2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">resCPU</span><span class="p">[</span><span class="n">numVector</span><span class="p">];</span><span class="c1">//Result of the vector addition on CPU
-</span>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numVector</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">resCPU</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">data2</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="c1">//CPU type of vector addition
-</span>    <span class="p">}</span>
-    
-    <span class="kt">int</span> <span class="n">resGPU</span><span class="p">[</span><span class="n">numVector</span><span class="p">];</span><span class="c1">//Result of the vector addition on CGPU
-</span>    <span class="n">vectorAdd</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">resGPU</span><span class="p">,</span> <span class="n">numVector</span><span class="p">);</span><span class="c1">//GPU(CUDA) type of vector addition
-</span>
+    <span class="kt">int</span> <span class="n">resCPU</span><span class="p">[</span><span class="n">numVector</span><span class="p">];</span><span class="c1">//Result of the vector addition on CPU</span>
     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numVector</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">resGPU</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">resCPU</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span><span class="c1">//Error handler
-</span>            <span class="n">printf</span><span class="p">(</span><span class="s">"Wrong result</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">resCPU</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">data2</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="c1">//CPU type of vector addition</span>
+    <span class="p">}</span>
+    
+    <span class="kt">int</span> <span class="n">resGPU</span><span class="p">[</span><span class="n">numVector</span><span class="p">];</span><span class="c1">//Result of the vector addition on CGPU</span>
+    <span class="n">vectorAdd</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">resGPU</span><span class="p">,</span> <span class="n">numVector</span><span class="p">);</span><span class="c1">//GPU(CUDA) type of vector addition</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numVector</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">resGPU</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">resCPU</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span><span class="c1">//Error handler</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"Wrong result</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
             <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -839,7 +839,7 @@ Example code is like below.</p>
   
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

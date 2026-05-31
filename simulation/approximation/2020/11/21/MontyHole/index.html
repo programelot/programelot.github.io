@@ -388,7 +388,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+09:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00-06:00">
                 2020-11-21
               </time>
             
@@ -504,10 +504,10 @@ As a result, if a person changes a door it will be $\frac{1}{n} \times 0 + \frac
 
 <p>It can be simulated by code below.</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;time.h&gt;
-#include &lt;iostream&gt;
+<div class="language-c highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span>
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
     <span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
 
     <span class="kt">int</span> <span class="n">numDoor</span><span class="p">;</span>
@@ -608,19 +608,19 @@ Collect the data and guess the actual probability.</p>
 
 <p>Here is one more example to compute the area of circle.</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
-#include &lt;time.h&gt;
+<div class="language-c highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18</pre></td><td class="code"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
 </span>
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
     <span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
     <span class="n">constexpr</span> <span class="kt">int</span> <span class="n">numIteration</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
     <span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
 
     <span class="kt">int</span> <span class="n">inSide</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numIteration</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// -1 ~ 1
-</span>        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// -1 ~ 1
-</span>        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// -1 ~ 1</span>
+        <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// -1 ~ 1</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">){</span>
             <span class="o">++</span><span class="n">inSide</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -847,7 +847,7 @@ Which means it works pretty well.</p>
   
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

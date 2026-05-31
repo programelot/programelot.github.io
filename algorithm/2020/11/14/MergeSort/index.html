@@ -388,7 +388,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-14T00:00:00+09:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-14T00:00:00-06:00">
                 2020-11-14
               </time>
             
@@ -481,16 +481,16 @@ However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
     <span class="n">_mergeSort</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">fromIdx</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
     <span class="n">_mergeSort</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">toIdx</span><span class="p">)</span>
 
-    <span class="c">#Where extra space is needed.</span>
-    <span class="n">auxList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">toIdx</span> <span class="o">-</span> <span class="n">fromIdx</span><span class="p">)</span>
+    <span class="c1">#Where extra space is needed.
+</span>    <span class="n">auxList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">toIdx</span> <span class="o">-</span> <span class="n">fromIdx</span><span class="p">)</span>
     <span class="n">idx1</span> <span class="o">=</span> <span class="n">fromIdx</span>
     <span class="n">idx2</span> <span class="o">=</span> <span class="n">mid</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">toIdx</span> <span class="o">-</span> <span class="n">fromIdx</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">idx2</span> <span class="o">&gt;=</span> <span class="n">toIdx</span> <span class="ow">or</span> <span class="n">idx1</span> <span class="o">&lt;</span> <span class="n">mid</span> <span class="ow">and</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]:</span><span class="c">#choose idx1</span>
-            <span class="n">auxList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">idx2</span> <span class="o">&gt;=</span> <span class="n">toIdx</span> <span class="ow">or</span> <span class="n">idx1</span> <span class="o">&lt;</span> <span class="n">mid</span> <span class="ow">and</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]:</span><span class="c1">#choose idx1
+</span>            <span class="n">auxList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span>
             <span class="n">idx1</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">idx1</span> <span class="o">&gt;=</span> <span class="n">mid</span> <span class="ow">or</span> <span class="n">idx2</span> <span class="o">&lt;</span> <span class="n">toIdx</span> <span class="ow">and</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]:</span><span class="c">#choose idx2</span>
-            <span class="n">auxList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">idx1</span> <span class="o">&gt;=</span> <span class="n">mid</span> <span class="ow">or</span> <span class="n">idx2</span> <span class="o">&lt;</span> <span class="n">toIdx</span> <span class="ow">and</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx1</span><span class="p">]:</span><span class="c1">#choose idx2
+</span>            <span class="n">auxList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span>
             <span class="n">idx2</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s">'Invalid situation'</span><span class="p">)</span>
@@ -501,20 +501,20 @@ However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
 <span class="k">def</span> <span class="nf">mergeSort</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_mergeSort</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
 
-<span class="c">#Test code</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<span class="c1">#Test code
+</span><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
         <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-            <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
-        <span class="n">targetIdx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">lst</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+        <span class="n">targetIdx</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">lst2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
 
-        <span class="c">#Will crush the qsort</span>
-        <span class="c">#lst2[0] = 0</span>
-
+        <span class="c1">#Will crush the qsort
+</span>        <span class="c1">#lst2[0] = 0
+</span>
         <span class="n">mergeSort</span><span class="p">(</span><span class="n">lst2</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">!=</span> <span class="n">lst2</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s">'wrong result for qsort'</span><span class="p">)</span>
@@ -733,7 +733,7 @@ However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
   
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
