@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-02T08:56:35-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication</title><link href="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/" rel="alternate" type="text/html" title="Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication" /><published>2026-06-02T00:00:00-05:00</published><updated>2026-06-02T00:00:00-05:00</updated><id>https://programelot.github.io/2026/06/02/Big%20integer%20based%20on%20NNT</id><content type="html" xml:base="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/"><![CDATA[<p>When implementing arbitrary-precision integers in C++, the key challenge is <strong>how fast you can perform multiplication</strong>. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-02T09:41:38-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Arbitrary-Precision Integer: NTT + Karatsuba Hybrid Multiplication</title><link href="https://programelot.github.io/algorithm/math/2026/06/02/Big-integer-based-on-NNT/" rel="alternate" type="text/html" title="Arbitrary-Precision Integer: NTT + Karatsuba Hybrid Multiplication" /><published>2026-06-02T00:00:00-05:00</published><updated>2026-06-02T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/math/2026/06/02/Big%20integer%20based%20on%20NNT</id><content type="html" xml:base="https://programelot.github.io/algorithm/math/2026/06/02/Big-integer-based-on-NNT/"><![CDATA[<p>When implementing arbitrary-precision integers in C++, the key challenge is <strong>how fast you can perform multiplication</strong>. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.</p>
 
 <hr />
 
@@ -200,11 +200,11 @@ else:
 
 <hr />
 
-<p>Together, these three components — the $10^7$-based limb representation, the NTT + Garner CRT convolution engine, and Knuth’s Algorithm D — form a self-contained arbitrary-precision integer library that handles numbers of any size with predictable, well-understood complexity at each layer.</p>]]></content><author><name>Programelot</name></author><category term="C++" /><category term="BigInteger" /><category term="NTT" /><category term="Karatsuba" /><category term="ArbitraryPrecision" /><summary type="html"><![CDATA[When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.]]></summary></entry><entry><title type="html">Master’s Theorem</title><link href="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/" rel="alternate" type="text/html" title="Master’s Theorem" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Masters%20Theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/"><![CDATA[<h1 id="definition">Definition</h1>
-<p>Master’s theorem is a theorem that uses for algorithm analysis.</p>
+<p>Together, these three components — the $10^7$-based limb representation, the NTT + Garner CRT convolution engine, and Knuth’s Algorithm D — form a self-contained arbitrary-precision integer library that handles numbers of any size with predictable, well-understood complexity at each layer.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="math" /><category term="C++" /><category term="BigInteger" /><category term="NTT" /><category term="Karatsuba" /><category term="ArbitraryPrecision" /><summary type="html"><![CDATA[When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.]]></summary></entry><entry><title type="html">Master’s Theorem</title><link href="https://programelot.github.io/algorithm/math/2023/06/18/Masters-Theorem/" rel="alternate" type="text/html" title="Master’s Theorem" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/math/2023/06/18/Masters%20Theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/math/2023/06/18/Masters-Theorem/"><![CDATA[<h1 id="definition">Definition</h1>
+<p>The Master’s Theorem is a tool for analyzing the time complexity of divide-and-conquer algorithms.</p>
 
-<h1 id="formal-theorem">Formal theorem</h1>
-<p>Let $a \ge 1$ and $b \ge 1$ be constants, $f(n)$ be a non negative function and $T(n)$ be a function defined on the nonnegative intergers by the recurrence $T(n) = aT(n/b) + f(n)$ along with sufficient base cases, where we interpret $n/b$ to mean either $ceil(n/b)$ or $floor(n/b)$.</p>
+<h1 id="formal-theorem">Formal Theorem</h1>
+<p>Let $a \ge 1$ and $b &gt; 1$ be constants, $f(n)$ be a non-negative function, and $T(n)$ be defined on the non-negative integers by the recurrence $T(n) = aT(n/b) + f(n)$ with sufficient base cases, where $n/b$ means either $\lceil n/b \rceil$ or $\lfloor n/b \rfloor$.</p>
 
 <table>
   <thead>
@@ -229,15 +229,14 @@ else:
   </tbody>
 </table>
 
-<h1 id="meaning">Meaning</h1>
-<p>This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Master’s theorem is a theorem that uses for algorithm analysis.]]></summary></entry><entry><title type="html">Maximum sum of a contiguous subsequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="alternate" type="text/html" title="Maximum sum of a contiguous subsequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Maximum%20sum%20of%20a%20contiguous%20subsequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/"><![CDATA[<h1 id="definition">Definition</h1>
-<p>The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</p>
+<h1 id="usage">Usage</h1>
+<p>This theorem gives the asymptotic complexity of divide-and-conquer algorithms directly from their recurrence relation.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="math" /><summary type="html"><![CDATA[Definition The Master’s Theorem is a tool for analyzing the time complexity of divide-and-conquer algorithms.]]></summary></entry><entry><title type="html">Maximum Sum of a Contiguous Subarray</title><link href="https://programelot.github.io/algorithm/dynamic%20programming/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="alternate" type="text/html" title="Maximum Sum of a Contiguous Subarray" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/dynamic%20programming/2023/06/18/Maximum%20sum%20of%20a%20contiguous%20subsequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/dynamic%20programming/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/"><![CDATA[<h1 id="definition">Definition</h1>
+<p>The maximum subarray problem asks for the contiguous subarray of an array whose sum is the largest.</p>
 
-<h1 id="solution">Solution</h1>
-<h2 id="naive-solution">Naive solution</h2>
-<p>In the naive method, every subarray can be computed as it is.
-Computing sum of subarray takes at most \(O(n)\) and there could be \(O(n^2)\) possible subarrays.
-As a result, it takes at most $O(n^3)$.</p>
+<h1 id="solutions">Solutions</h1>
+<h2 id="naive-solution">Naive Solution</h2>
+<p>The brute-force approach tries all $O(n^2)$ subarrays, each taking up to $O(n)$ to compute.
+This gives a total time of $O(n^3)$.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -264,12 +263,10 @@ As a result, it takes at most $O(n^3)$.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="divide-and-conquer">Divide and conquer</h2>
-<p>Divide and conquer can be applied to this problem either.
-Notice that to compute optimal solution, the solution that contain middle point should be reconsidered.
-Therefore, it needs $O(n)$ time for it at each level.
-As a result, it takses at most $O(n \log n)$.
-Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.</p>
+<h2 id="divide-and-conquer">Divide and Conquer</h2>
+<p>Divide and conquer also applies here.
+At each recursive level, we must consider subarrays crossing the midpoint, which takes $O(n)$.
+This gives $T(n) = 2T(n/2) + O(n)$, which by the Master’s Theorem yields $O(n \log n)$.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -310,14 +307,11 @@ Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="dynamic-programming">Dynamic programming</h2>
-<h3 id="prefix-sum">Prefix sum</h3>
-<p>Instead of compute the actual problem, this problem can be converted into the smaller problem.
-Let’s assume that answer is $\sum\limits_{k=x}^{y} a_k$.
-Then, answer is $\sum\limits_{k=x}^{y} a_k = \sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x} a_k$.
-Which means it’s enough to solve maximum difference in the Prefix sum array.
-Which is much easier to be solved.
-Notice that to save space, there is no physical Prefix sum array in the code below.</p>
+<h2 id="dynamic-programming">Dynamic Programming</h2>
+<h3 id="prefix-sum">Prefix Sum</h3>
+<p>The problem can be reformulated: if the answer is $\sum\limits_{k=x}^{y} a_k$, then it equals the difference of two prefix sums: $\sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x-1} a_k$.
+So it suffices to find the maximum difference in the prefix sum array, which is straightforward.
+The code below avoids storing the full prefix sum array to save space.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -345,9 +339,9 @@ Notice that to save space, there is no physical Prefix sum array in the code bel
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="max-ends-at">Max Ends At</h3>
-<p>Instead of using Prefix sum, algorithm can compute the maximum value that will ends at $i$th elements.
-In this case, it is obvious that it just decide whether it will expend to the next element or not because advantage of choosing subarray from ahead should be positive.</p>
+<h3 id="max-ends-at-kadanes-algorithm">Max Ends At (Kadane’s Algorithm)</h3>
+<p>Alternatively, we compute the maximum subarray sum ending at each position $i$.
+The key observation is that extending the subarray to include the previous element is worthwhile only if the running sum is positive.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -367,13 +361,13 @@ In this case, it is obvious that it just decide whether it will expend to the ne
     <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.]]></summary></entry><entry><title type="html">Fibonacci sequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci sequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/"><![CDATA[<h1 id="definition">Definition</h1>
-<p>Fibonacci sequence is a sequence that generats numbers from previous two numbers.
-In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
+</code></pre></div></div>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="dynamic programming" /><summary type="html"><![CDATA[Definition The maximum subarray problem asks for the contiguous subarray of an array whose sum is the largest.]]></summary></entry><entry><title type="html">Fibonacci Sequence</title><link href="https://programelot.github.io/algorithm/math/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci Sequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/math/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/math/2023/06/18/Fibonacci-sequence/"><![CDATA[<h1 id="definition">Definition</h1>
+<p>The Fibonacci sequence is defined by each number being the sum of the two preceding ones.
+Formally, the Fibonacci sequence $a$ is defined as follows.</p>
 
 <p>$a_1 = a_2 = 1$, $a_n = a_{n - 1} + a_{n - 2} \forall n \ge 3$.</p>
 
-<p>Fibonacci sequence can be changed to simple form as follows.</p>
+<p>The Fibonacci sequence has the following closed form.</p>
 
 <p>$a_n = a_{n-1} + a_{n-2}$</p>
 
@@ -409,7 +403,7 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
 
 <h2 id="recursion">Recursion</h2>
 
-<p>It is the most naive and simplest implementation among all.</p>
+<p>The most naive and simplest implementation.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">fib</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">){</span>
    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
@@ -449,13 +443,12 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="mathematical-analysis">Mathematical analysis</h2>
+<h2 id="mathematical-analysis">Mathematical Analysis</h2>
 
-<p>From the formula $a_n = \frac{1}{\sqrt{5}}( ({\frac{1 + \sqrt{5}}{2}})^n - ({\frac{1 - \sqrt{5}}{2}})^n)$, Fibonacci sequence can be computed in logarithmic time with constant space.
-To apply this to the program, the following techniques have been used.
-First of all, it uses Multiply operation with the logarithmic algorithm.
-Secondly, it ignores one side of algorithm because it is Symmetry between \((a-b\sqrt{5})^x = c - d\sqrt{5}\) and \((a+b\sqrt{5})^x=c+d\sqrt{5}\).
-This means it always has the same value for \(c\) and \(d\).
+<p>From the closed form $a_n = \frac{1}{\sqrt{5}}!\left(!\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n\right)$, we can compute Fibonacci numbers in $O(\log n)$ time with constant space.
+The implementation uses the following key observations.
+First, exponentiation is computed with binary exponentiation (repeated squaring).
+Second, the computation exploits the symmetry: $(a + b\sqrt{5})^x = c + d\sqrt{5}$ and $(a - b\sqrt{5})^x = c - d\sqrt{5}$ share the same $c$ and $d$, so only one side needs to be tracked.
 The proof is as follows.</p>
 
 <p>$(a+b\sqrt{5})(c+d\sqrt{5}) = ac +5bd + (ad+bc)\sqrt{5}$</p>
@@ -516,8 +509,8 @@ In other world to compute $a^x$, it computes $a^1 + a^2 + a^4 + a^8 + \cdots$ de
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h1 id="performance-comparison">Performance comparison</h1>
-<p>The mathematical approach is the fastest, the bottom-up approach is the second, top-down is the third, recursion is the last.
+<h1 id="performance-comparison">Performance Comparison</h1>
+<p>The mathematical approach is the fastest, followed by bottom-up dynamic programming, top-down memoization, and finally pure recursion.
 Detailed test results are below.</p>
 
 <table>
@@ -617,13 +610,13 @@ Detailed test results are below.</p>
 <tr><td>91</td><td>30796</td><td>106685</td><td>1380392</td><td>...</td><td>10.3351</td><td>11.5776</td><td>14.1379</td><td>...</td><td>Mathematical</td></tr>
 <tr><td>92</td><td>28222</td><td>107592</td><td>1310485</td><td>...</td><td>10.2479</td><td>11.5861</td><td>14.0859</td><td>...</td><td>Mathematical</td></tr>
 </tbody>
-</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.]]></summary></entry><entry><title type="html">Sum of beatty sequence</title><link href="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/" rel="alternate" type="text/html" title="Sum of beatty sequence" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Sum%20of%20beatty%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/"><![CDATA[<h1 id="problem">Problem</h1>
+</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="math" /><summary type="html"><![CDATA[Definition The Fibonacci sequence is defined by each number being the sum of the two preceding ones. Formally, the Fibonacci sequence $a$ is defined as follows.]]></summary></entry><entry><title type="html">Sum of the Beatty Sequence</title><link href="https://programelot.github.io/algorithm/number%20theory/2023/01/30/Sum-of-beatty-sequence/" rel="alternate" type="text/html" title="Sum of the Beatty Sequence" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/number%20theory/2023/01/30/Sum%20of%20beatty%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/number%20theory/2023/01/30/Sum-of-beatty-sequence/"><![CDATA[<h1 id="problem">Problem</h1>
 <p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
 For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
 Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$.
 Then, problem is that compute $S(\alpha, n)$.
-In general, it can be computed easily by computing one by one which takes $O(n)$.
-However, there is another algorithm that takes much less time than this.</p>
+The naive approach of computing term by term takes $O(n)$.
+However, there is a faster algorithm.</p>
 
 <h1 id="algorithm">Algorithm</h1>
 
@@ -645,11 +638,11 @@ However, there is another algorithm that takes much less time than this.</p>
 
 <p>As a result, $S(\alpha, n) = m(m + 1)/2 - S(\beta, [m/\beta])$.</p>
 
-<p>Now, onlything that matter is whether computing $S(\beta, [m/\beta])$ is simpler than computing $S(\alpha, n)$.</p>
+<p>The only thing that matters now is whether computing $S(\beta, \lfloor m/\beta \rfloor)$ is simpler than computing $S(\alpha, n)$.</p>
 
-<p>To achived this, we need to check whether $\alpha &gt; 2$ or not.</p>
+<p>To achieve this, we check whether $\alpha &gt; 2$.</p>
 
-<p>If $\alpha &gt; 2$, use the follwoing equations to reduce $\alpha$.</p>
+<p>If $\alpha &gt; 2$, use the following reduction to bring $\alpha$ into the range $(1, 2)$:</p>
 
 <p>$S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k] $
 $ = \sum\limits_{k = 1}^{n}[((\alpha - 1) + 1) k] $
@@ -659,23 +652,22 @@ $ = S(\alpha - 1, n) + n(n+1)/2$</p>
 
 <p>Notice that it means $S(\alpha, n) = S(\alpha - k, n) + kn(n+1)/2$ for $k \in \mathcal{Z}^{+}$ such that $k &lt; \alpha - 1$.</p>
 
-<p>Now, let’s assume that $1 &lt; \alpha &lt; 2$.</p>
+<p>Now assume $1 &lt; \alpha &lt; 2$.</p>
 
-<p>It is ture that $\beta = \frac{\alpha}{\alpha - 1}$ from $\alpha^{-1} + \beta^{-1} = 1$.</p>
+<p>From $\alpha^{-1} + \beta^{-1} = 1$, we get $\beta = \frac{\alpha}{\alpha - 1}$.</p>
 
-<p>If $\beta$ is bigger than $2$, we can use the same process above to change it exists between $1$ and $2$.</p>
+<p>If $\beta &gt; 2$, we apply the same reduction to bring $\beta$ into $(1, 2)$.</p>
 
-<p>Therefore, only consideration is whether $[m/\beta]$ is smaller than $n$ or not.</p>
+<p>The key observation is that $\lfloor m/\beta \rfloor &lt; n$:</p>
 
-<p>And it is true from $[m/\beta] = [[\alpha n]/\beta] = [[\alpha n]/(\alpha/(\alpha - 1))] \le ((\alpha n)/\alpha)(\alpha - 1) = (\alpha - 1) n &lt; n$.</p>
+<p>$\lfloor m/\beta \rfloor = \lfloor \lfloor \alpha n \rfloor / \beta \rfloor \le \frac{\alpha n}{\alpha/(\alpha-1)} = (\alpha - 1)n &lt; n$ since $0 &lt; \alpha - 1 &lt; 1$.</p>
 
 <p>Notice that $ 0 &lt; \alpha - 1 &lt; 1$.</p>
 
 <p>As a result, it makes problem simpler.</p>
 
-<p>Notice that this algorithm is faster since it reduces number to be computed in some ratio.</p>
-
-<p>Therefore, it usually faster than computing it one by one.</p>
+<p>Since the argument to $S$ shrinks by a constant factor at each step, the recursion terminates quickly.
+This algorithm is therefore much faster than the naive $O(n)$ computation.</p>
 
 <h1 id="example">Example</h1>
 
@@ -702,8 +694,8 @@ Notice that $\alpha = \sqrt{2}$ then $\beta = \frac{\sqrt{2}}{\sqrt{2} - 1} = 2 
   <li>$S(\sqrt{2}, 41) = 57 * 58 / 2 - S(2 + \sqrt{2}, 16) = 1653 - 456 = 1197$</li>
   <li>$S(2 + \sqrt{2}, 41) = S(\sqrt{2}, 41) + 2 * 41 * 42/2 = 1197 + 1722 = 2919$</li>
   <li>$S(\sqrt{2}, 100) = 141 * 142 / 2 - S(2 + \sqrt{2}, 41) = 10011 - 2919 = 7092$</li>
-</ol>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Problem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$. Then, problem is that compute $S(\alpha, n)$. In general, it can be computed easily by computing one by one which takes $O(n)$. However, there is another algorithm that takes much less time than this.]]></summary></entry><entry><title type="html">Rayleigh’s theorem(Beatty’s theorem)</title><link href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh’s theorem(Beatty’s theorem)" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/"><![CDATA[<h2 id="theorem">Theorem</h2>
-<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
+</ol>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="number theory" /><summary type="html"><![CDATA[Problem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$. Then, problem is that compute $S(\alpha, n)$. The naive approach of computing term by term takes $O(n)$. However, there is a faster algorithm.]]></summary></entry><entry><title type="html">Rayleigh’s Theorem (Beatty’s Theorem)</title><link href="https://programelot.github.io/algorithm/number%20theory/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh’s Theorem (Beatty’s Theorem)" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/number%20theory/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/number%20theory/2023/01/30/Rayleighs-theorem/"><![CDATA[<h2 id="theorem">Theorem</h2>
+<p>Consider the sequence $\lfloor \alpha k \rfloor$ for $k \in \mathbb{Z}^+$, where $\alpha \in \mathbb{R}^+ \setminus \mathbb{Q}^+$ and $\alpha &gt; 1$.
 For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
 Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
 For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$.
@@ -711,62 +703,60 @@ Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2}
 
 <h2 id="proof">Proof</h2>
 
-<p>Proof will be done with contradictions for two parts.</p>
+<p>The proof proceeds by contradiction, establishing two parts.</p>
 
-<h3 id="no-collision">No collision</h3>
+<h3 id="no-collision">No Collision</h3>
 
-<p>There is something that exists in both $[\alpha k]$ and $[\beta k]$.</p>
+<p>Suppose some positive integer $v$ appears in both $\lfloor \alpha k \rfloor$ and $\lfloor \beta k \rfloor$.</p>
 
-<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $v = [\alpha r] = [\beta k]$.</p>
+<p>Then there exist positive integers $r$ and $k$ such that $v = \lfloor \alpha r \rfloor = \lfloor \beta k \rfloor$.</p>
 
-<p>Which means $v \le \alpha r &lt; v + 1$ and $ v \le \beta k &lt; v + 1$.</p>
+<p>This means $v \le \alpha r &lt; v + 1$ and $v \le \beta k &lt; v + 1$.</p>
 
-<p>By dividing each by $\alpha, \beta$, $\frac{v}{\alpha} \le r &lt; \frac{v + 1}{\alpha}$ and $\frac{v}{\beta} \le k &lt; \frac{v + 1}{\beta}$.</p>
+<p>Dividing by $\alpha$ and $\beta$ respectively gives $\frac{v}{\alpha} \le r &lt; \frac{v+1}{\alpha}$ and $\frac{v}{\beta} \le k &lt; \frac{v+1}{\beta}$.</p>
 
-<p>However, equality can’t be happen because $\alpha, \beta$ is irrational.</p>
+<p>Note that equality cannot hold since $\alpha$ and $\beta$ are irrational.</p>
 
-<p>Now adding two equation results in $\frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v &lt; r + k &lt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} &lt; (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
+<p>Adding the two inequalities gives $\frac{v}{\alpha} + \frac{v}{\beta} = v!\left(\frac{1}{\alpha} + \frac{1}{\beta}\right) = v &lt; r + k &lt; \frac{v+1}{\alpha} + \frac{v+1}{\beta} = (v+1)!\left(\frac{1}{\alpha} + \frac{1}{\beta}\right) = v + 1$.</p>
 
-<p>Which result in $v &lt; r + k &lt; v + 1$ and it’s a contradiction to $r + k$ is an integer.</p>
+<p>So $v &lt; r + k &lt; v + 1$, which contradicts $r + k$ being an integer.</p>
 
-<h3 id="coverage">Coverage</h3>
+<h3 id="full-coverage">Full Coverage</h3>
 
-<p>There is something that doesn’t exists in both $[\alpha k]$ and $[\beta k]$.</p>
+<p>Suppose some positive integer $v$ does not appear in either $\lfloor \alpha k \rfloor$ or $\lfloor \beta k \rfloor$.</p>
 
-<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $[\alpha r] = v - 1, [\alpha (r + 1)] = v + 1, [\beta k] = v - 1, [\beta (k + 1)] = v + 1$.</p>
+<p>Then there exist positive integers $r$ and $k$ such that $\lfloor \alpha r \rfloor = v - 1$, $\lfloor \alpha(r+1) \rfloor = v + 1$, $\lfloor \beta k \rfloor = v - 1$, $\lfloor \beta(k+1) \rfloor = v + 1$.</p>
 
-<p>Which means, $\alpha r &lt; v, \alpha (r + 1) \ge v + 1, \beta k &lt; v , \beta (k + 1) \ge v + 1$.</p>
+<p>This gives $\alpha r &lt; v$, $\alpha(r+1) \ge v + 1$, $\beta k &lt; v$, $\beta(k+1) \ge v + 1$.</p>
 
-<p>Notice that equality can’t happen in here either because $\alpha, \beta$ is irrational.</p>
+<p>Again, equality cannot hold since $\alpha$ and $\beta$ are irrational.</p>
 
 <p>By dividing $\alpha, \beta$, it results in  $r &lt; \frac{v}{\alpha}, r + 1 &gt; \frac{v + 1}{\alpha}, k &lt; \frac{v}{\beta} , k + 1 &gt; \frac{v + 1}{\beta}$.</p>
 
-<p>Adding 1st and 3rd inequality, $r + k &lt; \frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v$.</p>
+<p>Adding the 1st and 3rd inequalities: $r + k &lt; \frac{v}{\alpha} + \frac{v}{\beta} = v$.</p>
 
-<p>Similarly adding 2nd and 4th inequality, $r + 1 + k + 1 &gt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} = (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
+<p>Adding the 2nd and 4th inequalities: $r + 1 + k + 1 &gt; \frac{v+1}{\alpha} + \frac{v+1}{\beta} = v + 1$, so $r + k &gt; v - 1$.</p>
 
-<p>Which means $r + k &gt; v + 1 - 2 = v - 1$.</p>
+<p>Combining: $v - 1 &lt; r + k &lt; v$, which contradicts $r + k$ being an integer.</p>
 
-<p>By using both inequality, $v - 1 &lt; r + k &lt; v$ and it’s a contradiction to $r + k$ is an integer.</p>
+<p>Therefore, the claim holds. $\square$</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="number theory" /><summary type="html"><![CDATA[Theorem Consider the sequence $\lfloor \alpha k \rfloor$ for $k \in \mathbb{Z}^+$, where $\alpha \in \mathbb{R}^+ \setminus \mathbb{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$. For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$. Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.]]></summary></entry><entry><title type="html">Stack and Queue</title><link href="https://programelot.github.io/algorithm/data%20structure/2021/08/13/Stack-Queue/" rel="alternate" type="text/html" title="Stack and Queue" /><published>2021-08-13T00:00:00-05:00</published><updated>2021-08-13T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/data%20structure/2021/08/13/Stack%20Queue</id><content type="html" xml:base="https://programelot.github.io/algorithm/data%20structure/2021/08/13/Stack-Queue/"><![CDATA[<p>Stack and queue are fundamental data structures with two core operations: <strong>push</strong> (insert) and <strong>pop</strong> (remove).
+They differ in the order in which elements are removed.</p>
 
-<p>As a result, claim holds.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Theorem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$. For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$. Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.]]></summary></entry><entry><title type="html">Stack and queue</title><link href="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/" rel="alternate" type="text/html" title="Stack and queue" /><published>2021-08-13T00:00:00-05:00</published><updated>2021-08-13T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/13/Stack%20Queue</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/"><![CDATA[<p>There is another data strucutre that used to store tons of data.
-Therefore, it has two special operations known as the insert and the pop.
-However, there are two types of ways to make policies for inserting and poping a data from a structure.</p>
-
-<p>Depending on this two method, it is so-called as a stack or a queue.
-Stack has a property known as LIFO(Last-In-First-Out).
-Queue has a property known as FIFO(First-In-First-Out).</p>
+<ul>
+  <li><strong>Stack</strong> follows LIFO (Last-In-First-Out).</li>
+  <li><strong>Queue</strong> follows FIFO (First-In-First-Out).</li>
+</ul>
 
 <h2 id="stack">Stack</h2>
-<p>If we insert a data into a stack first, it should be popped from the stack first.
-Therefore, it reserves the order we inserted even when it is popped.</p>
+<p>The last element pushed is the first one popped.
+Therefore, a stack <strong>reverses</strong> the insertion order when popping.</p>
 
 <h2 id="queue">Queue</h2>
-<p>If we insert a data into a queue first, it should be popped from the stack later.
-Therefore, it reverses the order we inserted even when it is popped.</p>
+<p>The first element enqueued is the first one dequeued.
+Therefore, a queue <strong>preserves</strong> the insertion order when popping.</p>
 
 <h2 id="complexity">Complexity</h2>
-<p>If we use a list for implementing a stack and a queue, it is easy to get a good performance because we already has $O(1)$ complexity for inserting and deleting at the front and the end of the list.</p>
+<p>Using a linked list with a tail pointer (List 2) for both stack and queue gives $O(1)$ push and pop, since we already have $O(1)$ insert and delete at both ends.</p>
 
 <table>
   <thead>
@@ -793,25 +783,21 @@ Therefore, it reverses the order we inserted even when it is popped.</p>
       <td>$O(n)$</td>
     </tr>
   </tbody>
-</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[There is another data strucutre that used to store tons of data. Therefore, it has two special operations known as the insert and the pop. However, there are two types of ways to make policies for inserting and poping a data from a structure.]]></summary></entry><entry><title type="html">Array and list</title><link href="https://programelot.github.io/algorithm/2021/08/12/Array-List/" rel="alternate" type="text/html" title="Array and list" /><published>2021-08-12T00:00:00-05:00</published><updated>2021-08-12T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/12/Array%20List</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/12/Array-List/"><![CDATA[<p>Before talking about algorithm itself, we need to talk about data structures that typically uses for algorithms.
-Some of algorithms even works based on a specific data structure that optimizes the algorithm.
-In this chapter, I’ll explain the most common data structures only.</p>
+</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="data structure" /><summary type="html"><![CDATA[Stack and queue are fundamental data structures with two core operations: push (insert) and pop (remove). They differ in the order in which elements are removed.]]></summary></entry><entry><title type="html">Array and List</title><link href="https://programelot.github.io/algorithm/data%20structure/2021/08/12/Array-List/" rel="alternate" type="text/html" title="Array and List" /><published>2021-08-12T00:00:00-05:00</published><updated>2021-08-12T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/data%20structure/2021/08/12/Array%20List</id><content type="html" xml:base="https://programelot.github.io/algorithm/data%20structure/2021/08/12/Array-List/"><![CDATA[<p>Before discussing algorithms, we need to cover the data structures they commonly rely on.
+Some algorithms are only efficient because of a specific underlying data structure.
+This post covers the most fundamental ones.</p>
 
 <h1 id="array-and-list">Array and list</h1>
 
 <h2 id="array">Array</h2>
 
-<p>To store a number of data, there should be some data structure that can give a specific data you want anytime and store a data in to the storage either.
-To acheive this property, there is the easiest data structure known as an array.
-Like the name itself, it stores data in an array of storage.
-Pros of this algorithm is that you can get a data anytime from an array in a constant time because all you need is an index.
-In mathmatical format, it usually written as $a[0]$ or $a_0$.
-However, there is a big disadvantange for this.
-If you want to use an array, you need to know exact size of data you need.
-Otherwise, you may can access to the data where you didn’t meant to.
-Therefore, it has a big disadvantage known as the fixed-size.
-However, it can extend the array by making a new array and copy every element in side of the array.
-Therefore, complexity of an array is like follow.</p>
+<p>To store multiple data items, we need a data structure that allows reading and writing at any position.
+The simplest such structure is an <strong>array</strong>.
+An array stores data in contiguous memory, so any element can be accessed in constant time via its index.
+In mathematical notation, it is written as $a[0]$ or $a_0$.
+The main drawback is the <strong>fixed size</strong>: you must know the maximum number of elements in advance, or risk accessing unintended memory.
+An array can be dynamically resized by allocating a new, larger array and copying all elements, though this is costly.
+The time complexity of array operations is as follows.</p>
 
 <table>
   <thead>
@@ -864,14 +850,11 @@ Therefore, complexity of an array is like follow.</p>
 Merge means that merging two array into a single array.
 It will be assumed to have the same size of two arrays.</p>
 
-<h2 id="list-1">List 1</h2>
+<h2 id="list-1-singly-linked-list">List 1 (Singly-Linked List)</h2>
 
-<p>To avoid this fixed-size problem, there is an alternative structure known as a list.
-A list consists of nodes.
-Each node has a data and a pointer to the next node.
-Therefore, it can access to next node from any node.
-However, it has a slow search algorithm because it can access only the next node.
-Therefore, it takes a linear time to read an array.</p>
+<p>To avoid the fixed-size problem, we use a <strong>linked list</strong>.
+A linked list consists of nodes, each holding a data value and a pointer to the next node.
+This allows dynamic insertion and deletion, but accessing an arbitrary element requires traversing from the head — taking $O(n)$ time.</p>
 
 <table>
   <thead>
@@ -920,15 +903,12 @@ Therefore, it takes a linear time to read an array.</p>
   </tbody>
 </table>
 
-<p>One other problem is that it can only add the new data without overhead at the front of the list.
-Therefore, there is another ways to make a list.</p>
+<p>Another limitation is that inserting at the back takes $O(n)$ because we must traverse to the tail.</p>
 
-<h2 id="list-2">List 2</h2>
+<h2 id="list-2-singly-linked-list-with-tail-pointer">List 2 (Singly-Linked List with Tail Pointer)</h2>
 
-<p>What if we make a pointer to denotes the last point of the list at the same time?
-It will gives an advantages that makes accessable at the end of the list.
-Therefore, it will give better performance when it works for the end of the list.
-At the same time, it has an advantage to merge two lists because it can connect the end point of a list to another list.</p>
+<p>Adding a tail pointer gives $O(1)$ access to the end of the list.
+This improves back-insertion and deletion, and enables $O(1)$ merging of two lists by connecting the tail of one to the head of the other.</p>
 
 <table>
   <thead>
@@ -977,20 +957,18 @@ At the same time, it has an advantage to merge two lists because it can connect 
   </tbody>
 </table>
 
-<p>However, it still has $O(n)$ complexity for read/change operation.
-Therefore, it usually doesn’t be used in actual implementation however the notation of the list is typically used for many other data structures.</p>
+<p>However, random access still takes $O(n)$.
+Linked lists are rarely used directly in implementations for this reason, but the conceptual abstraction is widely used in other data structures.</p>
 
 <h1 id="other-lists">Other lists</h1>
 
 <p>There are another way to implement the list.
 Followings are the common thing that could be tried.</p>
 
-<h2 id="double-sizing-array">Double sizing array</h2>
+<h2 id="double-sizing-array-dynamic-array--vector">Double-Sizing Array (Dynamic Array / Vector)</h2>
 
-<p>Double sizing array works like an ordinary array but it increases its size by double when it requires a bigger size.
-It gives a nice performance because it gives a constant complexity for adding and deleting data at the back of the array.
-Notice that this is amortized analysis.
-Therefore, it sometimes takes long to add elements.</p>
+<p>A double-sizing array behaves like a regular array but doubles its capacity when it runs out of space.
+Back insertions and deletions are amortized $O(1)$ — most are $O(1)$, with occasional $O(n)$ resizes.</p>
 
 <table>
   <thead>
@@ -1039,16 +1017,11 @@ Therefore, it sometimes takes long to add elements.</p>
   </tbody>
 </table>
 
-<h2 id="circular-array">Circular array</h2>
+<h2 id="circular-array">Circular Array</h2>
 
-<p>To access the data, we can use virtual indexing map instead of accessing data by index directly.
-In other world, just use $a[f(i)]$ instead of $a[i]$ when accessing array $a$ at index $i$.
-Please notice that $f$ is a virtual map function.
-There are many potential for this virtual map.
-However, let’s just think about one of the simplest one.
-Let’s use $f(i) = (i + from) \mod size$.
-Notice that $from$ is a constant that can changes.
-In such a case, we can easily remove and insert the data at the front and the end like list 2 above.
+<p>A circular array uses a virtual index mapping instead of direct index access.
+In other words, we access $a[f(i)]$ instead of $a[i]$, where $f$ is a mapping function.
+Using $f(i) = (i + \mathit{from}) \bmod \mathit{size}$, where $\mathit{from}$ can shift, we achieve $O(1)$ front and back insertions and deletions — similar to List 2, but in a contiguous memory block.
 In this case, complexity works like below.</p>
 
 <table>
@@ -1790,8 +1763,8 @@ In this case, complexity works like below.</p>
 
 <h2 id="performance">Performance</h2>
 
-<p>Performance depends on the experiment environment.
-I tested in my raspberry PI and results looks like as belows.</p>
+<p>Performance depends on the hardware and compiler.
+Tests were run on a Raspberry Pi; results are shown below.</p>
 
 <h3 id="without-compiler-optimization-option">Without compiler optimization option</h3>
 
@@ -1921,73 +1894,62 @@ I tested in my raspberry PI and results looks like as belows.</p>
       <td>5.010728</td>
     </tr>
   </tbody>
-</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Before talking about algorithm itself, we need to talk about data structures that typically uses for algorithms. Some of algorithms even works based on a specific data structure that optimizes the algorithm. In this chapter, I’ll explain the most common data structures only.]]></summary></entry><entry><title type="html">Complexity</title><link href="https://programelot.github.io/algorithm/2021/08/10/Complexity/" rel="alternate" type="text/html" title="Complexity" /><published>2021-08-10T00:00:00-05:00</published><updated>2021-08-10T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/10/Complexity</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/10/Complexity/"><![CDATA[<p>To analyze performances of algorithms, we need to define some jargons.</p>
+</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="data structure" /><summary type="html"><![CDATA[Before discussing algorithms, we need to cover the data structures they commonly rely on. Some algorithms are only efficient because of a specific underlying data structure. This post covers the most fundamental ones.]]></summary></entry><entry><title type="html">Algorithm Complexity Analysis</title><link href="https://programelot.github.io/algorithm/2021/08/10/Complexity/" rel="alternate" type="text/html" title="Algorithm Complexity Analysis" /><published>2021-08-10T00:00:00-05:00</published><updated>2021-08-10T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/10/Complexity</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/10/Complexity/"><![CDATA[<p>To analyze the performance of algorithms, we need a few key definitions.</p>
 
-<h2 id="time-complexity">Time complexity</h2>
+<h2 id="time-complexity">Time Complexity</h2>
 
-<p>The time complexity of an algorithm, $T(n)$ is a function that denotes running time of the algorithm depending on the size of input data.
-For example, let’s think about an algorithm that adds data with other data.
-You may smart enough to add any arbitrary two number in 1 second.
-Then, how many time will it took for 100 data?
-It will be 100 seconds.
+<p>The time complexity of an algorithm, $T(n)$, is a function representing the running time as a function of the input size $n$.
+For example, suppose you can add any two numbers in 1 second.
+Then adding 100 numbers takes 100 seconds.
 In this case, $T(n) = n$.</p>
 
-<h2 id="big-o-notation">Big O notation</h2>
+<h2 id="big-o-notation">Big-O Notation</h2>
 
-<p>Big O notation is the method to guarantee the upper bound of algorithms’ perforamce.
-For any time complexity $T(n)$, we say $T(n)$ $=$ $O(g(n))$ if there is some positive constant $M$,$x_0$ such that $T(n)$ $\le$ $M g(n)$ for all $x \ge x_0$.
-For example, if $T(n)$ $=$ $n^3$ $+$ $10n^2$ $+$ $n$ $+$ $27$, $T(n)$ $=$ $O(n^3)$ for $M$ $=$ $39$, $x_0$ $=$ $1$.
-Notice that $T(n)$ $=$ $n^3$ $+$ $10n^2$ $+$ $n$ $+$ $27$ $\le$ $n^3$ $+$ $10n^3$ $+$ $n^3$ $+$ $27n^3$ $=$ $39n^3$ for $n$ $\ge$ $1$.
-In fact, it is enough to find the most steepest part in $T(n)$.</p>
+<p>Big-O notation provides an upper bound on an algorithm’s performance.
+For any time complexity $T(n)$, we write $T(n) = O(g(n))$ if there exist positive constants $M$ and $n_0$ such that $T(n) \le M g(n)$ for all $n \ge n_0$.
+For example, if $T(n) = n^3 + 10n^2 + n + 27$, then $T(n) = O(n^3)$ with $M = 39$, $n_0 = 1$, since $T(n) \le 39n^3$ for $n \ge 1$.
+In practice, it suffices to find the dominant (fastest-growing) term of $T(n)$.</p>
 
-<h2 id="asymptotically-approximate">Asymptotically approximate</h2>
+<h2 id="asymptotic-approximation">Asymptotic Approximation</h2>
 
-<p>In fact, it can be choosed to be worse than expected in big O notation.
-For example, $T(n)$ $=$ $O(n^2)$ if $T(n)$ $=$ $O(n)$ in all cases.
-Therefore, we say that “An algorithm’s time complexity asymptotically approximates to $g(n)$” when $\lim\limits_{n \leftarrow \infty}\frac{T(n)}{Mg(n)} = 1$ for some positive constant $M$.</p>
+<p>Big-O can be chosen pessimistically: $T(n) = O(n^2)$ is valid even when $T(n) = O(n)$.
+For a tighter characterization, we say an algorithm’s complexity is <strong>asymptotically equivalent</strong> to $g(n)$ when $\lim\limits_{n \to \infty}\frac{T(n)}{M g(n)} = 1$ for some positive constant $M$.</p>
 
-<h2 id="big-omega-notation">Big $\Omega$ notation</h2>
+<h2 id="big-omega-notation">Big-$\Omega$ Notation</h2>
 
-<p>Big $\Omega$ notation is the opposite with the big O notation.
-It guarantess the lower bound of algorithms’ performance.
-For any time complexity $T(n)$, we say $T(n)$ $=$ $\Omega(g(n))$ if there is some positive constant $M$,$x_0$ such that $T(n)$ $\ge$ $M g(n)$ for all $x \ge x_0$.</p>
+<p>Big-$\Omega$ notation is the lower-bound counterpart of Big-O.
+For any time complexity $T(n)$, we write $T(n) = \Omega(g(n))$ if there exist positive constants $M$ and $n_0$ such that $T(n) \ge M g(n)$ for all $n \ge n_0$.</p>
 
-<h2 id="big-theta-notation">Big $\Theta$ notation</h2>
+<h2 id="big-theta-notation">Big-$\Theta$ Notation</h2>
 
-<p>Big theta notation is used when an algorithm has the same complexity for both upper and lower bounds.
-In other word, we say $T(n)$ $=$ $\Theta(g(n))$ if there is some positive constant $M1$,$M_2$,$x_0$ such that $M_2 g(n)$ $\le$ $T(n)$ $\le$ $M_1 g(n)$ for all $x \ge x_0$.
-However, it is hard to expect that algorithm has such a complexity.
-Some algorithms’ performance vary between the data itself.
-Therefore, some algorithm can’t have big $\Theta$ notation for their time complexity.</p>
+<p>Big-$\Theta$ notation is used when both upper and lower bounds are the same.
+We write $T(n) = \Theta(g(n))$ if there exist positive constants $M_1$, $M_2$, and $n_0$ such that $M_2 g(n) \le T(n) \le M_1 g(n)$ for all $n \ge n_0$.
+However, not every algorithm has a tight $\Theta$ bound: some algorithms’ performance varies significantly depending on the input, so a single $\Theta$ expression may not capture their complexity.</p>
 
-<h2 id="amortized-complexity">Amortized complexity</h2>
+<h2 id="amortized-complexity">Amortized Complexity</h2>
 
-<p>Amortized complexity is another measurement to analysis an algorithm.
-Many algorithms doesn’t have a nice $\Theta$ notation to explain the performance’s performance.
-It really depends on the situation.
-However, it can be pessimistic to use only big O notation.
-Therefore, amortized complexity measures a performance of an algorithm by dividing its complexity between executions.
-If some algorithm works $O(1)$ for $n$ times and it works $O(n^2)$ for $1$ time.
-Then, the amortized complexity of this algorithm is $O(\frac{1 \times n + n^2}{n + 1})$ $=$ $O(n)$.</p>
+<p>Amortized complexity is a technique for analyzing algorithms whose cost varies across calls.
+Many algorithms do not have a clean $\Theta$ bound for every single operation.
+However, using only Big-O can be overly pessimistic.
+Amortized complexity distributes the total cost over all operations.
+For example, if an algorithm runs in $O(1)$ for $n$ steps and $O(n^2)$ for one step, the amortized complexity per step is $O!\left(\frac{n + n^2}{n+1}\right) = O(n)$.</p>
 
-<h2 id="space-complexity">Space complexity</h2>
+<h2 id="space-complexity">Space Complexity</h2>
 
-<p>Space complexity is another measurable tool for algorithms.
-It denotes how many memory spaces it uses.
-We use all of notations above to represent space complexity either.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[To analyze performances of algorithms, we need to define some jargons.]]></summary></entry><entry><title type="html">Algorithm</title><link href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/" rel="alternate" type="text/html" title="Algorithm" /><published>2021-08-02T00:00:00-05:00</published><updated>2021-08-02T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/02/Algorithm</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/02/Algorithm/"><![CDATA[<p>Algorithm is a mathmatical tool to solve some problem with propal methods.
-For example, let’s think about a situation follows.
-Oneday, you’ve got a job from a city library.
-However, there was a tournado yesterday so all books dropped out of the shelf.
-Your employer calls you and asks you to clean it up in order of books’ ID.
-Despite of your low payment, you have no way but clean it up.
-Therefore, you started to think about the way to clean it up.</p>
+<p>Space complexity measures how much memory an algorithm uses.
+All of the above notations (Big-O, $\Omega$, $\Theta$) apply to space complexity as well.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[To analyze the performance of algorithms, we need a few key definitions.]]></summary></entry><entry><title type="html">Introduction to Algorithms</title><link href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/" rel="alternate" type="text/html" title="Introduction to Algorithms" /><published>2021-08-02T00:00:00-05:00</published><updated>2021-08-02T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/02/Algorithm</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/02/Algorithm/"><![CDATA[<p>An algorithm is a well-defined procedure for solving a problem.
+For example, imagine you just started a job at a city library.
+A tornado hit yesterday, and all the books fell off the shelves.
+Your employer asks you to put them back in order by book ID.
+Despite your meager pay, you have no choice but to sort them out.
+So you start thinking about the best way to do it.</p>
 
-<h2 id="insertion-sort">Insertion sort</h2>
-<p>You may give up to think about better way to clean it up.
-Instead of it, you just started to clean it up by reading the ID of each book and put the book which has the smallest ID into the shelf.</p>
+<h2 id="insertion-sort">Insertion Sort</h2>
+<p>You give up looking for a clever approach.
+Instead, you simply scan through the books, always picking the one with the smallest ID and placing it on the shelf.</p>
 
-<h2 id="quick-sort">Quick sort</h2>
-<p>While you are doing such a thing, your friend decided to do the follow.</p>
+<h2 id="quick-sort">Quick Sort</h2>
+<p>Meanwhile, your friend decides to do the following.</p>
 <ol>
   <li>If there is only one book, just put it in with the revered direction.</li>
   <li>If there is more than a book, select a book in random.</li>
@@ -1997,16 +1959,15 @@ Instead of it, you just started to clean it up by reading the ID of each book an
   <li>Otherwise, pick books between two reversed book and take books out of the shelf and do the same process from 1.</li>
 </ol>
 
-<p>Notice that the starting point, end point of the shelf will be considered as the reversed book in 6.</p>
+<p>Note that the two ends of the shelf are treated as reversed-book sentinels for step 6.</p>
 
-<p>This looks more complex but it usually takes much less time than you did.
+<p>This approach looks more complex, but it is usually much faster in practice.
 See the example below.</p>
 
 <h2 id="example">Example</h2>
-<p>For example, there are books that have IDs of 52,33,25,19,28,38,37,45,73,68,61,69,87,78,90.
-Now, let’s follow the each process.</p>
+<p>There are books with IDs: 52, 33, 25, 19, 28, 38, 37, 45, 73, 68, 61, 69, 87, 78, 90.</p>
 
-<p>You will clean the book like bellow.
+<p>Your approach (insertion sort) proceeds like this.
 Notice that I marked [] as books that shelf has, {} as what you are memorizing and () as what you are looking.
 In this algorithm, you can see only one book at once because numbers are too complex to see it on glance.
 At the same time, you can memorize a number at most because of its long digits.</p>
@@ -2272,6 +2233,5 @@ Notice that I marked revered book by !.</p>
 <p>As a result, your friend can get a result in 113 step.
 Which means 19% faster than you are.</p>
 
-<p>To solve this problem, we call both methods as sorting algorithms.
-However, it shows different perforamce as you can see.
-From the next time, it will focused on the performance of the algorithm and comparison between them.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.]]></summary></entry></feed>
+<p>Both methods are sorting algorithms, but they show very different performance characteristics.
+The next posts will analyze algorithm performance and compare different approaches.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[An algorithm is a well-defined procedure for solving a problem. For example, imagine you just started a job at a city library. A tornado hit yesterday, and all the books fell off the shelves. Your employer asks you to put them back in order by book ID. Despite your meager pay, you have no choice but to sort them out. So you start thinking about the best way to do it.]]></summary></entry></feed>

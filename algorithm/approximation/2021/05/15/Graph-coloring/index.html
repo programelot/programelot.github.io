@@ -117,13 +117,13 @@
 <meta name="description" content="We need some definitions and theorems to discuss about the coloring.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Graph coloring">
+<meta property="og:title" content="Graph Coloring">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="We need some definitions and theorems to discuss about the coloring.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Graph coloring">
+<meta name="twitter:title" content="Graph Coloring">
 <meta name="twitter:description" content="We need some definitions and theorems to discuss about the coloring.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Graph coloring | REAL</title>
+  <title>Graph Coloring | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Graph coloring
+            Graph Coloring
           
         </h1>
         
@@ -486,33 +486,39 @@
 
 <h2 id="definitions">Definitions</h2>
 <ol>
-  <li>A coloring of graph $G$ is an assignment of colors to the vertices of $G$.
-In this case, it can be considered as the assignemnts of sets like vertex 1 to set 1 and vetex 2 to set 3 and so-on.</li>
-  <li>A graph is is $k$-coloring if each vertex is assigned to exactly one of $k$ colors.</li>
-  <li>A coloring is proper if no two adjacent vertices are assigned to the same color.</li>
-  <li>A graph is so-called $k$-colorable if it has a proper $k$-coloring.</li>
-  <li>We say $g(n)$ $=$ $\tilde{O}(f(n))$ if there exists some constant $c$ $\ge$ $0$ such that $g(n)$ $=$ $O(f(n))\ln^c$.
-This is some extention that ignoring logarithmic terms.</li>
-  <li>We say coloring is a semicoloring if at most $\frac{\left\vert V \right\vert}{4}$ edges have endpoints with the same color.
-Notice that semicoloring don’t need to be proper.
-It allows $\frac{\left\vert V \right\vert}{4}$ edges to be collide.</li>
+  <li>A <strong>coloring</strong> of graph $G$ is an assignment of colors to its vertices.</li>
+  <li>A <strong>$k$-coloring</strong> assigns each vertex to exactly one of $k$ colors.</li>
+  <li>A coloring is <strong>proper</strong> if no two adjacent vertices share the same color.</li>
+  <li>A graph is <strong>$k$-colorable</strong> if it has a proper $k$-coloring.</li>
+  <li>We write $g(n) = \tilde{O}(f(n))$ if there exists a constant $c \ge 0$ such that $g(n) = O(f(n) \ln^c n)$, ignoring logarithmic factors.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>A <strong>semicoloring</strong> is a coloring where at most $\frac{</td>
+          <td>V</td>
+          <td>}{4}$ edges have both endpoints assigned the same color.</td>
+        </tr>
+        <tr>
+          <td>A semicoloring need not be proper; it tolerates at most $\frac{</td>
+          <td>V</td>
+          <td>}{4}$ monochromatic edges.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ol>
 
 <h2 id="theorems">Theorems</h2>
 <ol>
-  <li>There is a polynomial time algorithm to check 2-colorable.
-Notice that we can do it by DFS and checking there is some pair of vertices that colors collide.</li>
-  <li>It is known to be NP-hard to decide if a graph is 3-colorable.</li>
-  <li>It is known to be NP-hard to decide if a graph is 3-colorable or any of its proper coloring requires at least five colors.
-This means input will give like 3-colorable, 5-colorable, 6-colorable, etc..
-There will no 4-colorable inputs.</li>
-  <li>It is known to be NP-hard to find a 3-coloring from a 3-colorable graph.
-Notice that if there is such an algorithm in polynomial time then running that algorithm and checking the result are enough to solve 3-colorable problem.</li>
-  <li>A graph with maximum degree $\delta$ can be $(\delta + 1)$-colored in polynomial time.
-Notice that all of vertices never run out of colors in this case because even all the neighbors use seperate colors, there are still one color to use.</li>
-  <li>3-colorable graph can be $O(\sqrt{n})$-colored in polynomial time for $n$ as the number of vertices.</li>
-  <li>There exists a polynomial time random algorithm that finds a semicoloring with $4\Delta^{\log_3 2}$ colors at least $\frac{1}{2}$ probability where $\Delta$ is the maximum degree of a graph with.</li>
-  <li>There is a polynomial algorithm that finds $\tilde{O}(n^{\log_6 2})$-coloring of a given 3-colorable graph at least $\frac{1}{2}$ probability.</li>
+  <li>2-colorability can be decided in polynomial time by BFS/DFS: check whether any adjacent pair is assigned the same color.</li>
+  <li>Deciding 3-colorability is NP-hard.</li>
+  <li>Deciding whether a graph is 3-colorable or requires at least 5 colors is NP-hard (i.e., there are no 4-colorable inputs in the hard instances).</li>
+  <li>Finding a 3-coloring of a 3-colorable graph is NP-hard (since an efficient algorithm would solve 3-colorability).</li>
+  <li>A graph with maximum degree $\Delta$ can be $(\Delta + 1)$-colored in polynomial time: each vertex always has at least one available color since it has at most $\Delta$ neighbors.</li>
+  <li>A 3-colorable graph can be $O(\sqrt{n})$-colored in polynomial time.</li>
+  <li>There is a randomized polynomial-time algorithm that finds a semicoloring with $4\Delta^{\log_3 2}$ colors with probability at least $\frac{1}{2}$, where $\Delta$ is the maximum degree.</li>
+  <li>There is a randomized polynomial-time algorithm that finds a $\tilde{O}(n^{\log_6 2})$-coloring of a given 3-colorable graph with probability at least $\frac{1}{2}$.</li>
 </ol>
 
 <h2 id="proof-of-theorems">Proof of theorems</h2>
@@ -527,18 +533,12 @@ Notice that all of vertices never run out of colors in this case because even al
     </div>
     Color the rest of graph with $\sqrt{n}$ new colors
 </div>
-<p>Notice that the neighbors of $v$ can be colored with 2 colors in each iteration because given graph is a 3-colorable graph.
-The reason is that all of neighbor of $v$ can’t be $c_1$ if we select $v$ as $c_1$.
-Then, it’s a 2-coloring problem which can be solve in polynomial time.
-With that, $v$ and its neighbors are using distinct from other vertices because it producess new colors.
-Notice that we can remove it because it uses independent color sets.
-Now, it uses just $\sqrt{n}$ color at the last.
-Therefore it’s enough to show there are at most $O(\sqrt{n})$ iteration for “ $\operatorname{while} \exists$ a vertex $v$ with at least degree $\sqrt{n}$”.
-With that, it removes at least $\sqrt{n}I$ vetices from graph if we denote $I$ as the number of such an iteration because each vertices has $\sqrt{n}$ degree.
-However, we can’t remove more vetices than number of vertices at the beginning.
-Therefore, $\sqrt{n}I$ $\le$ $n$.
-As a result, $I$ $\le$ $\sqrt{n}$.
-Notice that algorithm uses at most $4\sqrt{n}$ colors and it runs in a polynomial time.</p>
+<p>Since the given graph is 3-colorable, the neighbors of $v$ form a 2-colorable subgraph (because $v$ occupies $c_1$, leaving only 2 colors for its neighbors).
+2-colorability can be checked and colored in polynomial time.
+Each iteration uses 3 fresh colors, so no color conflicts arise with other iterations.
+Finally, the remaining graph after removing all high-degree vertices has maximum degree at most $\sqrt{n}$, requiring at most $\sqrt{n}$ colors.
+The number of iterations $I$ satisfies $\sqrt{n} \cdot I \le n$, so $I \le \sqrt{n}$.
+The total number of colors used is at most $3\sqrt{n} + \sqrt{n} = 4\sqrt{n} = O(\sqrt{n})$, and the algorithm runs in polynomial time.</p>
 
 <p><br /></p>
 
@@ -569,7 +569,7 @@ Notice that angle is $\frac{2\pi}{3}$ because it’s an equilateral triangle.</p
     Assign a distinct color for all vectices in each resign.
 </div>
 
-<p>Polynomial running time of semidefinitive program/random picking will be updated later.
+<p>Polynomial running time of semidefinite program/random picking will be updated later.
 Then, all other process will be in the polynomial time.
 Notice that this algorithm uses $2^t$ $=$ $2^{2 + \log_3 \Delta}$ $=$ $4 \times 2^{\log_3 \Delta}$ $=$ $4 {\Delta}^{\log_3 2}$ colors.
 Therefore, it’s enough to show that this makes a semicoloring with $\frac{1}{2}$ probability.</p>
@@ -634,14 +634,14 @@ $1$ $-$ $\frac{1}{\pi}\arccos(v_i \cdot v_j)$.</p>
 <p>Therefore, $Pr[\text{Both } i \text{ and } j \text{ assigned to the same color}]$ $=$ 
 $Pr[\text{Both } v_i \text{ and } v_j \text{ are in the same reigon for all half space}]$ $=$ 
 $(1 - \frac{1}{\pi}\arccos(v_i \cdot v_j))^t$.
-With above, there are two facts from semidefinitive program and proof above.</p>
+From the semidefinite program and the proof above, two facts hold.</p>
 <ol>
-  <li>$v_i \cdot v_j \le \lambda$ for all $(i, j) \in E$</li>
-  <li>There is a feasible solution such that $v_i \cdot v_j$ $=$ $-\frac{1}{2}$ for all $(i,j) \in E$</li>
+  <li>$v_i \cdot v_j \le \lambda$ for all $(i, j) \in E$.</li>
+  <li>There is a feasible solution with $v_i \cdot v_j = -\frac{1}{2}$ for all $(i, j) \in E$.</li>
 </ol>
 
-<p>Now let’s denote semidefinitive program optimum’s $\lambda$ as ${\lambda}^{\star}$.
-Then, ${\lambda}^{\star}$ $\le$ $-\frac{1}{2}$ because semidefinitive program was minimization problem.</p>
+<p>Let $\lambda^\star$ denote the optimal value of the semidefinite program.
+Since the program minimizes $\lambda$, we have $\lambda^\star \le -\frac{1}{2}$.</p>
 
 <p>Therefore, $Pr[\text{Both } i \text{ and } j \text{ assigned to the same color}]$ $=$
 $(1 - \frac{1}{\pi}\arccos(v_i \cdot v_j))^t$ $\le$
@@ -659,8 +659,8 @@ Therefore, $1$ $-$ $\frac{1}{\pi}\arccos x$ is a monotonic increasing function.<
 Therefore, $2\left\vert E \right\vert$ $\le$ $n\Delta$ which means $\frac{\left\vert E \right\vert}{\Delta}$ $\le$ $\frac{n}{2}$.
 As a result, expected number of edges whose endpoints are colred the same is at most $\left\vert E \right\vert \frac{1}{9\Delta}$ $=$ $\frac{\left\vert E \right\vert}{9\Delta}$ $\le$ $\frac{n}{18}$.</p>
 
-<p>Then, $Pr[X \ge \frac{n}{4}]$ $\le$ $\frac{E[X]}{n/4}$ $=$ $\frac{4}{n}E[X]$ $\le$ $\frac{4}{n}\frac{n}{18}$ $=$ $\frac{2}{9}$ $\le$ $\frac{1}{2}$ with markov’s inequality where $X$ denotes number of edges where endpoiunts are colored the same.
-Therefore claim holds.</p>
+<p>By Markov’s inequality, $\Pr[X \ge \frac{n}{4}] \le \frac{E[X]}{n/4} = \frac{4}{n}E[X] \le \frac{4}{n} \cdot \frac{n}{18} = \frac{2}{9} \le \frac{1}{2}$, where $X$ is the number of monochromatic edges.
+Therefore the claim holds.</p>
 
 <p><br /></p>
 
@@ -788,7 +788,7 @@ Therefore, claim holds.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/" title="Graph coloring">https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/" title="Graph Coloring">https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -814,8 +814,8 @@ Therefore, claim holds.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/19/Useful-mathematical-tools/" rel="next" title="Useful mathematical tools">
-                <i class="fa fa-chevron-left"></i> Useful mathematical tools
+              <a href="/algorithm/math/2021/05/19/Useful-mathematical-tools/" rel="next" title="Useful Mathematical Tools">
+                <i class="fa fa-chevron-left"></i> Useful Mathematical Tools
               </a>
             
           </div>
@@ -824,8 +824,8 @@ Therefore, claim holds.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/14/Markovs-inequality/" rel="prev" title="Markov's inequality">
-                Markov's inequality <i class="fa fa-chevron-right"></i>
+              <a href="/probability/inequality/2021/05/14/Markovs-inequality/" rel="prev" title="Markov's Inequality">
+                Markov's Inequality <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -925,7 +925,7 @@ Therefore, claim holds.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1161,7 +1161,7 @@ Therefore, claim holds.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/05/15/Graph-coloring/';
               this.page.identifier = '/algorithm/approximation/2021/05/15/Graph-coloring/';
-              this.page.title = 'Graph coloring';
+              this.page.title = 'Graph Coloring';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

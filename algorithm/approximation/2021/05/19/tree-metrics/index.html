@@ -117,13 +117,13 @@
 <meta name="description" content="For a given vertices $V$ and distance $V \times V \rightarrow \mathcal{R} : d$. $(V,d)$ is so called a metric if following properties are hold.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation of metrics by tree metrics">
+<meta property="og:title" content="Approximating Metrics by Tree Metrics">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="For a given vertices $V$ and distance $V \times V \rightarrow \mathcal{R} : d$. $(V,d)$ is so called a metric if following properties are hold.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation of metrics by tree metrics">
+<meta name="twitter:title" content="Approximating Metrics by Tree Metrics">
 <meta name="twitter:description" content="For a given vertices $V$ and distance $V \times V \rightarrow \mathcal{R} : d$. $(V,d)$ is so called a metric if following properties are hold.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation of metrics by tree metrics | REAL</title>
+  <title>Approximating Metrics by Tree Metrics | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation of metrics by tree metrics
+            Approximating Metrics by Tree Metrics
           
         </h1>
         
@@ -494,21 +494,19 @@ $(V,d)$ is so called a metric if following properties are hold.</p>
 
 <p>Notice that we say it is a pseudometric if property 2 changes to “$d_{uv}$ $=$ $0$ if $u = v$”.</p>
 
-<p>A tree metic $(V’, T)$ for a set of vertices $V$ is a tree $T$ defined on a set of nodes $V’ \supseteq V$, whoese edges are given non negative lengths.
-For $u,v$ $\in$ $V’$, let $T_{uv}$ denote the length of the unique path between $u$ and $v$ in $T$.</p>
+<p>A tree metric $(V’, T)$ for a vertex set $V$ is a tree $T$ defined on a node set $V’ \supseteq V$, with non-negative edge lengths.
+For $u, v \in V’$, let $T_{uv}$ denote the length of the unique path between $u$ and $v$ in $T$.</p>
 
-<p>Notice that tree matrix is a matric.
-It is trivial to be hold for 1 ~ 3.
-For 4, if there is a path $u$ to $w$ and $w$ to $v$, then concatinating them is a path from $u$ to $v$.
-It will have the length equal or less than sum of each path because there could be a cycle and it can be removed.</p>
+<p>A tree metric is indeed a metric.
+Properties 1–3 are trivial to verify.
+For property 4 (triangle inequality): if there is a path from $u$ to $w$ and from $w$ to $v$, concatenating them gives a path from $u$ to $v$ with length at most the sum of the two sub-paths (a cycle, if any, can be removed to shorten it).</p>
 
 <p>Given a metric $d$ on $V$, we say a tree metric $(V’, T)$ is a $\operatorname{tree metic embedding}$ of distortion $\alpha$ if $d_{uv}$ $\le$ $T_{uv}$ $\le$ $\alpha d_{uv}$ for all $u,v$ $\in$ $V$.</p>
 
-<p>However, do we even have any approximation for it in every time?
-Yes, if we have gigantic distortion.
-However, it’s no with some distortion.
-In fact it is known that there is no tree metric has distortion less than $\frac{n - 1}{8}$ for some metric $d$ on $n$ vertices.
-However there is a good theorem.</p>
+<p>Can any metric be approximated by a tree metric?
+With large enough distortion, yes.
+But with bounded distortion, no — in fact, there exist metrics on $n$ vertices for which no tree metric has distortion less than $\frac{n-1}{8}$.
+However, the following theorem gives a useful randomized result.</p>
 
 <p>Given a metric $d$ on $V$ such that $d_{uv}$ $\ge$ $1$ for all $u$ $\neq$ $v$, there exists a randomized algorithm that finds a tree metric $(V’, T)$ such that for all $u, v$ $\in$ $V$, $d_{uv}$ $\le$ $T_{uv}$ and $E[T_{uv}]$ $\le$ $O(\ln \left\vert V \right\vert)d_{uv}$.
 Notice that this randomized algorithm picks a tree metric from a given graph.
@@ -685,11 +683,11 @@ Therefore, claim holds.</p>
 
 <ol>
   <li>$\mathcal{A}_{uv}$ is the least common ancestor of $u$ and $v$.</li>
-  <li>We say $w$ settles the pair of $u$ and $v$ on $i$ if $w$ is the first vertex in permutation $\pi$ such that at least one of $u$ and $v$ is in the hypersphere $B(w, r_i)$.</li>
-  <li>We say $w$ cut $u$ and $v$ on level $i$ if exactly one of $u$ and $v$ is in the hypersphere $B(w, r_i)$.</li>
-  <li>$X_{iw}(u,v)$ be the event that $w$ cuts $(u, v)$ on level $i$.</li>
-  <li>$S_{iW}(u,v)$ be the event that $w$ settles $(u, v)$ on level $i$.</li>
-  <li>$\mathbb{1}(x)$ is an indicator fuction such that $1$ if $x$ is true $0$ otherwise.</li>
+  <li>We say $w$ <strong>settles</strong> the pair $(u, v)$ on level $i$ if $w$ is the first vertex in $\pi$ such that at least one of $u, v$ is in $B(w, r_i)$.</li>
+  <li>We say $w$ <strong>cuts</strong> $(u, v)$ on level $i$ if exactly one of $u, v$ is in $B(w, r_i)$.</li>
+  <li>$X_{iw}(u,v)$ is the event that $w$ cuts $(u, v)$ on level $i$.</li>
+  <li>$S_{iw}(u,v)$ is the event that $w$ settles $(u, v)$ on level $i$.</li>
+  <li>$\mathbb{1}(x)$ is the indicator function: $1$ if $x$ is true, $0$ otherwise.</li>
 </ol>
 
 <p>First, $T_{uv}$ $=$ 
@@ -708,7 +706,7 @@ $\le$ $\sum\limits_{w \in V}\sum\limits_{i = 0}^{\log_2 \Delta - 1} \mathbb{1}(\
 <p>Now if we go back to the algorithm, there are two random events at the algorithm which are “picking $r_0$” and “picking a random permutation $\pi$”.
 Therefore, we can average on certain path to select $T_{uv}$.
 Then, $E[T_{uv}]$ $\le$ $\sum\limits_{w \in V}\sum\limits_{i = 0}^{\log_2 \Delta - 1} Pr[X_{iw}(u,v) \cap S_{iw}(u,v)] 2^{i + 3}$.
-Notice that existance of $X_{iw}(u,v) \cap S_{iw}(u,v)$ for $w$ $\in$ $V$ on level $i$ will be depend on random varaibles and other things are indepedent with the random variable.</p>
+Note that the existence of $X_{iw}(u,v) \cap S_{iw}(u,v)$ for $w \in V$ on level $i$ depends on the random variables; all other quantities are deterministic.</p>
 
 <p>Now, let’s consider followings.</p>
 
@@ -807,7 +805,7 @@ $16d{uv}(\ln \left\vert V \right\vert + 1)$ $=$ $O(\ln \left\vert V \right\vert)
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/" title="Approximation of metrics by tree metrics">https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/" title="Approximating Metrics by Tree Metrics">https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -833,8 +831,8 @@ $16d{uv}(\ln \left\vert V \right\vert + 1)$ $=$ $O(\ln \left\vert V \right\vert)
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" rel="next" title="Approximation algorithm(13) - Buy-at-bulk network design">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(13) - Buy-at-bulk network design
+              <a href="/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" rel="next" title="Approximation Algorithm (13): Buy-at-Bulk Network Design">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (13): Buy-at-Bulk Network Design
               </a>
             
           </div>
@@ -843,8 +841,8 @@ $16d{uv}(\ln \left\vert V \right\vert + 1)$ $=$ $O(\ln \left\vert V \right\vert)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/19/Useful-mathematical-tools/" rel="prev" title="Useful mathematical tools">
-                Useful mathematical tools <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/math/2021/05/19/Useful-mathematical-tools/" rel="prev" title="Useful Mathematical Tools">
+                Useful Mathematical Tools <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -935,7 +933,7 @@ $16d{uv}(\ln \left\vert V \right\vert + 1)$ $=$ $O(\ln \left\vert V \right\vert)
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1143,7 +1141,7 @@ $16d{uv}(\ln \left\vert V \right\vert + 1)$ $=$ $O(\ln \left\vert V \right\vert)
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/05/19/tree-metrics/';
               this.page.identifier = '/algorithm/approximation/2021/05/19/tree-metrics/';
-              this.page.title = 'Approximation of metrics by tree metrics';
+              this.page.title = 'Approximating Metrics by Tree Metrics';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

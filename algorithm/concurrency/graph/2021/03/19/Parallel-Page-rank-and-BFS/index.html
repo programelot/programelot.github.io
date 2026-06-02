@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Page rank Page rank is an algorithm to determine which vertices are important and which aren’t. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the value of vertex $i$ at the $t$th iteration such that $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighbor vetices of vertex $i$. $\beta$ is a convergance ratio which means $0 \le \beta \le 1$.">
+<meta name="description" content="PageRank PageRank is an algorithm that determines the relative importance of vertices in a graph. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the rank of vertex $i$ at iteration $t$, with $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighboring vertices of vertex $i$. $\beta$ is the convergence damping factor, with $0 \le \beta \le 1$.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Parallel Page rank/BFS">
+<meta property="og:title" content="Parallel PageRank and BFS">
 <meta property="og:url" content="https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Page rank Page rank is an algorithm to determine which vertices are important and which aren’t. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the value of vertex $i$ at the $t$th iteration such that $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighbor vetices of vertex $i$. $\beta$ is a convergance ratio which means $0 \le \beta \le 1$.">
+<meta property="og:description" content="PageRank PageRank is an algorithm that determines the relative importance of vertices in a graph. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the rank of vertex $i$ at iteration $t$, with $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighboring vertices of vertex $i$. $\beta$ is the convergence damping factor, with $0 \le \beta \le 1$.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Parallel Page rank/BFS">
-<meta name="twitter:description" content="Page rank Page rank is an algorithm to determine which vertices are important and which aren’t. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the value of vertex $i$ at the $t$th iteration such that $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighbor vetices of vertex $i$. $\beta$ is a convergance ratio which means $0 \le \beta \le 1$.">
+<meta name="twitter:title" content="Parallel PageRank and BFS">
+<meta name="twitter:description" content="PageRank PageRank is an algorithm that determines the relative importance of vertices in a graph. For each iteration, each vertex will be updated by nearby vertices. Let’s define some terms. $r_i^t$ as the rank of vertex $i$ at iteration $t$, with $\sum\limits_{i \in V}r_i^0 = 1$. $\delta(i)$ as the set of neighboring vertices of vertex $i$. $\beta$ is the convergence damping factor, with $0 \le \beta \le 1$.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Parallel Page rank/BFS | REAL</title>
+  <title>Parallel PageRank and BFS | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Parallel Page rank/BFS
+            Parallel PageRank and BFS
           
         </h1>
         
@@ -494,19 +494,19 @@
 
 
 
-  <h2 id="page-rank">Page rank</h2>
-<p>Page rank is an algorithm to determine which vertices are important and which aren’t.
+  <h2 id="pagerank">PageRank</h2>
+<p>PageRank is an algorithm that determines the relative importance of vertices in a graph.
 For each iteration, each vertex will be updated by nearby vertices.
 Let’s define some terms.</p>
 <ol>
-  <li>$r_i^t$ as the value of vertex $i$ at the $t$th iteration such that $\sum\limits_{i \in V}r_i^0 = 1$.</li>
-  <li>$\delta(i)$ as the set of neighbor vetices of vertex $i$.</li>
-  <li>$\beta$ is a convergance ratio which means $0 \le \beta \le 1$.</li>
+  <li>$r_i^t$ as the rank of vertex $i$ at iteration $t$, with $\sum\limits_{i \in V}r_i^0 = 1$.</li>
+  <li>$\delta(i)$ as the set of neighboring vertices of vertex $i$.</li>
+  <li>$\beta$ is the convergence damping factor, with $0 \le \beta \le 1$.</li>
 </ol>
 
 <p>With terms above, $r_i^{t + 1}$ $=$ $\beta\sum\limits_{j \in \delta(i)}\frac{r_j^t}{|\delta(j)|}$ $+$ $(1 - \beta)\frac{1}{|V|}$.
 If we keep compute this, it will converges to some values and that is the result of the page rank.
-Notice that if we have $\sum\limits_{i \in V}r_i^t$ $=$ $1$ then it will keep consistant after $t$th iteration either.
+Note that if $\sum\limits_{i \in V}r_i^t = 1$, then it remains consistent after each iteration as well.
 Proof is like follow.</p>
 
 <p>$\sum\limits_{i \in V}r_i^{t + 1}$
@@ -539,7 +539,7 @@ $=$ $\beta$ $+$ $(1 - \beta)$ $=$ $1$.</p>
     </div>
 </div>
 
-<p>If we see the algorithm above, it is known to be parallelizable for each $\operatorname{for}$ loops because there is no dependancy between each $\operatorname{for}$ loops.
+<p>The algorithm above can be parallelized across the <code class="language-plaintext highlighter-rouge">for</code> loops because there is no dependency between iterations of each loop.
 As a result, page rank can be parallelized like below.</p>
 
 <div class="algTab">
@@ -570,19 +570,18 @@ As a result, page rank can be parallelized like below.</p>
   <li>$\operatorname{for} \operatorname{in} \operatorname{reduction}$<br /></li>
 </ol>
 
-<p>$\operatorname{for} \operatorname{in} \operatorname{parallel}$ means that it can run in the fully parallelized manner.
-$\operatorname{for} \operatorname{in} \operatorname{reduction}$ means that it can be run in the fully parallelized manner but it will collect data in the tree order.
-First technique usually used for operations that have no dependancies between.
-Second technique usually used for there is some dependancies for data but it will accumulates outputs only.
-Notice that it is easy to check about the dependancies by reading the algorithm above and there may exists read dependancy but there is no write dependancy.</p>
+<p><code class="language-plaintext highlighter-rouge">for in parallel</code> means the iterations can be fully parallelized independently.
+<code class="language-plaintext highlighter-rouge">for in reduction</code> means the iterations are fully parallel but the results are combined in tree order.
+The first technique applies when there are no inter-iteration dependencies.
+The second applies when iterations write to a shared accumulator — there are read dependencies but no write conflicts.
+Inspecting the algorithm above confirms there are read dependencies but no write dependencies.</p>
 
 <h2 id="bfs">BFS</h2>
 
-<p>BFS is a search algorithm which reads vertices from source.
-It doesn’t need to be a specific algorithm.
-It may updates the edge distance from source, it may finds component by checking boolean variable of vertices.
-In this case, let’s assume that BFS works for set a value of vertex to a distance from the source.
-For do this, let’s define $\delta(v)$ as the set of neighbor of $v$.</p>
+<p>BFS (Breadth-First Search) is a graph traversal algorithm that explores vertices level by level from a source.
+It can be used for various purposes: computing shortest distances from the source, finding connected components, and more.
+Here, we use BFS to assign each vertex its distance from the source.
+Let $\delta(v)$ denote the set of neighbors of $v$.</p>
 
 <div class="algTab">
     $\operatorname{for} i \leftarrow 0, \cdots, |V| - 1$<div class="algTab">
@@ -628,15 +627,12 @@ For do this, let’s define $\delta(v)$ as the set of neighbor of $v$.</p>
     </div>
 </div>
 
-<p>However, there are two problems at this approach.
-One is that we need a critical section to handle every thing.
-Therefore, it’s not good for many cases.
-We may can avoid critical section for $Q$ by using a local queue.
-However, we need critical section for $d[u]$ anyway.
-Also, there could be potentially many collision for $\delta(v)$.
-Therefore many of them is actually waste of performance.</p>
+<p>However, there are two problems with this approach.
+First, a critical section is needed to update shared state, which limits scalability.
+We can avoid locking $Q$ by using thread-local queues, but $d[u]$ still requires synchronization.
+Second, many threads may race to update the same neighbor $u$, resulting in wasted work.</p>
 
-<p>Therefore, there is another approach for BFS known as bottom-up-approach.
+<p>To address these issues, there is an alternative approach known as the bottom-up BFS.
 To do this, let’s define $\delta(v)$ as incoming edges in this case.</p>
 
 <div class="algTab">
@@ -664,14 +660,13 @@ To do this, let’s define $\delta(v)$ as incoming edges in this case.</p>
     </div>
 </div>
 
-<p>In this case, we can utilize full computing unit because it can pass many collisons.
-Also, this can be parallelized better because there is no critical section to update each node’s depth at the moment.
-Therefore, this works well than before some times.
-However, it is known to be better to use both with some criteria.
-Therefore, there is a finite automaton to switching between these two.
-It starts with top-down approach first.
-If it has lower number of edges to explor then it switches to bottom-up approach.
-If it has few vertices to work then it switchs back to top-down approach.</p>
+<p>This approach makes better use of the full computing resources by avoiding many unnecessary collisions.
+It also parallelizes more efficiently because there is no critical section needed to update each node’s distance.
+Therefore, bottom-up BFS often outperforms top-down BFS for dense frontier cases.
+However, it is known to be optimal to use a hybrid strategy, switching between the two approaches based on the current state.
+The algorithm starts with top-down BFS.
+When the frontier becomes large (many edges to explore), it switches to the bottom-up approach.
+When the frontier shrinks again (few unvisited vertices remain), it switches back to top-down.</p>
 
 
       
@@ -707,7 +702,7 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" title="Parallel Page rank/BFS">https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/</a>
+      <a href="https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" title="Parallel PageRank and BFS">https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -733,8 +728,8 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" rel="next" title="Approximation algorithm(6) - Minimum-degree spanning tree">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(6) - Minimum-degree spanning tree
+              <a href="/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" rel="next" title="Approximation Algorithm (6): Minimum-Degree Spanning Tree">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (6): Minimum-Degree Spanning Tree
               </a>
             
           </div>
@@ -743,8 +738,8 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/concurrency/multi%20computer%20computing/2021/03/18/MPI/" rel="prev" title="MPI">
-                MPI <i class="fa fa-chevron-right"></i>
+              <a href="/concurrency/distributed%20computing/mpi/2021/03/18/MPI/" rel="prev" title="MPI: Message Passing Interface">
+                MPI: Message Passing Interface <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -844,7 +839,7 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -909,7 +904,7 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#page-rank"> <span class="nav-number">1</span> <span class="nav-text">Page rank</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#bfs"> <span class="nav-number">2</span> <span class="nav-text">BFS</span> </a> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#pagerank"> <span class="nav-number">1</span> <span class="nav-text">PageRank</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#bfs"> <span class="nav-number">2</span> <span class="nav-text">BFS</span> </a> </li>
     </ol>
   </div>
             
@@ -1080,7 +1075,7 @@ If it has few vertices to work then it switchs back to top-down approach.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/';
               this.page.identifier = '/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/';
-              this.page.title = 'Parallel Page rank/BFS';
+              this.page.title = 'Parallel PageRank and BFS';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

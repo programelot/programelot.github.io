@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Integer multicommodity flow problem is a problem to avoiding congetstion in edges. It can be used at the field of circuit design because avoiding critical path is a typical problem in a circuit design. Now, let’s fomulating a problem.">
+<meta name="description" content="The integer multicommodity flow problem aims to minimize edge congestion. It applies naturally to circuit design, where avoiding critical paths is a key concern. We begin by formulating the problem.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(8) - Integer multicommodity flows">
+<meta property="og:title" content="Approximation Algorithm (8): Integer Multicommodity Flows">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Integer multicommodity flow problem is a problem to avoiding congetstion in edges. It can be used at the field of circuit design because avoiding critical path is a typical problem in a circuit design. Now, let’s fomulating a problem.">
+<meta property="og:description" content="The integer multicommodity flow problem aims to minimize edge congestion. It applies naturally to circuit design, where avoiding critical paths is a key concern. We begin by formulating the problem.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(8) - Integer multicommodity flows">
-<meta name="twitter:description" content="Integer multicommodity flow problem is a problem to avoiding congetstion in edges. It can be used at the field of circuit design because avoiding critical path is a typical problem in a circuit design. Now, let’s fomulating a problem.">
+<meta name="twitter:title" content="Approximation Algorithm (8): Integer Multicommodity Flows">
+<meta name="twitter:description" content="The integer multicommodity flow problem aims to minimize edge congestion. It applies naturally to circuit design, where avoiding critical paths is a key concern. We begin by formulating the problem.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(8) - Integer multicommodity flows | REAL</title>
+  <title>Approximation Algorithm (8): Integer Multicommodity Flows | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(8) - Integer multicommodity flows
+            Approximation Algorithm (8): Integer Multicommodity Flows
           
         </h1>
         
@@ -482,9 +482,9 @@
 
 
 
-  <p>Integer multicommodity flow problem is a problem to avoiding congetstion in edges.
-It can be used at the field of circuit design because avoiding critical path is a typical problem in a circuit design.
-Now, let’s fomulating a problem.</p>
+  <p>The integer multicommodity flow problem aims to minimize edge congestion.
+It applies naturally to circuit design, where avoiding critical paths is a key concern.
+We begin by formulating the problem.</p>
 
 <p>Let’s think about a given graph $G = (V,E)$ and pairs of vertices $\{s_i, t_i\} \subset V$ for $1 \le i \le k$.
 There is a set of paths $P_i$ which consists of feasible paths from $s_i$ to $t_i$.
@@ -519,7 +519,7 @@ If we select $\delta = 1$, $Pr[Y_e \ge (1 + \delta)c\ln{n}W^\star]$ $&lt;$ $e^{-
 <p>As a result, $Pr[\max(Y_e) \ge (1 + \delta)c\ln{n}W^\star]$ $\le$ 
 $\sum\limits_{e \in E}Pr[Y_e \ge (1 + \delta)c\ln{n}W^\star]$ $\le$
 $\sum\limits_{e \in E}n^{-c/3}$ $=$ $\left\vert E \right\vert n^{-c/3}$ $\le$ $n^{2-c/3}$.
-As a result, we can select $c$ to make resonable probability with resonable maximum $Y_e$.</p>
+We can therefore choose $c$ to achieve a reasonable probability bound with a reasonable maximum $Y_e$.</p>
 
 <p>If $W^\star \ge c\ln{n}$, we can select $\delta = \sqrt{\frac{c\ln{n}}{W^\star}} \le 1$ then
 $Pr[Y_e \ge (1 + \delta)W^\star]$ $&lt;$ 
@@ -563,8 +563,7 @@ If we can select $x_P$, we can make a flow of value $x_P$ following $P$.
 Then, we can decompose such flow to paths.
 Notice that we can make a flow without cycle that makes better solution than flow with cycle because cycle will not change a value of flow but increase the congestion of edges.
 As a result, problem above can be changed to find a flows of paths and it is the same problem we’ve just changed. 
-In other word, proof can be easily summariezed to “New algorithm finds a feasible solution of original algorithm because we can compose flow from paths.
-In the same time, old algorithm can find a feasible solution of new algoroithm because we can decompose flow to paths.”</p>
+In short, the proof reduces to: “The new algorithm finds a feasible solution for the original because flows can be composed from paths; conversely, the original algorithm finds a feasible solution for the new formulation because flows can be decomposed into paths.”</p>
 
 
       
@@ -604,7 +603,7 @@ In the same time, old algorithm can find a feasible solution of new algoroithm b
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/" title="Approximation algorithm(8) - Integer multicommodity flows">https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/" title="Approximation Algorithm (8): Integer Multicommodity Flows">https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -630,8 +629,8 @@ In the same time, old algorithm can find a feasible solution of new algoroithm b
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/" rel="next" title="Approximation algorithm(9) - survivable network design">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(9) - survivable network design
+              <a href="/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/" rel="next" title="Approximation Algorithm (9): Survivable Network Design">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (9): Survivable Network Design
               </a>
             
           </div>
@@ -640,8 +639,8 @@ In the same time, old algorithm can find a feasible solution of new algoroithm b
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/04/03/Chernoff-bounds/" rel="prev" title="Chernoff bounds">
-                Chernoff bounds <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/probability/approximation/2021/04/03/Chernoff-bounds/" rel="prev" title="Chernoff Bounds">
+                Chernoff Bounds <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -732,7 +731,7 @@ In the same time, old algorithm can find a feasible solution of new algoroithm b
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -940,7 +939,7 @@ In the same time, old algorithm can find a feasible solution of new algoroithm b
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/';
               this.page.identifier = '/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/';
-              this.page.title = 'Approximation algorithm(8) - Integer multicommodity flows';
+              this.page.title = 'Approximation Algorithm (8): Integer Multicommodity Flows';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

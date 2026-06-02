@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Now, we will re visit the uncapacitated facility location problem. Before we proceed new methodology for the uncapacitated facility location problem, we can extend some terminology for assignment costs between clients or facilities either. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
+<meta name="description" content="We revisit the uncapacitated facility location problem. Before presenting the new approach, we extend the assignment cost notation to include costs between clients as well as between clients and facilities. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(12) - The uncapacitated facility location problem(2)">
+<meta property="og:title" content="Approximation Algorithm (12): Uncapacitated Facility Location (2)">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Now, we will re visit the uncapacitated facility location problem. Before we proceed new methodology for the uncapacitated facility location problem, we can extend some terminology for assignment costs between clients or facilities either. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
+<meta property="og:description" content="We revisit the uncapacitated facility location problem. Before presenting the new approach, we extend the assignment cost notation to include costs between clients as well as between clients and facilities. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(12) - The uncapacitated facility location problem(2)">
-<meta name="twitter:description" content="Now, we will re visit the uncapacitated facility location problem. Before we proceed new methodology for the uncapacitated facility location problem, we can extend some terminology for assignment costs between clients or facilities either. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
+<meta name="twitter:title" content="Approximation Algorithm (12): Uncapacitated Facility Location (2)">
+<meta name="twitter:description" content="We revisit the uncapacitated facility location problem. Before presenting the new approach, we extend the assignment cost notation to include costs between clients as well as between clients and facilities. For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$. If we define this as so, it is known to reserve the solution because of the metric closure.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(12) - The uncapacitated facility location problem(2) | REAL</title>
+  <title>Approximation Algorithm (12): Uncapacitated Facility Location (2) | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(12) - The uncapacitated facility location problem(2)
+            Approximation Algorithm (12): Uncapacitated Facility Location (2)
           
         </h1>
         
@@ -482,8 +482,8 @@
 
 
 
-  <p>Now, we will re visit the uncapacitated facility location problem.
-Before we proceed new methodology for the uncapacitated facility location problem, we can extend some terminology for assignment costs between clients or facilities either.
+  <p>We revisit the uncapacitated facility location problem.
+Before presenting the new approach, we extend the assignment cost notation to include costs between clients as well as between clients and facilities.
 For example, assignment costs between client $i$ and $j$ can be the shortest path between client $i$ and $j$.
 If we define this as so, it is known to reserve the solution because of the metric closure.</p>
 
@@ -516,7 +516,7 @@ With that let denotes $N(i)$ as the set of neighbors of $i$.</li>
   <li>Client $j$ contributes to $i$ if $w_{ij}^{\star} &gt; 0$.</li>
 </ol>
 
-<p>Now, let’s desing the algorithm.</p>
+<p>Now let’s design the algorithm.</p>
 
 <div class="algTab">
     $v \leftarrow 0, w \leftarrow 0$<br />
@@ -540,7 +540,7 @@ With that let denotes $N(i)$ as the set of neighbors of $i$.</li>
     </div>
 </div>
 
-<p>Now, if $j$ doesn’t have a neighbor in $T’$ then there exists $i \in T’$ such that $c_{ij} \le 3v_j$ if we work with algorithm above.
+<p>If client $j$ has no neighbor in $T’$, the algorithm guarantees there exists $i \in T’$ such that $c_{ij} \le 3v_j$.
 Let’s think about $T$ at the end of “$\operatorname{while}$ $S$ $\neq$ $\emptyset$” and $T’$ at the end of the algorithm.
 Then, all $j$’s neighbors will be excluded in $T$ at the loop of “$\operatorname{while}$ $T$ $\neq$ $\emptyset$” to be not exists in $T’$.
 Let denotes $h$ as the neighbor of $j$ which $v_j$ stops to increase.
@@ -570,7 +570,7 @@ Therefore, this algorithm runs in a polynomial time.</p>
 
 <p>Now, let’s think about the solution that assigning $i$ to $j$ which $i$ that contributes to $j$ and assigning $i$ that doesn’t contributes to the facility in $T’$ to facility $j$ in $T’$ such that maximizes $v_j$.
 Notice that from the algorithm we forced it to contributes to only one facility or none of facility.
-Let’s define $A(i)$ $\subseteq$ $N(i)$ as the set of assigned clients to faciltiy $i$ which clients neighbors $i$ $\in$ $T$, $Z$ as the set of clients that doesn’t neighbors any $j$ $\in$ $T$ and $X(j)$ $\in$ $T’$ as the facility that client $j$ assigned for $j$ such that contributes none of $T’$.
+Let $A(i) \subseteq N(i)$ be the set of clients assigned to facility $i$ (those that neighbor some $i \in T$), $Z$ as the set of clients that doesn’t neighbors any $j$ $\in$ $T$ and $X(j)$ $\in$ $T’$ as the facility that client $j$ assigned for $j$ such that contributes none of $T’$.
 Notice that all of clients that contributes none of $T’$ will not be in $A(i)$ because it should neighbor of some in $T’$ if it contributes.
 At the same time, all of clients that contributes some of $T’$ will be in $A(i)$ because it should neighbor of some in $T’$.
 Then, total cost will be $\sum\limits_{i \in T’}(f_i + \sum\limits_{j \in A(i)}c_{ij})$ $+$ $\sum\limits_{j \in Z}c_{X(j)j}$.
@@ -620,7 +620,7 @@ Therefore, claim holds.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/" title="Approximation algorithm(12) - The uncapacitated facility location problem(2)">https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/" title="Approximation Algorithm (12): Uncapacitated Facility Location (2)">https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -646,8 +646,8 @@ Therefore, claim holds.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/12/Semidefinite-programming/" rel="next" title="Semidefinite programming">
-                <i class="fa fa-chevron-left"></i> Semidefinite programming
+              <a href="/algorithm/approximation/optimization/2021/05/12/Semidefinite-programming/" rel="next" title="Semidefinite Programming">
+                <i class="fa fa-chevron-left"></i> Semidefinite Programming
               </a>
             
           </div>
@@ -656,8 +656,8 @@ Therefore, claim holds.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" rel="prev" title="Approximation algorithm(11) - Generalized Steiner tree problem">
-                Approximation algorithm(11) - Generalized Steiner tree problem <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" rel="prev" title="Approximation Algorithm (11): Generalized Steiner Tree Problem">
+                Approximation Algorithm (11): Generalized Steiner Tree Problem <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -748,7 +748,7 @@ Therefore, claim holds.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -956,7 +956,7 @@ Therefore, claim holds.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/';
               this.page.identifier = '/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/';
-              this.page.title = 'Approximation algorithm(12) - The uncapacitated facility location problem(2)';
+              this.page.title = 'Approximation Algorithm (12): Uncapacitated Facility Location (2)';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

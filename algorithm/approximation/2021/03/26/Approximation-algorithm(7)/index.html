@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+<meta name="description" content="Unweighted Version Minimizing the sum of completion times is a classic scheduling problem. Suppose there are $n$ jobs to be scheduled. Let $r_1, r_2, \ldots, r_n$ be their release dates and $p_1, p_2, \ldots, p_n$ be their processing times. We schedule all $n$ jobs in some order. Let $C_1, C_2, \ldots, C_n$ be the completion times of the jobs in that order. The goal is to find a schedule that minimizes $\sum\limits_{i=1}^n C_i$. The machine is non-preemptive, meaning a job cannot be interrupted once started.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(7) - Minimizing sum of completion time">
+<meta property="og:title" content="Approximation Algorithm (7): Minimizing Sum of Completion Times">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+<meta property="og:description" content="Unweighted Version Minimizing the sum of completion times is a classic scheduling problem. Suppose there are $n$ jobs to be scheduled. Let $r_1, r_2, \ldots, r_n$ be their release dates and $p_1, p_2, \ldots, p_n$ be their processing times. We schedule all $n$ jobs in some order. Let $C_1, C_2, \ldots, C_n$ be the completion times of the jobs in that order. The goal is to find a schedule that minimizes $\sum\limits_{i=1}^n C_i$. The machine is non-preemptive, meaning a job cannot be interrupted once started.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(7) - Minimizing sum of completion time">
-<meta name="twitter:description" content="Unweighted version Minimizing the sum of completion time is a typical scheduling problem. Let’s think that there are $n$ works to be done. With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times. Now we will schedule that $n$ works in some order. With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished. The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$. Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.">
+<meta name="twitter:title" content="Approximation Algorithm (7): Minimizing Sum of Completion Times">
+<meta name="twitter:description" content="Unweighted Version Minimizing the sum of completion times is a classic scheduling problem. Suppose there are $n$ jobs to be scheduled. Let $r_1, r_2, \ldots, r_n$ be their release dates and $p_1, p_2, \ldots, p_n$ be their processing times. We schedule all $n$ jobs in some order. Let $C_1, C_2, \ldots, C_n$ be the completion times of the jobs in that order. The goal is to find a schedule that minimizes $\sum\limits_{i=1}^n C_i$. The machine is non-preemptive, meaning a job cannot be interrupted once started.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(7) - Minimizing sum of completion time | REAL</title>
+  <title>Approximation Algorithm (7): Minimizing Sum of Completion Times | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(7) - Minimizing sum of completion time
+            Approximation Algorithm (7): Minimizing Sum of Completion Times
           
         </h1>
         
@@ -482,14 +482,14 @@
 
 
 
-  <h2 id="unweighted-version">Unweighted version</h2>
-<p>Minimizing the sum of completion time is a typical scheduling problem.
-Let’s think that there are $n$ works to be done.
-With these works, let $r_1, r_2, \cdots, r_n$ as release dates and $p_1, p_2, \cdots, p_n$ as processing times.
-Now we will schedule that $n$ works in some order.
-With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished.
-The problem is to find a schedule that minimize $\sum\limits_{i=1}^n C_i$.
-Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.</p>
+  <h2 id="unweighted-version">Unweighted Version</h2>
+<p>Minimizing the sum of completion times is a classic scheduling problem.
+Suppose there are $n$ jobs to be scheduled.
+Let $r_1, r_2, \ldots, r_n$ be their release dates and $p_1, p_2, \ldots, p_n$ be their processing times.
+We schedule all $n$ jobs in some order.
+Let $C_1, C_2, \ldots, C_n$ be the completion times of the jobs in that order.
+The goal is to find a schedule that minimizes $\sum\limits_{i=1}^n C_i$.
+The machine is non-preemptive, meaning a job cannot be interrupted once started.</p>
 
 <p>Now we can do a relaxation at this problem by just changing nonpreemptive machine to preemptive machine which means each work may interrupt other works.
 If we change it to the preemptive machine, we can solve this problem with an algorithm below.</p>
@@ -501,9 +501,8 @@ If we change it to the preemptive machine, we can solve this problem with an alg
         Process work $i$ until work $i$ is done or new $r_j$ release.<br />
     </div>
 </div>
-<p>This algorithm is so-called SRPT(shorted remaining processing time) rule.
-This algorithm works in a polynomial time because we can update a left processing time and get a minimum processing time by heap.
-We also can check whether new $r_j$ released or not by just sorting $r_i$ and checking it later.</p>
+<p>This is the Shortest Remaining Processing Time (SRPT) rule.
+It runs in polynomial time: we maintain remaining processing times in a heap to get the minimum efficiently, and preprocess release dates by sorting to detect when new jobs become available.</p>
 
 <p>However, notice that schedule from preemptive machine can’t be run on the nonpreemptive machine.
 Therefore, we need to make a strict order for the execution.
@@ -524,18 +523,15 @@ The reason is that work $i$ can only be idle because work $1, 2, \cdots, i - 1$ 
 <p>Therefore, $C^N_i$ $\le$ $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$ $\le$ $2C^P_i$.
 Which means $\sum\limits_{i=1}^n C^N_i$ $\le$ $2\sum\limits_{i=1}^n C^P_i$ $\le$ $2\operatorname{OPT}$.</p>
 
-<h2 id="weighted-version">Weighted version</h2>
-<p>The weighted version of the problem is simillar with the unweighted version.</p>
+<h2 id="weighted-version">Weighted Version</h2>
+<p>The weighted version is similar to the unweighted version.</p>
 
-<p>Let’s think that there are $n$ works to be done.
-With these works, let $r_1, r_2, \cdots, r_n$ as release dates, $p_1, p_2, \cdots, p_n$ as processing times and $w_1, w_2, \cdots, w_n$ as weights of each works.
-Notice that $w_i \ge 0$ $\forall 1 \le i \le n$
-Now we will schedule that $n$ works in some order.
-With that order, let’s define $C_1, C_2, \cdots, C_n$ as times that each work finished.
-The problem is to find a schedule that minimize $\sum\limits_{i=1}^n w_i C_i$.
-Notice that this machine is a nonpreemptively which means each work can’t interrupt other works.</p>
+<p>There are $n$ jobs with release dates $r_1, \ldots, r_n$, processing times $p_1, \ldots, p_n$, and weights $w_1, \ldots, w_n \ge 0$.
+Let $C_1, \ldots, C_n$ be the completion times in the chosen order.
+The goal is to find a schedule that minimizes $\sum\limits_{i=1}^n w_i C_i$.
+The machine is non-preemptive.</p>
 
-<p>Now, we can’t solve problem with preemptive machine unlike unweighted verison of the problem in polynomail time else P is NP.
+<p>Unlike the unweighted version, the weighted variant cannot be solved with a preemptive machine in polynomial time unless P $=$ NP.
 Therefore, we will use a relaxation with linear programming in it.
 Relaxation of this problem is like below.</p>
 
@@ -577,7 +573,7 @@ Then, we can get 2 facts like unweighted version did and we can know other two f
 </ol>
 
 <p>Third fact is a trivial because $C^L_i$ is ordered in $i$ and this means $C^L_i \ge C^L_j$ $\forall 1 \le j \le i$ and from the constraint $C^L_i \ge C^L_j \ge r_j$ $\forall 1 \le j \le i$.
-Simillary, fourth fact can be proven in following way.
+Similarly, the fourth fact can be proven as follows.
 From the constaint, $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_j$.<br />
 Then, $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_j$ $\le$ $\sum\limits_{j = 1}^{i} p_jC^L_i$ $=$ $C^L_i\sum\limits_{j = 1}^{i} p_j$ $=$ $C^L_i\rho(\{1,2,\cdots,i\})$.<br />
 As a result, $\frac{1}{2}\rho(\{1,2,\cdots,i\})$ $\le$ $C^L_i$ by dividing $\rho(\{1,2,\cdots,i\})$ for each side of $\frac{1}{2}\rho(\{1,2,\cdots,i\})^2$ $\le$ $C^L_i\rho(\{1,2,\cdots,i\})$.<br />
@@ -585,13 +581,12 @@ Therefore, fact 3, 4 has been proven.<br />
 Which means $C^R_i$ $\le$ $\max\limits_{k=1,2,\cdots,i}r_k$ $+$ $\sum\limits_{k=1}^i p_k$ $\le$ $C^L_i + 2C^L_i$ $=$ $3C^L_i$.<br />
 Therefore, $\sum\limits_{i=1}^n C^R_i$ $\le$ $\sum\limits_{i=1}^n 3C^L_i$ $\le$ $3\operatorname{OPT}$</p>
 
-<p>We didn’t discussed about the running time and it look exponential because the number of contraints is exponential.
-However, we still can solve this problem in the polynomial time with ellipsoid method which doesn’t bounded in the number of contraints.</p>
+<p>We have not yet discussed the running time. The number of constraints appears exponential, but the ellipsoid method solves LP in polynomial time regardless of the number of constraints.</p>
 
 <p>To solve this problem with ellipsoid method, we need a seperation oracle that runs in the polynomial time and checks whether a solution is a feasible or not.
 If we have a seperation oracle, ellipsoid method can solve the linear programming in $O(poly(log u, n))$ which $u$ is bit in use for saving the data.</p>
 
-<p>However we need to shirnk the number of constraint to check because it is exponential of number of variables.
+<p>However, we need a separation oracle that checks feasibility efficiently, since the number of constraints is exponential.
 Therefore, we claim below.</p>
 
 <p>“Let’s define $S_1 = \{1$}, $S_2 = \{1, 2$}, $\cdots$, $S_n = \{1,2,\cdots,n$}.
@@ -661,7 +656,7 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/" title="Approximation algorithm(7) - Minimizing sum of completion time">https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/" title="Approximation Algorithm (7): Minimizing Sum of Completion Times">https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -687,8 +682,8 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/network/2021/04/02/Network-flow-algorithm/" rel="next" title="Network decomposition">
-                <i class="fa fa-chevron-left"></i> Network decomposition
+              <a href="/algorithm/graph/network/2021/04/02/Network-flow-algorithm/" rel="next" title="Network Flow Decomposition">
+                <i class="fa fa-chevron-left"></i> Network Flow Decomposition
               </a>
             
           </div>
@@ -697,8 +692,8 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/lp/2021/03/24/Linear-programming/" rel="prev" title="Linear programming">
-                Linear programming <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/optimization/lp/2021/03/24/Linear-programming/" rel="prev" title="Linear Programming">
+                Linear Programming <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -798,7 +793,7 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -863,7 +858,7 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#unweighted-version"> <span class="nav-number">1</span> <span class="nav-text">Unweighted version</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#weighted-version"> <span class="nav-number">2</span> <span class="nav-text">Weighted version</span> </a> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#unweighted-version"> <span class="nav-number">1</span> <span class="nav-text">Unweighted Version</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#weighted-version"> <span class="nav-number">2</span> <span class="nav-text">Weighted Version</span> </a> </li>
     </ol>
   </div>
             
@@ -1034,7 +1029,7 @@ As a result, we don’t need to see all the contraint but only for $S = \{1,2,\c
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/';
               this.page.identifier = '/algorithm/approximation/2021/03/26/Approximation-algorithm(7)/';
-              this.page.title = 'Approximation algorithm(7) - Minimizing sum of completion time';
+              this.page.title = 'Approximation Algorithm (7): Minimizing Sum of Completion Times';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

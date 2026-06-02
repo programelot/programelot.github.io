@@ -117,13 +117,13 @@
 <meta name="description" content="Problem is like below. There is a set of items $I = \{1,2,\cdots,n$}, where each item $i$ has a value $v_i \gt 0$ and a size $s_i \gt 0$. Now, knapsack problem is a “Find the maximum possible value with capacity $B$”.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(4) - Knapsack">
+<meta property="og:title" content="Approximation Algorithm (4): Knapsack">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="Problem is like below. There is a set of items $I = \{1,2,\cdots,n$}, where each item $i$ has a value $v_i \gt 0$ and a size $s_i \gt 0$. Now, knapsack problem is a “Find the maximum possible value with capacity $B$”.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(4) - Knapsack">
+<meta name="twitter:title" content="Approximation Algorithm (4): Knapsack">
 <meta name="twitter:description" content="Problem is like below. There is a set of items $I = \{1,2,\cdots,n$}, where each item $i$ has a value $v_i \gt 0$ and a size $s_i \gt 0$. Now, knapsack problem is a “Find the maximum possible value with capacity $B$”.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(4) - Knapsack | REAL</title>
+  <title>Approximation Algorithm (4): Knapsack | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(4) - Knapsack
+            Approximation Algorithm (4): Knapsack
           
         </h1>
         
@@ -524,11 +524,10 @@ Now, knapsack problem is a “Find the maximum possible value with capacity $B$�
     $\operatorname{return}(\max_{j=1}^{W}{j | OPT_{n, j} \le B})$
 </div>
 <p>In this case, $\operatorname{OPT}_{i,j}$ means the smallest size possible with $1,2,\cdots, i$ items with value below $j$.
-Now, it is shown that we have two options.
-Algorithm bounded in O(nB) or O(nW).</p>
+We thus have two options: an algorithm bounded by $O(nB)$ or $O(nV)$.</p>
 
-<p>However, $B$ and $W$ may arbitrary big and running time may become too long.
-Now, we will try to make a quantization for it.</p>
+<p>However, $B$ and $V$ may be arbitrarily large, causing the running time to be too long.
+We address this by quantizing (scaling and rounding) the values.</p>
 
 <h2 id="quantization">Quantization</h2>
 <div class="algTab">
@@ -558,7 +557,7 @@ Now, we will try to make a quantization for it.</p>
 Let’s define $v_i’$ $=$ [$\frac{v_i}{\mu}$].
 Then for the new $V$ value, $V’$ $=$ $\sum\limits_{i = 1}^n v_i’$ $\le$ $\sum\limits_{i = 1}^n (\frac{v_i}{\mu})$ $=$ $\sum\limits_{i = 1}^n (\frac{v_i n}{M \epsilon})$ $\le$ $\sum\limits_{i = 1}^n (\frac{n}{\epsilon})$ $=$ $O(n^2/\epsilon)$.</p>
 
-<p>Now, we need to show that it returns at least $(1 - \epsilon)$ of $\operatorname{OPT}$ for show it is a $\operatorname{FPAS}$.
+<p>Now, we need to show that it returns at least $(1 - \epsilon) \cdot \operatorname{OPT}$ to establish it as an FPTAS.
 To prove this, we need some facts, 1, $M \le OPT$, 2. $\mu v_i’ \le v_i \le \mu(v_i’ + 1)$.
 Also, we can get $\mu v_i’ \ge v_i - \mu$, $\epsilon M = n \mu$.</p>
 
@@ -603,7 +602,7 @@ Then, $\sum\limits_{i \in S} v_i$ $\ge$ $\sum\limits_{i \in S} \mu v_i’$ $\ge$
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/" title="Approximation algorithm(4) - Knapsack">https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/" title="Approximation Algorithm (4): Knapsack">https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -629,8 +628,8 @@ Then, $\sum\limits_{i \in S} v_i$ $\ge$ $\sum\limits_{i \in S} \mu v_i’$ $\ge$
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/" rel="next" title="Approximation algorithm(5) - K-center">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(5) - K-center
+              <a href="/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/" rel="next" title="Approximation Algorithm (5): K-Center Clustering">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (5): K-Center Clustering
               </a>
             
           </div>
@@ -639,8 +638,8 @@ Then, $\sum\limits_{i \in S} v_i$ $\ge$ $\sum\limits_{i \in S} \mu v_i’$ $\ge$
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/concurrency/gpu/2021/03/16/CUDA_Stream/" rel="prev" title="CUDA">
-                CUDA <i class="fa fa-chevron-right"></i>
+              <a href="/gpu/cuda/concurrency/2021/03/16/CUDA_Stream/" rel="prev" title="CUDA: Basic GPU Programming">
+                CUDA: Basic GPU Programming <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -740,7 +739,7 @@ Then, $\sum\limits_{i \in S} v_i$ $\ge$ $\sum\limits_{i \in S} \mu v_i’$ $\ge$
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -976,7 +975,7 @@ Then, $\sum\limits_{i \in S} v_i$ $\ge$ $\sum\limits_{i \in S} \mu v_i’$ $\ge$
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/';
               this.page.identifier = '/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/';
-              this.page.title = 'Approximation algorithm(4) - Knapsack';
+              this.page.title = 'Approximation Algorithm (4): Knapsack';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

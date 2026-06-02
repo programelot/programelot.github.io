@@ -355,7 +355,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/simulation/approximation/2020/11/21/MontyHole/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/probability/simulation/2020/11/21/MontyHole/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -377,8 +377,8 @@
           
             
                 
-                <a class="post-title-link" href="/simulation/approximation/2020/11/21/MontyHole/" itemprop="url">
-                Monty hall problem and monte carlo method
+                <a class="post-title-link" href="/probability/simulation/2020/11/21/MontyHole/" itemprop="url">
+                The Monty Hall Problem and Monte Carlo Method
               </a>
             
           
@@ -423,8 +423,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/simulation" itemprop="url" rel="index">
-                    <span itemprop="name">simulation</span>
+                  <a href="/category/#/probability" itemprop="url" rel="index">
+                    <span itemprop="name">probability</span>
                   </a>
                 </span>
 
@@ -435,8 +435,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/approximation" itemprop="url" rel="index">
-                    <span itemprop="name">approximation</span>
+                  <a href="/category/#/simulation" itemprop="url" rel="index">
+                    <span itemprop="name">simulation</span>
                   </a>
                 </span>
 
@@ -494,7 +494,7 @@
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/simulation/approximation/2020/11/21/MontyHole/#more" rel="contents">
+            <a class="btn" href="/probability/simulation/2020/11/21/MontyHole/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -547,7 +547,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/15/SortingAlgorithm/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/sorting/2020/11/15/SortingAlgorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -569,8 +569,8 @@
           
             
                 
-                <a class="post-title-link" href="/algorithm/2020/11/15/SortingAlgorithm/" itemprop="url">
-                Sorting algorithm analysis
+                <a class="post-title-link" href="/algorithm/sorting/2020/11/15/SortingAlgorithm/" itemprop="url">
+                Sorting Algorithm Analysis
               </a>
             
           
@@ -622,6 +622,18 @@
 
                 
                 
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/sorting" itemprop="url" rel="index">
+                    <span itemprop="name">sorting</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -667,13 +679,13 @@
 
 
 
-  <p>From the previous algorithms, qsort is the slowest at the worst cases and others are always $O(n logn)$.
-However, qsort is known to be fastest at the most of cases.</p>
+  <p>Among the previous algorithms, quick sort performs worst in the worst case, while the others are always $O(n \log n)$.
+However, quick sort is known to be the fastest in practice for most inputs.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2020/11/15/SortingAlgorithm/#more" rel="contents">
+            <a class="btn" href="/algorithm/sorting/2020/11/15/SortingAlgorithm/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -726,7 +738,7 @@ However, qsort is known to be fastest at the most of cases.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/15/Heapsort/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/sorting/2020/11/15/Heapsort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -748,8 +760,8 @@ However, qsort is known to be fastest at the most of cases.</p>
           
             
                 
-                <a class="post-title-link" href="/algorithm/2020/11/15/Heapsort/" itemprop="url">
-                Heap sort
+                <a class="post-title-link" href="/algorithm/sorting/2020/11/15/Heapsort/" itemprop="url">
+                Heap Sort
               </a>
             
           
@@ -801,6 +813,18 @@ However, qsort is known to be fastest at the most of cases.</p>
 
                 
                 
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/sorting" itemprop="url" rel="index">
+                    <span itemprop="name">sorting</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -846,13 +870,13 @@ However, qsort is known to be fastest at the most of cases.</p>
 
 
 
-  <p>Heap sort is an in-place algorithm that sorts the list with heap.
-It first changes a list to the heap and then keeps poping it and push the maximum value to the end of the list.
-To change a list to the heap in-place, list is assumed to be form of complete binary tree.
-With this assumption, it read from bottom to up and downHeap to change complete binary tree to heap.
-This takes $O(n log n)$(Infact, it is known to be $O(n)$ with carefull analysis).
-After that, just pop head and push it to end of the list.
-As a result, it is $O(n log n)$ in-place sorting algorithm.
+  <p>Heap sort is an in-place sorting algorithm that uses a heap data structure.
+It first transforms the list into a max-heap, then repeatedly pops the maximum value and places it at the end of the list.
+To build the heap in-place, the list is treated as a complete binary tree.
+With this assumption, it traverses from the bottom up and applies <code class="language-plaintext highlighter-rouge">downHeap</code> to convert the binary tree into a valid heap.
+This step takes $O(n \log n)$ (in fact, it is known to run in $O(n)$ with a careful analysis).
+After that, repeatedly swapping the root with the last element and restoring the heap property yields the sorted result.
+Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm.
 ```python
 def downHeap(lst, length, idx):
     if 2 * idx + 2 &lt; length:
@@ -876,7 +900,7 @@ def downHeap(lst, length, idx):
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2020/11/15/Heapsort/#more" rel="contents">
+            <a class="btn" href="/algorithm/sorting/2020/11/15/Heapsort/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -929,7 +953,7 @@ def downHeap(lst, length, idx):
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/QuickAlgorithms/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/sorting/2020/11/14/QuickAlgorithms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -951,8 +975,8 @@ def downHeap(lst, length, idx):
           
             
                 
-                <a class="post-title-link" href="/algorithm/2020/11/14/QuickAlgorithms/" itemprop="url">
-                Quick sort and quick select
+                <a class="post-title-link" href="/algorithm/sorting/2020/11/14/QuickAlgorithms/" itemprop="url">
+                Quick Sort and Quick Select
               </a>
             
           
@@ -1004,6 +1028,18 @@ def downHeap(lst, length, idx):
 
                 
                 
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/sorting" itemprop="url" rel="index">
+                    <span itemprop="name">sorting</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -1049,26 +1085,26 @@ def downHeap(lst, length, idx):
 
 
 
-  <p>Quick sort and quick selection are algorithms based on the partition algorithm.
-Partition algorithm makes a two sublist($\mathcal{A},\mathcal{B}$) and one value(pivot$ = \gamma$).
-Every element in $\mathcal{A}$ is less or equal than $\gamma$.
+  <p>Quick sort and quick select are algorithms based on the partition algorithm.
+The partition algorithm produces two sublists ($\mathcal{A},\mathcal{B}$) and one pivot value ($\gamma$).
+Every element in $\mathcal{A}$ is less than or equal to $\gamma$.
 Every element in $\mathcal{B}$ is greater than $\gamma$.
-Notice that $\mathcal{A}$ can have some elements which have the same value with $\gamma$ but not $\gamma$ itself and $\mathcal{A},\mathcal{B}$ may be $\emptyset$.
-As a result, partition function makes $\gamma$ is the highest value of $\mathcal{A}$.
+Note that $\mathcal{A}$ may contain elements equal to $\gamma$ but not $\gamma$ itself, and either $\mathcal{A}$ or $\mathcal{B}$ may be $\emptyset$.
+As a result, the partition function places $\gamma$ as the maximum element of $\mathcal{A}$.
 Quick sort uses this property to sort the list.
-After partition function, $\mathcal{A}$ and $\mathcal{B}$ is sorted to each other by $\gamma$.
-Therefore, quick sort just sort recursively in $\mathcal{A}$ and $\mathcal{B}$.
-Quick selection do the simillar thing.
-Quick selection is an algorithm to find a $n$th element in the entire list.
-If the order of $\gamma$ is equal with what you seek for, it’s done.
-If the order of $\gamma$ is less than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{B}$ again.
-If the order of $\gamma$ is greater than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{A}$ again.
-It works like semi-quick sort, it sorts a little bit and tries to find the elements in $n$th order and keep going on.</p>
+After partitioning, $\mathcal{A}$ and $\mathcal{B}$ are sorted relative to each other by $\gamma$.
+Therefore, quick sort simply recurses on $\mathcal{A}$ and $\mathcal{B}$.
+Quick select does a similar thing.
+Quick select is an algorithm to find the $n$-th element in the list.
+If the rank of $\gamma$ equals the target rank, we are done.
+If the rank of $\gamma$ is less than the target, adjust the target rank and recurse into $\mathcal{B}$.
+If the rank of $\gamma$ is greater than the target, adjust the target rank and recurse into $\mathcal{A}$.
+It works like a partial quick sort — it sorts just enough to locate the desired element.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2020/11/14/QuickAlgorithms/#more" rel="contents">
+            <a class="btn" href="/algorithm/sorting/2020/11/14/QuickAlgorithms/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1121,7 +1157,7 @@ It works like semi-quick sort, it sorts a little bit and tries to find the eleme
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/MergeSort/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/sorting/2020/11/14/MergeSort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -1143,8 +1179,8 @@ It works like semi-quick sort, it sorts a little bit and tries to find the eleme
           
             
                 
-                <a class="post-title-link" href="/algorithm/2020/11/14/MergeSort/" itemprop="url">
-                Merge sort
+                <a class="post-title-link" href="/algorithm/sorting/2020/11/14/MergeSort/" itemprop="url">
+                Merge Sort
               </a>
             
           
@@ -1196,6 +1232,18 @@ It works like semi-quick sort, it sorts a little bit and tries to find the eleme
 
                 
                 
+                  , 
+                
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/sorting" itemprop="url" rel="index">
+                    <span itemprop="name">sorting</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -1241,14 +1289,14 @@ It works like semi-quick sort, it sorts a little bit and tries to find the eleme
 
 
 
-  <p>Merge sort is a naive way to sort with divide and conquer methodology.
-It needs $O(n)$ memory space unlike quick sort.
-However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
+  <p>Merge sort is a straightforward divide-and-conquer sorting algorithm.
+It requires $O(n)$ extra memory, unlike quick sort.
+However, it guarantees $O(n \log n)$ time complexity even in the worst case.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2020/11/14/MergeSort/#more" rel="contents">
+            <a class="btn" href="/algorithm/sorting/2020/11/14/MergeSort/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1359,7 +1407,7 @@ However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>

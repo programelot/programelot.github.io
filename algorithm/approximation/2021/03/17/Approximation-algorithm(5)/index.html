@@ -117,13 +117,13 @@
 <meta name="description" content="We can imagine some clustering problem with $k$-centers. For $G = (V,E)$ with distance $d_{ij} \ge 0$ between each pair of vertices $i,j \in V$. We assume that $d_{ii} = 0, d_{ij} = d_{ji}, d_{ik} + d_{kj} \ge d_{ij}$ for each $i,j,k \in V$. Now, problem is find $S \subset V$ which $|S| = k$. Which makes $max(d(j,S))$ smallest. It’s like making clusters efficiently.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(5) - K-center">
+<meta property="og:title" content="Approximation Algorithm (5): K-Center Clustering">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="We can imagine some clustering problem with $k$-centers. For $G = (V,E)$ with distance $d_{ij} \ge 0$ between each pair of vertices $i,j \in V$. We assume that $d_{ii} = 0, d_{ij} = d_{ji}, d_{ik} + d_{kj} \ge d_{ij}$ for each $i,j,k \in V$. Now, problem is find $S \subset V$ which $|S| = k$. Which makes $max(d(j,S))$ smallest. It’s like making clusters efficiently.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(5) - K-center">
+<meta name="twitter:title" content="Approximation Algorithm (5): K-Center Clustering">
 <meta name="twitter:description" content="We can imagine some clustering problem with $k$-centers. For $G = (V,E)$ with distance $d_{ij} \ge 0$ between each pair of vertices $i,j \in V$. We assume that $d_{ii} = 0, d_{ij} = d_{ji}, d_{ik} + d_{kj} \ge d_{ij}$ for each $i,j,k \in V$. Now, problem is find $S \subset V$ which $|S| = k$. Which makes $max(d(j,S))$ smallest. It’s like making clusters efficiently.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(5) - K-center | REAL</title>
+  <title>Approximation Algorithm (5): K-Center Clustering | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(5) - K-center
+            Approximation Algorithm (5): K-Center Clustering
           
         </h1>
         
@@ -500,14 +500,13 @@ Let’s define $d(i,S) = \min_{j \in S} d_{ij}$.</p>
     </div>
 </div>
 
-<p>It’s running time is trivial to be in polynomial time.
-Now, let’s define that $O$ $=$ {$e_1, e_2, \cdots, e_k$} is an optimal solution, $S^O$ $=$ {$S_1, S_2, \cdots, S_k$} as each cluster and $r^{\star}$ as its radius.
-Then two points in each $S_i$ can’t be greater than $2r^{\star}$ by triangle inequality.</p>
+<p>Its running time is clearly polynomial.
+Let $O = {e_1, e_2, \ldots, e_k}$ be an optimal solution, $S^O = {S_1, S_2, \ldots, S_k}$ be its clusters, and $r^{\star}$ its radius.
+By the triangle inequality, any two points within the same cluster $S_i$ are at most $2r^{\star}$ apart.</p>
 
-<p>Now, let’s think about the soltuion of an approximation algorithm $A$.
-Between the progress, if $A \neq O$ then in some moment algorithm needs to choose two points from some $S_i$.
-However, it means that farest points are already bounded in $2r^{\star}$ from the fact above.
-As a result, it can’t make bigger radius than $2r^{\star}$.</p>
+<p>Now consider the solution produced by algorithm $A$.
+If $A \neq O$, at some step the algorithm must select two points from the same optimal cluster $S_i$.
+Since those two points are at most $2r^{\star}$ apart, the algorithm’s radius cannot exceed $2r^{\star}$.</p>
 
 
       
@@ -547,7 +546,7 @@ As a result, it can’t make bigger radius than $2r^{\star}$.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/" title="Approximation algorithm(5) - K-center">https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/" title="Approximation Algorithm (5): K-Center Clustering">https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -573,8 +572,8 @@ As a result, it can’t make bigger radius than $2r^{\star}$.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/17/Family-of-algorithms/" rel="next" title="Family of algorithms">
-                <i class="fa fa-chevron-left"></i> Family of algorithms
+              <a href="/algorithm/approximation/2021/03/17/Family-of-algorithms/" rel="next" title="Families of Approximation Algorithms">
+                <i class="fa fa-chevron-left"></i> Families of Approximation Algorithms
               </a>
             
           </div>
@@ -583,8 +582,8 @@ As a result, it can’t make bigger radius than $2r^{\star}$.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/" rel="prev" title="Approximation algorithm(4) - Knapsack">
-                Approximation algorithm(4) - Knapsack <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/03/17/Approximation-algorithm(4)/" rel="prev" title="Approximation Algorithm (4): Knapsack">
+                Approximation Algorithm (4): Knapsack <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -675,7 +674,7 @@ As a result, it can’t make bigger radius than $2r^{\star}$.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -883,7 +882,7 @@ As a result, it can’t make bigger radius than $2r^{\star}$.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/';
               this.page.identifier = '/algorithm/approximation/2021/03/17/Approximation-algorithm(5)/';
-              this.page.title = 'Approximation algorithm(5) - K-center';
+              this.page.title = 'Approximation Algorithm (5): K-Center Clustering';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

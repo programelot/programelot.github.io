@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="An optimization problem is a problem to find minimum/maximum possible soltuion. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, it is known that $\operatorname{SET COVER}$ is a NP-hard. Which means that requires more than polynomial time if P $ eq$ NP.">
+<meta name="description" content="An optimization problem is a problem of finding the minimum or maximum possible solution. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, $\operatorname{SET COVER}$ is known to be NP-hard, meaning it requires more than polynomial time unless P $=$ NP.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(1) - SET COVER">
+<meta property="og:title" content="Approximation Algorithm (1): Set Cover">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="An optimization problem is a problem to find minimum/maximum possible soltuion. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, it is known that $\operatorname{SET COVER}$ is a NP-hard. Which means that requires more than polynomial time if P $ eq$ NP.">
+<meta property="og:description" content="An optimization problem is a problem of finding the minimum or maximum possible solution. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, $\operatorname{SET COVER}$ is known to be NP-hard, meaning it requires more than polynomial time unless P $=$ NP.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(1) - SET COVER">
-<meta name="twitter:description" content="An optimization problem is a problem to find minimum/maximum possible soltuion. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, it is known that $\operatorname{SET COVER}$ is a NP-hard. Which means that requires more than polynomial time if P $ eq$ NP.">
+<meta name="twitter:title" content="Approximation Algorithm (1): Set Cover">
+<meta name="twitter:description" content="An optimization problem is a problem of finding the minimum or maximum possible solution. For example, $\operatorname{SET COVER}$ is a well-known optimization problem. For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$. For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$. Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$. Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$. However, $\operatorname{SET COVER}$ is known to be NP-hard, meaning it requires more than polynomial time unless P $=$ NP.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(1) - SET COVER | REAL</title>
+  <title>Approximation Algorithm (1): Set Cover | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(1) - SET COVER
+            Approximation Algorithm (1): Set Cover
           
         </h1>
         
@@ -482,20 +482,20 @@
 
 
 
-  <p>An optimization problem is a problem to find minimum/maximum possible soltuion.
+  <p>An optimization problem is a problem of finding the minimum or maximum possible solution.
 For example, $\operatorname{SET COVER}$ is a well-known optimization problem.
 For a universe set $U = \{e_1,e_2,e_3,\cdots,e_n$} and subsets of $U$, $S_j(1 \le j \le n)$. 
 $\operatorname{SET COVER}$ is a problem to find a collection of subsets which minimize the sum of costs of subset $W_j$ and it contains every element in $U$.
 For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$.
 Optimal solution would be $W_3 + W_4 + W_5 + W_6 = 1 + 15 + 1 + 1 = 18$.
 Notice that $S_3 \cup S_4 \cup S_5 \cup S_6 = U$.
-However, it is known that $\operatorname{SET COVER}$ is a NP-hard.
-Which means that requires more than polynomial time if P $\neq$ NP.</p>
+However, $\operatorname{SET COVER}$ is known to be NP-hard,
+meaning it requires more than polynomial time unless P $=$ NP.</p>
 
 <p>Now, here the approximation algorithm works.</p>
 
-<p>$\alpha$-approximation algorithm is an algorithm that solves problem with maximum of $\alpha$ factor difference.
-Which means if problem’s solution is $\operatorname{OPT}$, solution of $\alpha$-approximation algorithm $ans$ needs to be $ans \le \alpha OPT$.</p>
+<p>An $\alpha$-approximation algorithm produces a solution within a factor of $\alpha$ of the optimum.
+That is, if the optimal solution cost is $\operatorname{OPT}$, the algorithm’s answer $\mathrm{ans}$ satisfies $\mathrm{ans} \le \alpha \cdot \operatorname{OPT}$.</p>
 
 <p>For the easy of explanation, $\operatorname{SET COVER}$ can be converted like below.
 Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \in \{0,1$}.
@@ -508,34 +508,34 @@ New problem is like below.</p>
 Notice that this kinds of problem is known as linear problem.
 Which is known to be solvable in the polynomial time.</p>
 
-<p>After solving problem above, we can get $x_j$ as the solution.
-However, to make it as a vaild solution, we need to do rounding.
-To achieve this, we need to find the maximum number of existance of element in unverse set $e_i$ in $S$s.
+<p>After solving the LP above, we obtain a fractional solution $x_j$.
+However, to produce a valid integer solution, we need to round the values.
+To do so, we compute the maximum frequency $f_{e_i}$ of each element $e_i$ across all sets $S_j$.
 For example, if $U = \{e_1,e_2,e_3,e_4,e_5$}, $S_1 = \{e_1,e_2$}, $S_2 = \{e_3,e_4$}, $S_3 = \{e_5$}, $S_4 = \{e_2,e_3$}, $S_5 = \{e_1$}, $S_6 = \{e_4$}, $W_1=10$, $W_2=10$, $W_3=1$, $W_4=15$, $W_5=1$, $W_6=1$.
-Number of existances are like $f_{e_1} = 2$, $f_{e_2} = 2$, $f_{e_3} = 2$, $f_{e_4} = 2$, $f_{e_5} = 1$.
-So, maximum of $f_{e_i}$, $f = 2$.
-Now, we only set $x_j \ge \frac{1}{f}$ to 1, otherwise to 0.
+The frequencies are $f_{e_1} = 2$, $f_{e_2} = 2$, $f_{e_3} = 2$, $f_{e_4} = 2$, $f_{e_5} = 1$.
+So the maximum frequency is $f = 2$.
+We then round up: set $x_j = 1$ if $x_j \ge \frac{1}{f}$, and $x_j = 0$ otherwise.
 Algorithm above can be done in polynomial time.</p>
 
 <p>Now, we need to prove that this is a proper $f$-approximation algorithm for original problem.</p>
 
 <ol>
   <li>
-    <p>Since, we choosed $x_j \ge \frac{1}{f}$ to 1 and maximum number of existance of element is $f$, we need to choose at least one of such $x_j \ge \frac{1}{f}$.
-Otherwise, $\sum\limits_{j|e_i \in S_j} x_j \ge 1$ can’t be happen.
-Therefore, $\operatorname{ans}$ is a valid solution.</p>
+    <p>Since we set $x_j = 1$ for all $x_j \ge \frac{1}{f}$, and the maximum frequency of any element is $f$, at least one such $x_j$ must be selected.
+Otherwise, $\sum\limits_{j:e_i \in S_j} x_j \ge 1$ cannot hold.
+Therefore, $\operatorname{ans}$ is a valid set cover.</p>
   </li>
   <li>
-    <p>Let’s assume that answer before rouding to $\operatorname{round}$.
-Since $\operatorname{ans}$ choosed only  $x_j \ge \frac{1}{f}$ to 1, $\operatorname{ans} \le f \operatorname{round}$.
-Notice that $\operatorname{round}$ will have no $x &gt; 1$.
-However $\operatorname{round} \le \operatorname{OPT}$ because we did relaxation.
-As a result, $\operatorname{ans} \le f \operatorname{round} \le f\operatorname{OPT}$.
-Proof stops in here.</p>
+    <p>Let $\operatorname{round}$ denote the LP solution before rounding.
+Since $\operatorname{ans}$ selects only those $x_j \ge \frac{1}{f}$, we have $\operatorname{ans} \le f \cdot \operatorname{round}$.
+Note that $\operatorname{round}$ has no $x_j &gt; 1$.
+Furthermore, $\operatorname{round} \le \operatorname{OPT}$ because it is a relaxation of the integer program.
+Therefore, $\operatorname{ans} \le f \cdot \operatorname{round} \le f \cdot \operatorname{OPT}$.
+This completes the proof.</p>
   </li>
 </ol>
 
-<p>Now, we made an efficient approach to this $\operatorname{SET COVER}$.</p>
+<p>We have constructed an efficient $f$-approximation algorithm for $\operatorname{SET COVER}$.</p>
 
 
       
@@ -575,7 +575,7 @@ Proof stops in here.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/" title="Approximation algorithm(1) - SET COVER">https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/" title="Approximation Algorithm (1): Set Cover">https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -601,8 +601,8 @@ Proof stops in here.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" rel="next" title="Approximation algorithm(2) - SET COVER">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(2) - SET COVER
+              <a href="/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" rel="next" title="Approximation Algorithm (2): Set Cover">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (2): Set Cover
               </a>
             
           </div>
@@ -611,8 +611,8 @@ Proof stops in here.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/concurrency/problem/2020/11/22/ABAProblem/" rel="prev" title="ABA problem">
-                ABA problem <i class="fa fa-chevron-right"></i>
+              <a href="/concurrency/lock-free/2020/11/22/ABAProblem/" rel="prev" title="The ABA Problem">
+                The ABA Problem <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -703,7 +703,7 @@ Proof stops in here.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -911,7 +911,7 @@ Proof stops in here.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/';
               this.page.identifier = '/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/';
-              this.page.title = 'Approximation algorithm(1) - SET COVER';
+              this.page.title = 'Approximation Algorithm (1): Set Cover';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

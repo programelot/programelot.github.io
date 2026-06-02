@@ -117,13 +117,13 @@
 <meta name="description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
+<meta property="og:title" content="Approximation Algorithm (6): Minimum-Degree Spanning Tree">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(6) - Minimum-degree spanning tree">
+<meta name="twitter:title" content="Approximation Algorithm (6): Minimum-Degree Spanning Tree">
 <meta name="twitter:description" content="Minimum-degree spanning tree problem is a problem to minimize the degree of the spanning tree from given graph. Formally, problem is like below. Given a graph $G = (V,E)$, minimized the $\max_{v \in V} deg(v)$ from a spanning tree $T$ of $G$. Notice that this is a NP-hard problem.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(6) - Minimum-degree spanning tree | REAL</title>
+  <title>Approximation Algorithm (6): Minimum-Degree Spanning Tree | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(6) - Minimum-degree spanning tree
+            Approximation Algorithm (6): Minimum-Degree Spanning Tree
           
         </h1>
         
@@ -500,8 +500,8 @@ Let $l = \left[ log_2 n \right]$, $d_T(u)$ denotes the degree of $u$ in $T$ and 
     return $T$
 </div>
 
-<p>From the algorithm above, it guarantess that a local search will imporve the solution and it will terminates.
-Notice that “$max(d_T(v), d_T(W)) \le d_T(u) - 2$” gurantees that “a local search will imporve the solution” and
+<p>The algorithm guarantees that each local search step improves the solution and that the process terminates.
+The condition “$\max(d_T(v), d_T(w)) \le d_T(u) - 2$” ensures that each local step improves the solution, and
 “$\operatorname{while} \exists (v,w) \not\in T.E$ but $(v,w) \in G.E$
         such that there is a $u$ such that $u$ is a vertex in a cycle $C$ of $T.E$ + $(v,w)$,
             $d_T(u) \ge \Delta(T) - l$ and $max(d_T(v), d_T(w)) \le d_T(u) - 2$” gurantees that “it will terminates”.</p>
@@ -514,8 +514,8 @@ Now, let’s define the set of one end point of inter-connecting edges between d
 Then, we have $\operatorname{OPT} \ge \frac{k}{|S|}$.
 The reason is like follow.
 It should be connected after re-connecting them again and this requires $k$ edges at least.
-However, edges can be choosesn in the $S$ only.
-Which means each components need to have at least $\frac{k}{|S|}$ edges.</p>
+However, edges can only be chosen from endpoints in $S$.
+This means each component must contribute at least $\frac{k}{|S|}$ edges.</p>
 
 <p>Now, let’s think about an output of algorithm $T$ from above.
 Let $S_i$ denote the set of nodes of $deg(v) \ge i$ in $T$.
@@ -586,7 +586,7 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" title="Approximation algorithm(6) - Minimum-degree spanning tree">https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/" title="Approximation Algorithm (6): Minimum-Degree Spanning Tree">https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -612,8 +612,8 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/lp/2021/03/24/Linear-programming/" rel="next" title="Linear programming">
-                <i class="fa fa-chevron-left"></i> Linear programming
+              <a href="/algorithm/optimization/lp/2021/03/24/Linear-programming/" rel="next" title="Linear Programming">
+                <i class="fa fa-chevron-left"></i> Linear Programming
               </a>
             
           </div>
@@ -622,8 +622,8 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" rel="prev" title="Parallel Page rank/BFS">
-                Parallel Page rank/BFS <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/concurrency/graph/2021/03/19/Parallel-Page-rank-and-BFS/" rel="prev" title="Parallel PageRank and BFS">
+                Parallel PageRank and BFS <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -714,7 +714,7 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -922,7 +922,7 @@ Now, potential decrase at least by a factor of $(1-\frac{2}{27n^3})$ at each ite
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/';
               this.page.identifier = '/algorithm/approximation/2021/03/24/Approximation-algorithm(6)/';
-              this.page.title = 'Approximation algorithm(6) - Minimum-degree spanning tree';
+              this.page.title = 'Approximation Algorithm (6): Minimum-Degree Spanning Tree';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

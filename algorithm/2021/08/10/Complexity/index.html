@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="To analyze performances of algorithms, we need to define some jargons.">
+<meta name="description" content="To analyze the performance of algorithms, we need a few key definitions.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Complexity">
+<meta property="og:title" content="Algorithm Complexity Analysis">
 <meta property="og:url" content="https://programelot.github.io/algorithm/2021/08/10/Complexity/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="To analyze performances of algorithms, we need to define some jargons.">
+<meta property="og:description" content="To analyze the performance of algorithms, we need a few key definitions.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Complexity">
-<meta name="twitter:description" content="To analyze performances of algorithms, we need to define some jargons.">
+<meta name="twitter:title" content="Algorithm Complexity Analysis">
+<meta name="twitter:description" content="To analyze the performance of algorithms, we need a few key definitions.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Complexity | REAL</title>
+  <title>Algorithm Complexity Analysis | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Complexity
+            Algorithm Complexity Analysis
           
         </h1>
         
@@ -470,60 +470,50 @@
 
 
 
-  <p>To analyze performances of algorithms, we need to define some jargons.</p>
+  <p>To analyze the performance of algorithms, we need a few key definitions.</p>
 
-<h2 id="time-complexity">Time complexity</h2>
+<h2 id="time-complexity">Time Complexity</h2>
 
-<p>The time complexity of an algorithm, $T(n)$ is a function that denotes running time of the algorithm depending on the size of input data.
-For example, let’s think about an algorithm that adds data with other data.
-You may smart enough to add any arbitrary two number in 1 second.
-Then, how many time will it took for 100 data?
-It will be 100 seconds.
+<p>The time complexity of an algorithm, $T(n)$, is a function representing the running time as a function of the input size $n$.
+For example, suppose you can add any two numbers in 1 second.
+Then adding 100 numbers takes 100 seconds.
 In this case, $T(n) = n$.</p>
 
-<h2 id="big-o-notation">Big O notation</h2>
+<h2 id="big-o-notation">Big-O Notation</h2>
 
-<p>Big O notation is the method to guarantee the upper bound of algorithms’ perforamce.
-For any time complexity $T(n)$, we say $T(n)$ $=$ $O(g(n))$ if there is some positive constant $M$,$x_0$ such that $T(n)$ $\le$ $M g(n)$ for all $x \ge x_0$.
-For example, if $T(n)$ $=$ $n^3$ $+$ $10n^2$ $+$ $n$ $+$ $27$, $T(n)$ $=$ $O(n^3)$ for $M$ $=$ $39$, $x_0$ $=$ $1$.
-Notice that $T(n)$ $=$ $n^3$ $+$ $10n^2$ $+$ $n$ $+$ $27$ $\le$ $n^3$ $+$ $10n^3$ $+$ $n^3$ $+$ $27n^3$ $=$ $39n^3$ for $n$ $\ge$ $1$.
-In fact, it is enough to find the most steepest part in $T(n)$.</p>
+<p>Big-O notation provides an upper bound on an algorithm’s performance.
+For any time complexity $T(n)$, we write $T(n) = O(g(n))$ if there exist positive constants $M$ and $n_0$ such that $T(n) \le M g(n)$ for all $n \ge n_0$.
+For example, if $T(n) = n^3 + 10n^2 + n + 27$, then $T(n) = O(n^3)$ with $M = 39$, $n_0 = 1$, since $T(n) \le 39n^3$ for $n \ge 1$.
+In practice, it suffices to find the dominant (fastest-growing) term of $T(n)$.</p>
 
-<h2 id="asymptotically-approximate">Asymptotically approximate</h2>
+<h2 id="asymptotic-approximation">Asymptotic Approximation</h2>
 
-<p>In fact, it can be choosed to be worse than expected in big O notation.
-For example, $T(n)$ $=$ $O(n^2)$ if $T(n)$ $=$ $O(n)$ in all cases.
-Therefore, we say that “An algorithm’s time complexity asymptotically approximates to $g(n)$” when $\lim\limits_{n \leftarrow \infty}\frac{T(n)}{Mg(n)} = 1$ for some positive constant $M$.</p>
+<p>Big-O can be chosen pessimistically: $T(n) = O(n^2)$ is valid even when $T(n) = O(n)$.
+For a tighter characterization, we say an algorithm’s complexity is <strong>asymptotically equivalent</strong> to $g(n)$ when $\lim\limits_{n \to \infty}\frac{T(n)}{M g(n)} = 1$ for some positive constant $M$.</p>
 
-<h2 id="big-omega-notation">Big $\Omega$ notation</h2>
+<h2 id="big-omega-notation">Big-$\Omega$ Notation</h2>
 
-<p>Big $\Omega$ notation is the opposite with the big O notation.
-It guarantess the lower bound of algorithms’ performance.
-For any time complexity $T(n)$, we say $T(n)$ $=$ $\Omega(g(n))$ if there is some positive constant $M$,$x_0$ such that $T(n)$ $\ge$ $M g(n)$ for all $x \ge x_0$.</p>
+<p>Big-$\Omega$ notation is the lower-bound counterpart of Big-O.
+For any time complexity $T(n)$, we write $T(n) = \Omega(g(n))$ if there exist positive constants $M$ and $n_0$ such that $T(n) \ge M g(n)$ for all $n \ge n_0$.</p>
 
-<h2 id="big-theta-notation">Big $\Theta$ notation</h2>
+<h2 id="big-theta-notation">Big-$\Theta$ Notation</h2>
 
-<p>Big theta notation is used when an algorithm has the same complexity for both upper and lower bounds.
-In other word, we say $T(n)$ $=$ $\Theta(g(n))$ if there is some positive constant $M1$,$M_2$,$x_0$ such that $M_2 g(n)$ $\le$ $T(n)$ $\le$ $M_1 g(n)$ for all $x \ge x_0$.
-However, it is hard to expect that algorithm has such a complexity.
-Some algorithms’ performance vary between the data itself.
-Therefore, some algorithm can’t have big $\Theta$ notation for their time complexity.</p>
+<p>Big-$\Theta$ notation is used when both upper and lower bounds are the same.
+We write $T(n) = \Theta(g(n))$ if there exist positive constants $M_1$, $M_2$, and $n_0$ such that $M_2 g(n) \le T(n) \le M_1 g(n)$ for all $n \ge n_0$.
+However, not every algorithm has a tight $\Theta$ bound: some algorithms’ performance varies significantly depending on the input, so a single $\Theta$ expression may not capture their complexity.</p>
 
-<h2 id="amortized-complexity">Amortized complexity</h2>
+<h2 id="amortized-complexity">Amortized Complexity</h2>
 
-<p>Amortized complexity is another measurement to analysis an algorithm.
-Many algorithms doesn’t have a nice $\Theta$ notation to explain the performance’s performance.
-It really depends on the situation.
-However, it can be pessimistic to use only big O notation.
-Therefore, amortized complexity measures a performance of an algorithm by dividing its complexity between executions.
-If some algorithm works $O(1)$ for $n$ times and it works $O(n^2)$ for $1$ time.
-Then, the amortized complexity of this algorithm is $O(\frac{1 \times n + n^2}{n + 1})$ $=$ $O(n)$.</p>
+<p>Amortized complexity is a technique for analyzing algorithms whose cost varies across calls.
+Many algorithms do not have a clean $\Theta$ bound for every single operation.
+However, using only Big-O can be overly pessimistic.
+Amortized complexity distributes the total cost over all operations.
+For example, if an algorithm runs in $O(1)$ for $n$ steps and $O(n^2)$ for one step, the amortized complexity per step is $O!\left(\frac{n + n^2}{n+1}\right) = O(n)$.</p>
 
-<h2 id="space-complexity">Space complexity</h2>
+<h2 id="space-complexity">Space Complexity</h2>
 
-<p>Space complexity is another measurable tool for algorithms.
-It denotes how many memory spaces it uses.
-We use all of notations above to represent space complexity either.</p>
+<p>Space complexity measures how much memory an algorithm uses.
+All of the above notations (Big-O, $\Omega$, $\Theta$) apply to space complexity as well.</p>
 
 
       
@@ -559,7 +549,7 @@ We use all of notations above to represent space complexity either.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/2021/08/10/Complexity/" title="Complexity">https://programelot.github.io/algorithm/2021/08/10/Complexity/</a>
+      <a href="https://programelot.github.io/algorithm/2021/08/10/Complexity/" title="Algorithm Complexity Analysis">https://programelot.github.io/algorithm/2021/08/10/Complexity/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -585,8 +575,8 @@ We use all of notations above to represent space complexity either.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/2021/08/12/Array-List/" rel="next" title="Array and list">
-                <i class="fa fa-chevron-left"></i> Array and list
+              <a href="/algorithm/data%20structure/2021/08/12/Array-List/" rel="next" title="Array and List">
+                <i class="fa fa-chevron-left"></i> Array and List
               </a>
             
           </div>
@@ -595,8 +585,8 @@ We use all of notations above to represent space complexity either.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/2021/08/02/Algorithm/" rel="prev" title="Algorithm">
-                Algorithm <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/2021/08/02/Algorithm/" rel="prev" title="Introduction to Algorithms">
+                Introduction to Algorithms <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -696,7 +686,7 @@ We use all of notations above to represent space complexity either.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -761,7 +751,7 @@ We use all of notations above to represent space complexity either.</p>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#time-complexity"> <span class="nav-number">1</span> <span class="nav-text">Time complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-o-notation"> <span class="nav-number">2</span> <span class="nav-text">Big O notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#asymptotically-approximate"> <span class="nav-number">3</span> <span class="nav-text">Asymptotically approximate</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-omega-notation"> <span class="nav-number">4</span> <span class="nav-text">Big $\Omega$ notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-theta-notation"> <span class="nav-number">5</span> <span class="nav-text">Big $\Theta$ notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#amortized-complexity"> <span class="nav-number">6</span> <span class="nav-text">Amortized complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#space-complexity"> <span class="nav-number">7</span> <span class="nav-text">Space complexity</span> </a> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#time-complexity"> <span class="nav-number">1</span> <span class="nav-text">Time Complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-o-notation"> <span class="nav-number">2</span> <span class="nav-text">Big-O Notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#asymptotic-approximation"> <span class="nav-number">3</span> <span class="nav-text">Asymptotic Approximation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-omega-notation"> <span class="nav-number">4</span> <span class="nav-text">Big-$\Omega$ Notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#big-theta-notation"> <span class="nav-number">5</span> <span class="nav-text">Big-$\Theta$ Notation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#amortized-complexity"> <span class="nav-number">6</span> <span class="nav-text">Amortized Complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#space-complexity"> <span class="nav-number">7</span> <span class="nav-text">Space Complexity</span> </a> </li>
     </ol>
   </div>
             
@@ -932,7 +922,7 @@ We use all of notations above to represent space complexity either.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/2021/08/10/Complexity/';
               this.page.identifier = '/algorithm/2021/08/10/Complexity/';
-              this.page.title = 'Complexity';
+              this.page.title = 'Algorithm Complexity Analysis';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

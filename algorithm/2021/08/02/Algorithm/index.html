@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.">
+<meta name="description" content="An algorithm is a well-defined procedure for solving a problem. For example, imagine you just started a job at a city library. A tornado hit yesterday, and all the books fell off the shelves. Your employer asks you to put them back in order by book ID. Despite your meager pay, you have no choice but to sort them out. So you start thinking about the best way to do it.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Algorithm">
+<meta property="og:title" content="Introduction to Algorithms">
 <meta property="og:url" content="https://programelot.github.io/algorithm/2021/08/02/Algorithm/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.">
+<meta property="og:description" content="An algorithm is a well-defined procedure for solving a problem. For example, imagine you just started a job at a city library. A tornado hit yesterday, and all the books fell off the shelves. Your employer asks you to put them back in order by book ID. Despite your meager pay, you have no choice but to sort them out. So you start thinking about the best way to do it.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Algorithm">
-<meta name="twitter:description" content="Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.">
+<meta name="twitter:title" content="Introduction to Algorithms">
+<meta name="twitter:description" content="An algorithm is a well-defined procedure for solving a problem. For example, imagine you just started a job at a city library. A tornado hit yesterday, and all the books fell off the shelves. Your employer asks you to put them back in order by book ID. Despite your meager pay, you have no choice but to sort them out. So you start thinking about the best way to do it.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Algorithm | REAL</title>
+  <title>Introduction to Algorithms | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Algorithm
+            Introduction to Algorithms
           
         </h1>
         
@@ -470,20 +470,19 @@
 
 
 
-  <p>Algorithm is a mathmatical tool to solve some problem with propal methods.
-For example, let’s think about a situation follows.
-Oneday, you’ve got a job from a city library.
-However, there was a tournado yesterday so all books dropped out of the shelf.
-Your employer calls you and asks you to clean it up in order of books’ ID.
-Despite of your low payment, you have no way but clean it up.
-Therefore, you started to think about the way to clean it up.</p>
+  <p>An algorithm is a well-defined procedure for solving a problem.
+For example, imagine you just started a job at a city library.
+A tornado hit yesterday, and all the books fell off the shelves.
+Your employer asks you to put them back in order by book ID.
+Despite your meager pay, you have no choice but to sort them out.
+So you start thinking about the best way to do it.</p>
 
-<h2 id="insertion-sort">Insertion sort</h2>
-<p>You may give up to think about better way to clean it up.
-Instead of it, you just started to clean it up by reading the ID of each book and put the book which has the smallest ID into the shelf.</p>
+<h2 id="insertion-sort">Insertion Sort</h2>
+<p>You give up looking for a clever approach.
+Instead, you simply scan through the books, always picking the one with the smallest ID and placing it on the shelf.</p>
 
-<h2 id="quick-sort">Quick sort</h2>
-<p>While you are doing such a thing, your friend decided to do the follow.</p>
+<h2 id="quick-sort">Quick Sort</h2>
+<p>Meanwhile, your friend decides to do the following.</p>
 <ol>
   <li>If there is only one book, just put it in with the revered direction.</li>
   <li>If there is more than a book, select a book in random.</li>
@@ -493,16 +492,15 @@ Instead of it, you just started to clean it up by reading the ID of each book an
   <li>Otherwise, pick books between two reversed book and take books out of the shelf and do the same process from 1.</li>
 </ol>
 
-<p>Notice that the starting point, end point of the shelf will be considered as the reversed book in 6.</p>
+<p>Note that the two ends of the shelf are treated as reversed-book sentinels for step 6.</p>
 
-<p>This looks more complex but it usually takes much less time than you did.
+<p>This approach looks more complex, but it is usually much faster in practice.
 See the example below.</p>
 
 <h2 id="example">Example</h2>
-<p>For example, there are books that have IDs of 52,33,25,19,28,38,37,45,73,68,61,69,87,78,90.
-Now, let’s follow the each process.</p>
+<p>There are books with IDs: 52, 33, 25, 19, 28, 38, 37, 45, 73, 68, 61, 69, 87, 78, 90.</p>
 
-<p>You will clean the book like bellow.
+<p>Your approach (insertion sort) proceeds like this.
 Notice that I marked [] as books that shelf has, {} as what you are memorizing and () as what you are looking.
 In this algorithm, you can see only one book at once because numbers are too complex to see it on glance.
 At the same time, you can memorize a number at most because of its long digits.</p>
@@ -768,9 +766,8 @@ Notice that I marked revered book by !.</p>
 <p>As a result, your friend can get a result in 113 step.
 Which means 19% faster than you are.</p>
 
-<p>To solve this problem, we call both methods as sorting algorithms.
-However, it shows different perforamce as you can see.
-From the next time, it will focused on the performance of the algorithm and comparison between them.</p>
+<p>Both methods are sorting algorithms, but they show very different performance characteristics.
+The next posts will analyze algorithm performance and compare different approaches.</p>
 
 
       
@@ -806,7 +803,7 @@ From the next time, it will focused on the performance of the algorithm and comp
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/" title="Algorithm">https://programelot.github.io/algorithm/2021/08/02/Algorithm/</a>
+      <a href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/" title="Introduction to Algorithms">https://programelot.github.io/algorithm/2021/08/02/Algorithm/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -832,8 +829,8 @@ From the next time, it will focused on the performance of the algorithm and comp
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/2021/08/10/Complexity/" rel="next" title="Complexity">
-                <i class="fa fa-chevron-left"></i> Complexity
+              <a href="/algorithm/2021/08/10/Complexity/" rel="next" title="Algorithm Complexity Analysis">
+                <i class="fa fa-chevron-left"></i> Algorithm Complexity Analysis
               </a>
             
           </div>
@@ -842,8 +839,8 @@ From the next time, it will focused on the performance of the algorithm and comp
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/" rel="prev" title="Hardness of approximation">
-                Hardness of approximation <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/complexity/2021/05/28/Hardness-of-approximation/" rel="prev" title="Hardness of Approximation">
+                Hardness of Approximation <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -943,7 +940,7 @@ From the next time, it will focused on the performance of the algorithm and comp
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1008,7 +1005,7 @@ From the next time, it will focused on the performance of the algorithm and comp
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#insertion-sort"> <span class="nav-number">1</span> <span class="nav-text">Insertion sort</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#quick-sort"> <span class="nav-number">2</span> <span class="nav-text">Quick sort</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#example"> <span class="nav-number">3</span> <span class="nav-text">Example</span> </a> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#insertion-sort"> <span class="nav-number">1</span> <span class="nav-text">Insertion Sort</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#quick-sort"> <span class="nav-number">2</span> <span class="nav-text">Quick Sort</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#example"> <span class="nav-number">3</span> <span class="nav-text">Example</span> </a> </li>
     </ol>
   </div>
             
@@ -1179,7 +1176,7 @@ From the next time, it will focused on the performance of the algorithm and comp
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/2021/08/02/Algorithm/';
               this.page.identifier = '/algorithm/2021/08/02/Algorithm/';
-              this.page.title = 'Algorithm';
+              this.page.title = 'Introduction to Algorithms';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

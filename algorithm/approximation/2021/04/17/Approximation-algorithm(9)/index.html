@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="Survivable network design is a problem that designing a network that can survive from disconnecting some edges.">
+<meta name="description" content="Survivable network design is the problem of building a network that remains connected even after some edges are removed.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(9) - survivable network design">
+<meta property="og:title" content="Approximation Algorithm (9): Survivable Network Design">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="Survivable network design is a problem that designing a network that can survive from disconnecting some edges.">
+<meta property="og:description" content="Survivable network design is the problem of building a network that remains connected even after some edges are removed.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(9) - survivable network design">
-<meta name="twitter:description" content="Survivable network design is a problem that designing a network that can survive from disconnecting some edges.">
+<meta name="twitter:title" content="Approximation Algorithm (9): Survivable Network Design">
+<meta name="twitter:description" content="Survivable network design is the problem of building a network that remains connected even after some edges are removed.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(9) - survivable network design | REAL</title>
+  <title>Approximation Algorithm (9): Survivable Network Design | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(9) - survivable network design
+            Approximation Algorithm (9): Survivable Network Design
           
         </h1>
         
@@ -482,7 +482,7 @@
 
 
 
-  <p>Survivable network design is a problem that designing a network that can survive from disconnecting some edges.</p>
+  <p>Survivable network design is the problem of building a network that remains connected even after some edges are removed.</p>
 
 <p>Let’s assume that there is a given undirected graph $G = (V,E)$ with costs $c_e \ge 0$ $\forall e \in E$.
 Now, let’s define connectivity requirments $r_{ij} \in \mathbb{Z}^{+} \cup \{0\}$ for all pairs of vertices $i,j \in V$, where $i \neq j$.
@@ -498,8 +498,8 @@ If we have a such min-cut then we have such flow either.</p>
 
 <p>Now, we can do a linear programming relaxation like we did in the set cover.
 “Minimize $\sum\limits_{e \in E} c_e x_e$ such that $\sum\limits_{e \in \delta(S)} x_e \ge \max\limits_{i \in S, j \not\in S} r_{ij}$ $\forall S \subset V$, $0 \le x_e \le 1$”.
-We can solve this LP in polynomial time with ellipsoid method.
-We can construct a seperation orcale like follow.</p>
+We can solve this LP in polynomial time using the ellipsoid method.
+We construct a separation oracle as follows.</p>
 <ol>
   <li>Make a graph that consists of $G = (V,E)$ and set capacity of $E$ as $x_e$.</li>
   <li>Solve the network flow problem between all pair $i$ and $j$ such that $i \neq j$ and $i,j \in V$.</li>
@@ -560,7 +560,7 @@ $(B - A)$ $\cup$ $(A \cap B)$ $=$ $B$ and $(V- (A \cup B))$ $\cup$ $(A - B)$ $=$
   <li>$\min(f(A - B), f(B - A))$ $&lt;$ $f(A \cup B)$</li>
 </ol>
 
-<p>Then, it is a contraction because of following reasoning.</p>
+<p>This leads to a contradiction, as shown by the following reasoning.</p>
 
 <p>$\min(f(A - B), f(B - A))$ $&lt;$ $\min(f(A \cap B), f(A \cup B))$ from 1, 4<br />
 $\min(f(A \cap B), f(A \cup B))$ $&lt;$ $\min(f(A - B), f(B - A))$ from 2, 3<br />
@@ -568,9 +568,9 @@ $\min(f(A \cap B), f(A \cup B))$ $&lt;$ $\min(f(A - B), f(B - A))$ $&lt;$ $\min(
 As a result, $\min(f(A \cap B), f(A \cup B))$ $&lt;$ $\min(f(A \cap B), f(A \cup B))$ and it can’t be true.
 Therefore, $f$ is a weakly supermodular.</p>
 
-<p>Now, there is a nice property of a weakly supermodular $f$.
-There exists an edge $e \in E$ such that $x_e \ge \frac{1}{2}$ if we solve linear problem “Minimize $\sum\limits_{e \in E} c_e x_e$ such that $\sum\limits_{e \in \delta(S)} x_e \ge f(S)$ $\forall S \subset V$, $0 \le x_e \le 1$” for any weakly supermodular $f$.
-Proof will be followed at the end of the post.</p>
+<p>There is a key property of weakly supermodular functions $f$:
+if we solve “Minimize $\sum\limits_{e \in E} c_e x_e$ such that $\sum\limits_{e \in \delta(S)} x_e \ge f(S)$ $\forall S \subset V$, $0 \le x_e \le 1$”, then there exists an edge $e \in E$ with $x_e \ge \frac{1}{2}$.
+The proof is given at the end of this post.</p>
 
 <p>From the fact above, we can construct an algorithm.</p>
 
@@ -586,7 +586,7 @@ Proof will be followed at the end of the post.</p>
     $\textbf{return} \text{ } F$
 </div>
 
-<p>Notice that it is so-called $\operatorname{iterative rounding}$ because it uses LP-relxation to extend solution and iterates it many times.</p>
+<p>This is called $\operatorname{iterative rounding}$: it uses LP relaxation to extend the solution and repeats the process.</p>
 
 <p>If the algorithm above terminates, solution should be feasible.
 Now, we will show that solution will be in $2\operatorname{OPT}$ and it terminates.</p>
@@ -710,7 +710,7 @@ As a result, $\sum\limits_{e \in \delta(S)} f_e \ge r_{ij} - |\delta(S) \cap F|$
 If there is some $i, j$ such that flow between $i$ and $j$ is less than $r_{ij}$ then there should be $S$ such that $\sum\limits_{e \in \delta(S)} f_e + |\delta(S) \cap F|&lt; r_{ij}$.
 As a result, we can use this as a seperation orcale.</p>
 
-<p>Now only left thing to show is that solution is in $2\operatorname{OPT}$.
+<p>The only remaining thing to show is that the solution is within $2\operatorname{OPT}$.
 To show this, we will prove generalized version of the claim.
 The claim is 
 “For any weakly supermodular function $f$, let’s define $x^i$ as the solution of LP in $i$th iteration.
@@ -767,10 +767,10 @@ There exists an edge $e \in E$ such that $x_e \ge \frac{1}{2}$ if we solve linea
   <li>$A$ and $B$ are intersecting if all of $A \cap B$, $A - B$ and $B - A$ are not empty.</li>
   <li>$A$ is tight if $\sum\limits_{e \in \delta(A)} x_e = f(A)$ for $A \in V$.</li>
   <li>A collection of sets $\mathcal{L}$ is $\operatorname{laminor}$ if no pair of sets in $\mathcal{L}$ is intersecting.</li>
-  <li>$\operatorname{Span}(\mathcal{L})$ $=$ $\operatorname{Span}\{\chi_{\delta(S)} \mid S \in \mathcal{L}\}$</li>
+  <li>$\operatorname{Span}(\mathcal{L})$ $=$ $\operatorname{Span}{\chi_{\delta(S)} \mid S \in \mathcal{L}}$</li>
 </ol>
 
-<p>Now, we need some $\operatorname{Lemma}$s.</p>
+<p>We need several lemmas.</p>
 
 <p>If $A$ and $B$ are tight and intersecting, at least one of the following is true.</p>
 <ol>
@@ -826,8 +826,8 @@ Then, there is $\mathcal{L} \subset 2^{V}$ which satisfies 4 things.</p>
 </ol>
 
 <p>Proof is like follow.
-Let $\mathcal{T} \subset 2^{V}$ be the family of all tight sets and $\mathcal{L}$ as a maximal $\operatorname{laminor}$ subfamily of $\mathcal{T}$.
-Which means $\mathcal{L}$ will not be a $\operatorname{laminor}$ if we add anything more to $\mathcal{L}$.</p>
+Let $\mathcal{T} \subset 2^{V}$ be the family of all tight sets and $\mathcal{L}$ be a maximal laminar subfamily of $\mathcal{T}$
+(i.e., $\mathcal{L}$ ceases to be laminar if any additional set from $\mathcal{T}$ is added).</p>
 
 <p>First, we will claim $\operatorname{Span}(\mathcal{T})$ $\subset$ $\operatorname{Span}(\mathcal{L})$ to show $\operatorname{Span}(\mathcal{T})$ $=$ $\operatorname{Span}(\mathcal{L})$.
 Notice that $\operatorname{Span}(\mathcal{L})$ $\subset$ $\operatorname{Span}(\mathcal{T})$ is trivial because $\mathcal{L} \subset \mathcal{T}$.</p>
@@ -961,15 +961,15 @@ Now, we’ve showend that there is at least one of a maximal $\operatorname{lami
 
 <p>Now, we can find some set $S \in \mathcal{T}$ which is lineary dependent from other vectors.
 Then, we can just remove it without losing property above.
-Now, we keep doing it untill every vectors are lineary independent and let the result to be $\mathcal{L}^\star$.
-Then, $\mathcal{L}^\star$ should have $\left\vert E \right\vert$ independent vectors because they are all independent and $\operatorname{Span}(\mathcal{L}^\star)$ Should be still $\operatorname{Span}(\mathcal{T})$ because we removed only lineary dependent vectors.
+We continue until all vectors are linearly independent; call the result $\mathcal{L}^\star$.
+Then $\mathcal{L}^\star$ contains $\left\vert E \right\vert$ linearly independent vectors, and $\operatorname{Span}(\mathcal{L}^\star)$ remains equal to $\operatorname{Span}(\mathcal{T})$ since we removed only linearly dependent vectors.
 Notice that each vector has $\left\vert E \right\vert$ elements inside.
 Therefore, $\mathcal{L}^\star$ fulfills every property below.</p>
 <ol>
   <li>$S$ is tight for all $S \in \mathcal{L}^\star$</li>
   <li>$\{\chi_{\delta(S)}\}_{S \in \mathcal{L}^\star}$ are linear independent.</li>
   <li>$\left\vert \mathcal{L}^\star \right\vert$ $=$ $\left\vert E \right\vert$</li>
-  <li>$\mathcal{L}^\star$ is $\operatorname{laminor}$.</li>
+  <li>$\mathcal{L}^\star$ is $\operatorname{laminar}$.</li>
 </ol>
 
 <p>Now, we will show the following is true.</p>
@@ -1067,7 +1067,7 @@ As a result, total cost of $\mathcal{L} &lt; \left\vert E \right\vert$.</p>
 
 <p>Therefore, it’s a contradiction with the fact above.
 As a result, assumption that “$0 &lt; x_e &lt; \frac{1}{2}$ for all $e \in E$” is false.
-Therefore, there should be at least $x_e$ shuch that $x_e \ge \frac{1}{2}$ or $x_e = 0$.
+Therefore, there must exist at least one $x_e$ such that $x_e \ge \frac{1}{2}$ or $x_e = 0$.
 However, if we think about the LP with removing $x_e$s such that $x_e = 0$ then solution of problem should be the same with before.
 At the same time, there should be at least one $x_e$ such that $x_e \ge \frac{1}{2}$ or $x_e = 0$.
 However, that should be the case of $x_e \ge \frac{1}{2}$ because we just removed every $x_e = 0$.
@@ -1111,7 +1111,7 @@ Therefore, claim holds.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/" title="Approximation algorithm(9) - survivable network design">https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/" title="Approximation Algorithm (9): Survivable Network Design">https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -1137,7 +1137,7 @@ Therefore, claim holds.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/lp/2021/04/20/LP-Duality/" rel="next" title="LP Duality">
+              <a href="/algorithm/optimization/lp/2021/04/20/LP-Duality/" rel="next" title="LP Duality">
                 <i class="fa fa-chevron-left"></i> LP Duality
               </a>
             
@@ -1147,8 +1147,8 @@ Therefore, claim holds.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/" rel="prev" title="Approximation algorithm(8) - Integer multicommodity flows">
-                Approximation algorithm(8) - Integer multicommodity flows <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/04/04/Approximation-algorithm(8)/" rel="prev" title="Approximation Algorithm (8): Integer Multicommodity Flows">
+                Approximation Algorithm (8): Integer Multicommodity Flows <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1239,7 +1239,7 @@ Therefore, claim holds.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1447,7 +1447,7 @@ Therefore, claim holds.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/';
               this.page.identifier = '/algorithm/approximation/2021/04/17/Approximation-algorithm(9)/';
-              this.page.title = 'Approximation algorithm(9) - survivable network design';
+              this.page.title = 'Approximation Algorithm (9): Survivable Network Design';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

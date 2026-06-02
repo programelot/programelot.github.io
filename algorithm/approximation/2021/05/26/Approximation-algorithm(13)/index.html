@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
+<meta name="description" content="In practice, buying in bulk is typically cheaper due to economies of scale in delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(13) - Buy-at-bulk network design">
+<meta property="og:title" content="Approximation Algorithm (13): Buy-at-Bulk Network Design">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
+<meta property="og:description" content="In practice, buying in bulk is typically cheaper due to economies of scale in delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(13) - Buy-at-bulk network design">
-<meta name="twitter:description" content="In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
+<meta name="twitter:title" content="Approximation Algorithm (13): Buy-at-Bulk Network Design">
+<meta name="twitter:description" content="In practice, buying in bulk is typically cheaper due to economies of scale in delivery costs. Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$. This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$. One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(13) - Buy-at-bulk network design | REAL</title>
+  <title>Approximation Algorithm (13): Buy-at-Bulk Network Design | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(13) - Buy-at-bulk network design
+            Approximation Algorithm (13): Buy-at-Bulk Network Design
           
         </h1>
         
@@ -482,7 +482,7 @@
 
 
 
-  <p>In the real world, it is usually cheaper when you buy some thing in a bulk because of the delivery costs.
+  <p>In practice, buying in bulk is typically cheaper due to economies of scale in delivery costs.
 Now think about a undirected graph $G$ $=$ $(V,E)$ with length $l_e$ $\ge$ $0$ for all $e$ $\in$ $E$.
 This problem requires $k$ pairs of vertices $(s_i,t_i)$ and demand $d_i$.
 One thing that makes this problem interesting is that there is a cost function $f(u)$ such that satisfies following.</p>
@@ -497,11 +497,9 @@ One thing that makes this problem interesting is that there is a cost function $
 to minimize $\sum\limits_{e \in E}f(c_e)l_e$
 such that for any edge we can send $d_i$ units of commodity from $s_i$ to $t_i$ at the same time without violating $c$.</p>
 
-<p>Notice that this algorithm can be solved in polynomial time if $G$ is a tree.
-The reason is like follow.
-If you think about any possible path on a tree, there is a unique path from $u$ to $v$ where $u,v$ $\in$ $V$.
-Therefore, solution is just find a unique path and set the capacity and that’s all.
-Notice that this means it’s not just in polynomial time but it gives a trivial unique solution.</p>
+<p>This problem can be solved in polynomial time if $G$ is a tree.
+Since trees have unique paths between any two vertices, the solution is trivially determined by setting the capacity along each unique path.
+In fact, this gives a unique optimal solution, not just a polynomial-time algorithm.</p>
 
 <p>Now, let’s consider the following algorithm.</p>
 
@@ -759,7 +757,7 @@ Sixth equality holds because $f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((u,v) \in
 Seventh equality holds because $\sum\limits_{(x,y) \in P’_{u v}}T’_{xy}$ is the distance from $u$ to $v$.
 Therefore claim holds.</p>
 
-<p>Simiallary, following is true.</p>
+<p>Similarly, the following holds.</p>
 
 <p>Now let’s denote $\operatorname{ALG}$ as the value of the output solution.
 Then, $\operatorname{ALG}$ $=$
@@ -773,8 +771,8 @@ $\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in
 $\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}$ $=$
 $\operatorname{OPT’}$.</p>
 
-<p>All eqaulities and inequalities except last ineuqality can be proven in the same way with above.
-Therefore, we need to show only last inequality holds.</p>
+<p>All equalities and inequalities except the last one follow in the same way as above.
+It remains to prove the last inequality.</p>
 
 <p>Proof for “$\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \mathbb{1}((x,y) \in P’_{s_i t_i})) T’_{xy}$ $\le$
 $\sum\limits_{(x,y) \in T’} f(\sum\limits_{i = 1}^{k} d_i \sum\limits_{(u,v) \in E} \mathbb{1}((u,v) \in P^{\star}_{s_i t_i} \text{ and } (x,y) \in P’_{u v}))T’_{xy}$” is like follow.</p>
@@ -834,7 +832,7 @@ Therefore claim holds.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" title="Approximation algorithm(13) - Buy-at-bulk network design">https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/" title="Approximation Algorithm (13): Buy-at-Bulk Network Design">https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -860,8 +858,8 @@ Therefore claim holds.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/" rel="next" title="Hardness of approximation">
-                <i class="fa fa-chevron-left"></i> Hardness of approximation
+              <a href="/algorithm/approximation/complexity/2021/05/28/Hardness-of-approximation/" rel="next" title="Hardness of Approximation">
+                <i class="fa fa-chevron-left"></i> Hardness of Approximation
               </a>
             
           </div>
@@ -870,8 +868,8 @@ Therefore claim holds.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/19/tree-metrics/" rel="prev" title="Approximation of metrics by tree metrics">
-                Approximation of metrics by tree metrics <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/05/19/tree-metrics/" rel="prev" title="Approximating Metrics by Tree Metrics">
+                Approximating Metrics by Tree Metrics <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -962,7 +960,7 @@ Therefore claim holds.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1170,7 +1168,7 @@ Therefore claim holds.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/';
               this.page.identifier = '/algorithm/approximation/2021/05/26/Approximation-algorithm(13)/';
-              this.page.title = 'Approximation algorithm(13) - Buy-at-bulk network design';
+              this.page.title = 'Approximation Algorithm (13): Buy-at-Bulk Network Design';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

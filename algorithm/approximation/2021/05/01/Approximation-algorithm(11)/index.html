@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="There is a problem known as a steiner tree problem. The steiner tree problem is a problem to find a minimum edge set that connects every vertex in $S \subseteq V$ from a given graph $G = (V,E)$. Notice that this problem doesn’t care whether you included some vertices $v \in V - S$ in the edge set. Moreover, this problem is a superset of the minimum spanning tree problem and shortest path problem. We can construct problem like $S = V$ or $S = \{s, t\}$ to solve the minimum spanning tree problem and shortest path problem repectively. Notice that this problem will result in a tree because it will not have a cycle which doesn’t make sense for minimum edge set with connectivity.">
+<meta name="description" content="The Steiner tree problem asks for a minimum-cost edge set that connects every vertex in a terminal set $S \subseteq V$ in a graph $G = (V, E)$. Steiner trees may include non-terminal Steiner vertices in $V - S$. This problem generalizes both the minimum spanning tree problem (when $S = V$) and the shortest path problem (when $S = {s, t}$). An optimal solution always forms a tree, since any cycle could be removed to reduce cost while preserving connectivity.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(11) - Generalized Steiner tree problem">
+<meta property="og:title" content="Approximation Algorithm (11): Generalized Steiner Tree Problem">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="There is a problem known as a steiner tree problem. The steiner tree problem is a problem to find a minimum edge set that connects every vertex in $S \subseteq V$ from a given graph $G = (V,E)$. Notice that this problem doesn’t care whether you included some vertices $v \in V - S$ in the edge set. Moreover, this problem is a superset of the minimum spanning tree problem and shortest path problem. We can construct problem like $S = V$ or $S = \{s, t\}$ to solve the minimum spanning tree problem and shortest path problem repectively. Notice that this problem will result in a tree because it will not have a cycle which doesn’t make sense for minimum edge set with connectivity.">
+<meta property="og:description" content="The Steiner tree problem asks for a minimum-cost edge set that connects every vertex in a terminal set $S \subseteq V$ in a graph $G = (V, E)$. Steiner trees may include non-terminal Steiner vertices in $V - S$. This problem generalizes both the minimum spanning tree problem (when $S = V$) and the shortest path problem (when $S = {s, t}$). An optimal solution always forms a tree, since any cycle could be removed to reduce cost while preserving connectivity.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(11) - Generalized Steiner tree problem">
-<meta name="twitter:description" content="There is a problem known as a steiner tree problem. The steiner tree problem is a problem to find a minimum edge set that connects every vertex in $S \subseteq V$ from a given graph $G = (V,E)$. Notice that this problem doesn’t care whether you included some vertices $v \in V - S$ in the edge set. Moreover, this problem is a superset of the minimum spanning tree problem and shortest path problem. We can construct problem like $S = V$ or $S = \{s, t\}$ to solve the minimum spanning tree problem and shortest path problem repectively. Notice that this problem will result in a tree because it will not have a cycle which doesn’t make sense for minimum edge set with connectivity.">
+<meta name="twitter:title" content="Approximation Algorithm (11): Generalized Steiner Tree Problem">
+<meta name="twitter:description" content="The Steiner tree problem asks for a minimum-cost edge set that connects every vertex in a terminal set $S \subseteq V$ in a graph $G = (V, E)$. Steiner trees may include non-terminal Steiner vertices in $V - S$. This problem generalizes both the minimum spanning tree problem (when $S = V$) and the shortest path problem (when $S = {s, t}$). An optimal solution always forms a tree, since any cycle could be removed to reduce cost while preserving connectivity.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(11) - Generalized Steiner tree problem | REAL</title>
+  <title>Approximation Algorithm (11): Generalized Steiner Tree Problem | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(11) - Generalized Steiner tree problem
+            Approximation Algorithm (11): Generalized Steiner Tree Problem
           
         </h1>
         
@@ -482,22 +482,19 @@
 
 
 
-  <p>There is a problem known as a steiner tree problem.
-The steiner tree problem is a problem to find a minimum edge set that connects every vertex in $S \subseteq V$ from a given graph $G = (V,E)$.
-Notice that this problem doesn’t care whether you included some vertices $v \in V - S$ in the edge set.
-Moreover, this problem is a superset of the minimum spanning tree problem and shortest path problem.
-We can construct problem like $S = V$ or $S = \{s, t\}$ to solve the minimum spanning tree problem and shortest path problem repectively.
-Notice that this problem will result in a tree because it will not have a cycle which doesn’t make sense for minimum edge set with connectivity.</p>
+  <p>The Steiner tree problem asks for a minimum-cost edge set that connects every vertex in a terminal set $S \subseteq V$ in a graph $G = (V, E)$.
+Steiner trees may include non-terminal Steiner vertices in $V - S$.
+This problem generalizes both the minimum spanning tree problem (when $S = V$) and the shortest path problem (when $S = {s, t}$).
+An optimal solution always forms a tree, since any cycle could be removed to reduce cost while preserving connectivity.</p>
 
-<p>Generalized steiner tree problem is a problem that requires to connect some pairs of vertices of given graph $G$.
-If we select one vertex $v$ and set required pairs as $v$ and others, it’s the steiner tree problem.
-Which means Generalized steiner tree problem is a generalized version of steiner tree problem like it named.
-At the same time, it’s a special case of survivable network design problem which all $r_{ij} = 1$.
-Now let’s define $\delta(S) = \{e | e = (u,v) \text{ such that } u \in S, v \in V - S \}$ and $S_i = \{S \subseteq V : \left\vert S \cap \{s_i, t_i\} \right\vert = 1\}$.
-Notice that $S_i$ is a set of subsets that make a proper s-t cut for $s_i, t_i$.
-Therefore, problem can be written as LP follow.</p>
+<p>The generalized Steiner tree problem requires connecting a set of specified vertex pairs in $G$.
+If one vertex $v$ is paired with all others, this reduces to the Steiner tree problem.
+It is also a special case of the survivable network design problem with $r_{ij} = 1$ for all pairs.
+Let $\delta(S) = {e \mid e = (u,v),\ u \in S,\ v \in V - S}$ and $S_i = {S \subseteq V : |S \cap {s_i, t_i}| = 1}$.
+Note that $S_i$ is the collection of subsets forming a proper $s_i$-$t_i$ cut.
+The problem can be written as the following IP.</p>
 
-<p>For given pairs of vetices $s_i, t_i$,<br />
+<p>For given pairs of vertices $s_i, t_i$,<br />
 minimize $\sum\limits_{e \in E}c_e x_e$ such that<br />
 $\sum\limits_{e \in \delta(S)} x_e \ge 1$, for all $S \subseteq V$ which $S \in S_i$ for all $i$, <br />
 $x_e \in \{0, 1\}$.</p>
@@ -535,17 +532,16 @@ With constraint that moats can’t overlapped for subsets exist at the same edge
     return $F$
 </div>
 
-<p>Algorithm above works like choose any componenet such that are not tight then increase moat distance as possible as.</p>
+<p>The algorithm works by selecting any active component and increasing its moat width as much as possible.</p>
 
 <p>Then, solution of algorithm is $\sum\limits_{e \in F}c_e$.
 However, $\sum\limits_{e \in F}c_e$ $=$ $\sum\limits_{e \in F}\sum\limits_{S:e \in \delta(S)} y_S$ $=$ $\sum\limits_{S}\sum\limits_{e \in F \cap \delta(S)} y_S$ $=$ $\sum\limits_{S}|F \cap \delta(S)|y_S$.</p>
 
-<p>However, algorithm above can’t guarantees to be nice approximation algorithm.
-Let’s think about the complete graph $G = (\{s,t_1,t_2,t_3,\cdots,t_n\},E)$ with $C_{(s,t_1)} = C_{(s,t_2)} = \cdots = C_{(s,t_n)} &gt; 0$.
-If pairs need to be connected is $(s,t_1), (s,t_2), \cdots, (s,t_n)$ then $\sum\limits_{S}|F \cap \delta(S)|y_S$ = $\sum\limits_{S}ny_S$.
-Which means this is $O(n)OPT$ approximation.
-However it’s not good enough even though the solution we will give a good solution.
-Therefore, we will modify algorithm above to below.</p>
+<p>However, the first algorithm does not guarantee a good approximation ratio.
+Consider the complete graph $G = ({s, t_1, t_2, \ldots, t_n}, E)$ with equal edge costs.
+If all pairs $(s, t_i)$ must be connected, then $\sum\limits_{S}|F \cap \delta(S)|y_S = \sum\limits_{S}n y_S$, giving an $O(n)$-approximation.
+This is far from optimal even though the edge solution is good.
+Therefore, we modify the algorithm as follows.</p>
 
 <div class="algTab">
     $y \leftarrow 0$<br />
@@ -566,10 +562,9 @@ Therefore, we will modify algorithm above to below.</p>
     return $F'$
 </div>
 
-<p>Notice that algorithm is a polynomial algorithm.
-Finding connected components is polynomial algorithm by BFS.
-Increasing $y_C$ is polynomial algorithm because we can pick some $\Delta y_C$ to be tight.
-Then it is enough to pick minimum of such an $\Delta y_C$ for uniform increasement.</p>
+<p>This algorithm runs in polynomial time.
+Finding connected components by BFS is polynomial.
+Increasing $y_C$ uniformly is polynomial: we compute the minimum $\Delta y_C$ needed to make some edge tight and apply that increment.</p>
 
 <p>First of all, $\sum\limits_{C \in \mathcal{C}} \left\vert \delta(C) \cap F’ \right\vert$ $\le$ $2 \left\vert \mathcal{C} \right\vert$.
 Proof is like follow.</p>
@@ -631,7 +626,7 @@ RHS of given inequality will incrase $2\sum\limits_{\mathcal{C}}\epsilon$.
 Then, LHS $\le$ RHS is true from the fact “$\sum\limits_{C \in \mathcal{C}} \left\vert \delta(C) \cap F’ \right\vert$ $\le$ $2 \left\vert \mathcal{C} \right\vert$”.
 As a result, claim holds.</p>
 
-<p>Notice that $\sum\limits_{S}y_S$ is a LP optimum which is less than optimal solution of original problem.</p>
+<p>Note that $\sum\limits_{S}y_S$ is the LP dual optimum, which lower-bounds the optimal solution of the original problem.</p>
 
 
       
@@ -671,7 +666,7 @@ As a result, claim holds.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" title="Approximation algorithm(11) - Generalized Steiner tree problem">https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" title="Approximation Algorithm (11): Generalized Steiner Tree Problem">https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -697,8 +692,8 @@ As a result, claim holds.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/" rel="next" title="Approximation algorithm(12) - The uncapacitated facility location problem(2)">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(12) - The uncapacitated facility location problem(2)
+              <a href="/algorithm/approximation/2021/05/07/Approximation-algorithm(12)/" rel="next" title="Approximation Algorithm (12): Uncapacitated Facility Location (2)">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (12): Uncapacitated Facility Location (2)
               </a>
             
           </div>
@@ -707,8 +702,8 @@ As a result, claim holds.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/" rel="prev" title="Approximation algorithm(10) - The uncapacitated facility location problem(1)">
-                Approximation algorithm(10) - The uncapacitated facility location problem(1) <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/" rel="prev" title="Approximation Algorithm (10): Uncapacitated Facility Location (1)">
+                Approximation Algorithm (10): Uncapacitated Facility Location (1) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -799,7 +794,7 @@ As a result, claim holds.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1007,7 +1002,7 @@ As a result, claim holds.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/';
               this.page.identifier = '/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/';
-              this.page.title = 'Approximation algorithm(11) - Generalized Steiner tree problem';
+              this.page.title = 'Approximation Algorithm (11): Generalized Steiner Tree Problem';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

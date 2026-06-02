@@ -117,13 +117,13 @@
 <meta name="description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(3) - SET COVER">
+<meta property="og:title" content="Approximation Algorithm (3): Set Cover">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(3) - SET COVER">
+<meta name="twitter:title" content="Approximation Algorithm (3): Set Cover">
 <meta name="twitter:description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(3) - SET COVER | REAL</title>
+  <title>Approximation Algorithm (3): Set Cover | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(3) - SET COVER
+            Approximation Algorithm (3): Set Cover
           
         </h1>
         
@@ -484,9 +484,8 @@
 
   <p class="box-note"><strong>Recap</strong> $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.</p>
 
-<p>From the above, we can make $f$-approximation algorithm.
-However it may arbitrary big in comparison.
-Therefore, we prefer the better approximation.</p>
+<p>From the above, we can construct an $f$-approximation algorithm.
+However, $f$ may be arbitrarily large, so we seek a better approximation.</p>
 
 <p>Here are some different approaches to this $\operatorname{SET COVER}$ with $O(ln(n))$-approximation.</p>
 
@@ -514,24 +513,23 @@ Which means $\sum\limits_{j \in I} w_j$ $\le$ $\sum\limits_{j = 1}^{|I|} \frac{|
 
 <h2 id="random-rounding">Random rounding</h2>
 
-<p>One another approach is that choosing 1 in probability of itselft.
-Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ with probability of $x_j$ and $0$ with probability $1 - x_j$. Notice that This algorithm will not choose $x_j &gt; 1$.</p>
+<p>Another approach is to round each $x_j$ randomly, setting $x_j = 1$ with probability $x_j$ and $x_j = 0$ with probability $1 - x_j$.
+Note that this algorithm will never set $x_j &gt; 1$.</p>
 
-<p>Now, we can’t guarantee that it returns good solution. (It may return the solution with all $1$ inside.)
-However, we may make a guarantee for average and it is usual for approximation algorithm with random.
+<p>We cannot guarantee that a single round returns a good solution (it might set all $x_j = 1$).
+However, we can provide guarantees in expectation, which is standard for randomized approximation algorithms.
 $E[\sum\limits_{j=1}^{m} w_j X_j]$ $=$ $\sum\limits_{j=1}^{m} Pr[X_j = 1]$ $=$ $\sum\limits_{j=1}^{m} w_j x_j \le \operatorname{OPT}$.
 As a result, it gives a solution which is better than $\operatorname{OPT}$.
 However, it never can’t better than the optimal solution unless it doesn’t cover all elements in the ground set.
 Let’s check whether it really can’t cover all elements.
 $Pr[e_i$ not covered$]$ $=$ $\prod\limits_{j:e_i \in S_j} (1 - x_j)$ $\le$ $\prod\limits_{j:e_i \in S_j} e^{-x_j}$ $=$ $e^{-\sum_{j:e_i \in S_j} x_j}$ $\le$ $e^{-1}$
-As a result, it will return a solution with non-covered elements in upper bound of $e^{-1}$.
-Which means that this algorithm highly likely returns a non-solution.</p>
+As a result, the probability that any given element remains uncovered is at most $e^{-1}$.
+This means the algorithm is likely to leave some elements uncovered in a single round.</p>
 
-<p>Therefore, we need some improvements.
-What if we try $c \operatorname{ln} n$ times to get $1$?
+<p>To fix this, we repeat the rounding $c \ln n$ times and take the union:
 $Pr[e_i$ not covered$]$ $=$ $\prod\limits_{j:e_i \in S_j} (1 - x_j)^{c \operatorname{ln} n}$ $\le$ $\prod\limits_{j:e_i \in S_j} e^{-x_j (c \operatorname{ln} n)}$ $=$ $e^{-(c \operatorname{ln} n) \sum_{j:e_i \in S_j} x_j}$ $\le$ $\frac{1}{n^c}$.
-As a result, $Pr[$ there exsits an uncovered element $]$ $\le$ $\sum\limits_{i=1}^{n}Pr[e_i$ not covered$]$ $\le$ $\frac{1}{n^{c - 1}}$.
-Now, it can show that this random algorithm can produce a feasible solution with resonably high probability.</p>
+As a result, $\Pr[\text{there exists an uncovered element}]$ $\le$ $\sum\limits_{i=1}^{n}\Pr[e_i \text{ not covered}]$ $\le$ $\frac{1}{n^{c-1}}$.
+This shows that the randomized algorithm produces a feasible solution with reasonably high probability.</p>
 
 <p>How about the average of the solution?
 First of all, let’s define $p(x_j)$ as the probability of “$x_j$ is included in the solution”.
@@ -540,8 +538,8 @@ Which makes $p(x_j)’$ $=$ $(c \operatorname{ln} n)(1 - (1-x_j)^{(c \operatorna
 Which also makes $p(x_j)$ $\le$ $(c \operatorname{ln} n) x_j$.
 As a result, $E[\sum\limits_{j=1}^m w_j X_j]$ $=$ $\sum\limits_{j=1}^m w_j Pr[X_j = 1]$ $\le$ $\sum_{j=1}^m w_j (c \operatorname{ln} n) x_j$ $=$ $(c \operatorname{ln} n)\sum_{j=1}^m w_j x_j$ $\le$ $(c \operatorname{ln} n) OPT$</p>
 
-<p>This is a summary of approximation algorithm for $\operatorname{SET COVER}$.
-We will see some other techniques with some examples.</p>
+<p>This concludes the summary of approximation algorithms for $\operatorname{SET COVER}$.
+The next posts will explore other techniques with additional examples.</p>
 
 
       
@@ -581,7 +579,7 @@ We will see some other techniques with some examples.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/" title="Approximation algorithm(3) - SET COVER">https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/" title="Approximation Algorithm (3): Set Cover">https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -607,8 +605,8 @@ We will see some other techniques with some examples.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/graph/matrix/2021/03/14/Matrix-representation/" rel="next" title="Matrix representation">
-                <i class="fa fa-chevron-left"></i> Matrix representation
+              <a href="/algorithm/graph/data%20structure/2021/03/14/Matrix-representation/" rel="next" title="Matrix Representation of Graphs">
+                <i class="fa fa-chevron-left"></i> Matrix Representation of Graphs
               </a>
             
           </div>
@@ -617,8 +615,8 @@ We will see some other techniques with some examples.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" rel="prev" title="Approximation algorithm(2) - SET COVER">
-                Approximation algorithm(2) - SET COVER <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" rel="prev" title="Approximation Algorithm (2): Set Cover">
+                Approximation Algorithm (2): Set Cover <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -718,7 +716,7 @@ We will see some other techniques with some examples.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -954,7 +952,7 @@ We will see some other techniques with some examples.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/';
               this.page.identifier = '/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/';
-              this.page.title = 'Approximation algorithm(3) - SET COVER';
+              this.page.title = 'Approximation Algorithm (3): Set Cover';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

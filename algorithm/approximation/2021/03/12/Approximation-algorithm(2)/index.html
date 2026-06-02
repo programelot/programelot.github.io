@@ -117,13 +117,13 @@
 <meta name="description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(2) - SET COVER">
+<meta property="og:title" content="Approximation Algorithm (2): Set Cover">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(2) - SET COVER">
+<meta name="twitter:title" content="Approximation Algorithm (2): Set Cover">
 <meta name="twitter:description" content="Recap $\operatorname{SET COVER}$ can be LP-relaxed to “Minimize the $\sum\limits_{j=1}^{m} w_j x_j$ such that $\sum\limits_{j:e_i \in S_j} x_j \ge 1$, $x_j \ge 0$ then choose $x_j$ to $1$ which $x_j \ge \frac{1}{f}$ and otherwise to 0”. Which is $f$-approximation algorithm. Which $e_i$ denotes each elements, $S_j$ denotes each subsets, $w_j$ denotes costs of each subsets, $x_j$ is the chocie of each subset. With $f$ is the maximum number of existance of elements.">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(2) - SET COVER | REAL</title>
+  <title>Approximation Algorithm (2): Set Cover | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(2) - SET COVER
+            Approximation Algorithm (2): Set Cover
           
         </h1>
         
@@ -492,17 +492,17 @@ This is so-called dual of original LP.
 Now, how do we rounding?
 We can choose $\sum\limits_{i:e_i \in S_j} y_i = w_j$.</p>
 
-<p>This apporach is like make the sum of cost of elements to expensive possible but every subset can cover costs.
-Also, choose only subset fully utilize the cost of own.</p>
+<p>This approach aims to make the total payment as large as possible while ensuring every subset can be fully funded.
+Only subsets that are fully paid for are selected.</p>
 
-<p>Now, let’s show this is a $f$-appoximation either.</p>
+<p>Now, let’s show this is also an $f$-approximation.</p>
 
-<p>First, let’s show that solution of dual, $I$ is a set cover.
-Suppouse that we didn’t cover some $e_k$ so for every subset $e_k \in S_j$, $\sum\limits_{i:e_i \in S_j} y_i &lt; w_j $.
-Now find the minimum difference $w_j$ which $\epsilon = \min_{j:e_k \in S_j}(w_j - \sum\limits_{i:e_i \in S_j} y^o_i)$.
-Then, a new solution with $y^b_k = y^o_k + \epsilon \le w_j$ is still a feasible soltuion.
-It means the contradiction which $y^o_k$ was the maximum.
-Therefore dual problem should produced a feasible solution.</p>
+<p>First, let’s show that the dual solution $I$ is a valid set cover.
+Suppose we failed to cover some $e_k$, so for every subset $S_j$ with $e_k \in S_j$, $\sum\limits_{i:e_i \in S_j} y_i &lt; w_j$.
+Let $\epsilon = \min_{j:e_k \in S_j}(w_j - \sum\limits_{i:e_i \in S_j} y^o_i)$.
+Then the new solution with $y^b_k = y^o_k + \epsilon$ is still feasible and has a strictly larger objective value.
+This contradicts the assumption that $y^o$ was optimal.
+Therefore, the dual solution always produces a feasible set cover.</p>
 
 <p>From the original LP, it can be known that $\sum\limits_{i=1}^{n} y_i$ $\le$ 
 $\sum\limits_{i=1}^{n} (y_i \sum\limits_{j:e_i \in S_j} x_j)$ $=$ 
@@ -528,20 +528,20 @@ Now we proved this is the $f$-approximation algorithm.</p>
   <li>We will choose $\sum\limits_{i:e_i \in S_j} y_i = w_j$.</li>
 </ol>
 
-<p>From the above, we can make better algorithmic approach for it.</p>
+<p>From the above, we can design a better algorithmic approach.</p>
 <div class="algTab">
     $y \leftarrow 0$<br />
-    $l \leftarrow \emptyset$<br />
+    $I \leftarrow \emptyset$<br />
     $\operatorname{while}$ there exists $e_i \not\in \bigcup\limits_{j \in I} S_j \operatorname{do}$<div class="algTab">
-        Increase the dual variable $y_i$ untill there is some $l$ with $e_i \in S_l$ such that $\sum\limits_{j:e_j \in S_l} y_j = w_l$<br />
-        $I \leftarrow I \cup$ {$l$}
+        Increase the dual variable $y_i$ until there is some $l$ with $e_i \in S_l$ such that $\sum\limits_{j:e_j \in S_l} y_j = w_l$<br />
+        $I \leftarrow I \cup \{l\}$
     </div>
 </div>
 
-<p>From the facts above, we can notice that after inreasing $y_j$, we still have 1.
-From the fact 2 and 3, we can choose any $y_j$ to make it still feasible.
-Proof is ommited in here because it just follows exact the same process of dual program.
-However, it can remove linear programming.</p>
+<p>From the facts above, we can observe that after increasing $y_i$, property 1 still holds.
+By facts 2 and 3, we can adjust any $y_j$ while maintaining feasibility.
+The proof is omitted here as it follows the same reasoning as the dual program analysis.
+Importantly, this primal-dual approach avoids solving linear programming explicitly.</p>
 
 
       
@@ -581,7 +581,7 @@ However, it can remove linear programming.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" title="Approximation algorithm(2) - SET COVER">https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/" title="Approximation Algorithm (2): Set Cover">https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -607,8 +607,8 @@ However, it can remove linear programming.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/" rel="next" title="Approximation algorithm(3) - SET COVER">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(3) - SET COVER
+              <a href="/algorithm/approximation/2021/03/14/Approximation-algorithm(3)/" rel="next" title="Approximation Algorithm (3): Set Cover">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (3): Set Cover
               </a>
             
           </div>
@@ -617,8 +617,8 @@ However, it can remove linear programming.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/" rel="prev" title="Approximation algorithm(1) - SET COVER">
-                Approximation algorithm(1) - SET COVER <i class="fa fa-chevron-right"></i>
+              <a href="/algorithm/approximation/2021/03/07/Approximation-algorithm(1)/" rel="prev" title="Approximation Algorithm (1): Set Cover">
+                Approximation Algorithm (1): Set Cover <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -718,7 +718,7 @@ However, it can remove linear programming.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -954,7 +954,7 @@ However, it can remove linear programming.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/';
               this.page.identifier = '/algorithm/approximation/2021/03/12/Approximation-algorithm(2)/';
-              this.page.title = 'Approximation algorithm(2) - SET COVER';
+              this.page.title = 'Approximation Algorithm (2): Set Cover';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';

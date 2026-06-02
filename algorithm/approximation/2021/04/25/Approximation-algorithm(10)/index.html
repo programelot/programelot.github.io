@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="The uncapacitated facility location problem is a problem to decide which facility to open and how to handle clients for it. Notice that every client will just go to the closest facility because there is no capacity limits.">
+<meta name="description" content="The uncapacitated facility location problem asks which facilities to open and how to assign clients to them. Since there are no capacity constraints, every client is assigned to the closest open facility.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Approximation algorithm(10) - The uncapacitated facility location problem(1)">
+<meta property="og:title" content="Approximation Algorithm (10): Uncapacitated Facility Location (1)">
 <meta property="og:url" content="https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="The uncapacitated facility location problem is a problem to decide which facility to open and how to handle clients for it. Notice that every client will just go to the closest facility because there is no capacity limits.">
+<meta property="og:description" content="The uncapacitated facility location problem asks which facilities to open and how to assign clients to them. Since there are no capacity constraints, every client is assigned to the closest open facility.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Approximation algorithm(10) - The uncapacitated facility location problem(1)">
-<meta name="twitter:description" content="The uncapacitated facility location problem is a problem to decide which facility to open and how to handle clients for it. Notice that every client will just go to the closest facility because there is no capacity limits.">
+<meta name="twitter:title" content="Approximation Algorithm (10): Uncapacitated Facility Location (1)">
+<meta name="twitter:description" content="The uncapacitated facility location problem asks which facilities to open and how to assign clients to them. Since there are no capacity constraints, every client is assigned to the closest open facility.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>Approximation algorithm(10) - The uncapacitated facility location problem(1) | REAL</title>
+  <title>Approximation Algorithm (10): Uncapacitated Facility Location (1) | REAL</title>
   
 
 
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Approximation algorithm(10) - The uncapacitated facility location problem(1)
+            Approximation Algorithm (10): Uncapacitated Facility Location (1)
           
         </h1>
         
@@ -482,15 +482,15 @@
 
 
 
-  <p>The uncapacitated facility location problem is a problem to decide which facility to open and how to handle clients for it.
-Notice that every client will just go to the closest facility because there is no capacity limits.</p>
+  <p>The uncapacitated facility location problem asks which facilities to open and how to assign clients to them.
+Since there are no capacity constraints, every client is assigned to the closest open facility.</p>
 
 <p>Now, let’s denote a given set of facility as $F$, clients as $D$.
 There are some costs for opening facility $f_i \ge 0$ $\forall i \in F$.
 With this costs, there are some assignment costs $c_{ij} \ge 0$ $\forall i \in F, j \in D$ such that triangular inequality holds.
 Which means $C_{ij}$ $\le$ $C_{il} + C_{kl} + C_{kj}$.
-This means cost of “assigning $j$ to $i$” is allways less or equal than cost of “assigning $l$ to $i$, $l$ to $k$ and $j$ to $k$”.
-It is not too hard constraint because $j$ can recieves item at $k$ delivered by $l$ from $i$ if it is.</p>
+This means the cost of assigning $j$ to $i$ is always no greater than assigning $l$ to $i$, $l$ to $k$, and $j$ to $k$.
+This is a natural constraint: if $i$ delivers to $k$ via $l$, then $j$ can receive from $k$ at no extra indirect cost.</p>
 
 <p>Now, problem is to minimize sum of costs to assign all clients to some facility which are open.</p>
 
@@ -542,7 +542,7 @@ Now, problem is like finding the maximum payment for clients.
 However, they will pay more than they need to but less possible as.
 Also, they need to pay at least the same costs for opening facility.</p>
 
-<p>Now, let $(x^{\star}, y^{\star}), (v^{\star}, w^{\star})$ be an optimumm of primal and dual respectively.
+<p>Let $(x^{\star}, y^{\star})$ and $(v^{\star}, w^{\star})$ be optimal solutions of the primal and dual, respectively.
 Then define client $j$ is neighbor of facility $i$ if $x_{ij}^{\star} &gt; 0$.
 Therefore, let $N(j) = \{i \in F, x_{ij}^{\star} &gt; 0\}$.
 With this, we can define distance 2 neighborhood of $j$ like follow.
@@ -577,7 +577,7 @@ Notice that $\sum\limits_{i \in N(j_{k})}x_{ij_{k}}^{\star}$ $=$ $1$, $f_{i_{k}^
 <p>Then, the algorithm given is a 4-approximation algorithm.
 Proof is like follow.</p>
 
-<p>Now, let’s define $S_k$ as the set of assigned clients at the $k$th ieration and assume that algorithm terminates in $K$ iteration.</p>
+<p>Let $S_k$ be the set of clients assigned at the $k$-th iteration, and assume the algorithm terminates in $K$ iterations.</p>
 
 <p>Then, $\sum\limits_{k = 1}^{K} f_{i_k}$ $\le$ $\sum\limits_{k = 1}^{K}\sum\limits_{i \in N(j_k)} f_{i_k}y_i^{\star}$ $\le$ $\sum\limits_{i \in F} f_{i_k}y_i^{\star}$. Proof is like follow.</p>
 
@@ -654,7 +654,7 @@ Proof stops here.</p>
     </li>
     <li class="post-copyright-link">
       <strong>Post link:</strong>
-      <a href="https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/" title="Approximation algorithm(10) - The uncapacitated facility location problem(1)">https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/</a>
+      <a href="https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/" title="Approximation Algorithm (10): Uncapacitated Facility Location (1)">https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright Notice: </strong>
@@ -680,8 +680,8 @@ Proof stops here.</p>
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" rel="next" title="Approximation algorithm(11) - Generalized Steiner tree problem">
-                <i class="fa fa-chevron-left"></i> Approximation algorithm(11) - Generalized Steiner tree problem
+              <a href="/algorithm/approximation/2021/05/01/Approximation-algorithm(11)/" rel="next" title="Approximation Algorithm (11): Generalized Steiner Tree Problem">
+                <i class="fa fa-chevron-left"></i> Approximation Algorithm (11): Generalized Steiner Tree Problem
               </a>
             
           </div>
@@ -690,7 +690,7 @@ Proof stops here.</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/algorithm/lp/2021/04/20/LP-Duality/" rel="prev" title="LP Duality">
+              <a href="/algorithm/optimization/lp/2021/04/20/LP-Duality/" rel="prev" title="LP Duality">
                 LP Duality <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -782,7 +782,7 @@ Proof stops here.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -990,7 +990,7 @@ Proof stops here.</p>
           var disqus_config = function () {
               this.page.url = 'https://programelot.github.io/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/';
               this.page.identifier = '/algorithm/approximation/2021/04/25/Approximation-algorithm(10)/';
-              this.page.title = 'Approximation algorithm(10) - The uncapacitated facility location problem(1)';
+              this.page.title = 'Approximation Algorithm (10): Uncapacitated Facility Location (1)';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://programelot.disqus.com/embed.js';
