@@ -118,7 +118,7 @@
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="website">
 <meta property="og:title" content="REAL">
-<meta property="og:url" content="https://programelot.github.io/">
+<meta property="og:url" content="https://programelot.github.io/page5/">
 <meta property="og:site_name" content="REAL">
 <meta property="og:description" content="I am Programelot who is researching about optimization.">
 <meta property="og:locale" content="en">
@@ -355,7 +355,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/15/SortingAlgorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -377,8 +377,8 @@
           
             
                 
-                <a class="post-title-link" href="/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" itemprop="url">
-                Maximum sum of a contiguous subsequence
+                <a class="post-title-link" href="/algorithm/2020/11/15/SortingAlgorithm/" itemprop="url">
+                Sorting algorithm analysis
               </a>
             
           
@@ -397,8 +397,8 @@
                 
                   <span class="post-meta-item-text">Posted on</span>
                 
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00-05:00">
-                  2023-06-18
+                <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00-06:00">
+                  2020-11-15
                 </time>
               
 
@@ -475,13 +475,13 @@
 
 
 
-  <h1 id="definition">Definition</h1>
-<p>The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</p>
+  <p>From the previous algorithms, qsort is the slowest at the worst cases and others are always $O(n logn)$.
+However, qsort is known to be fastest at the most of cases.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/#more" rel="contents">
+            <a class="btn" href="/algorithm/2020/11/15/SortingAlgorithm/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -534,7 +534,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/15/Heapsort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -556,8 +556,8 @@
           
             
                 
-                <a class="post-title-link" href="/algorithm/2023/06/18/Masters-Theorem/" itemprop="url">
-                Master's Theorem
+                <a class="post-title-link" href="/algorithm/2020/11/15/Heapsort/" itemprop="url">
+                Heap sort
               </a>
             
           
@@ -576,8 +576,8 @@
                 
                   <span class="post-meta-item-text">Posted on</span>
                 
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00-05:00">
-                  2023-06-18
+                <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00-06:00">
+                  2020-11-15
                 </time>
               
 
@@ -654,13 +654,37 @@
 
 
 
-  <h1 id="definition">Definition</h1>
-<p>Master’s theorem is a theorem that uses for algorithm analysis.</p>
+  <p>Heap sort is an in-place algorithm that sorts the list with heap.
+It first changes a list to the heap and then keeps poping it and push the maximum value to the end of the list.
+To change a list to the heap in-place, list is assumed to be form of complete binary tree.
+With this assumption, it read from bottom to up and downHeap to change complete binary tree to heap.
+This takes $O(n log n)$(Infact, it is known to be $O(n)$ with carefull analysis).
+After that, just pop head and push it to end of the list.
+As a result, it is $O(n log n)$ in-place sorting algorithm.
+```python
+def downHeap(lst, length, idx):
+    if 2 * idx + 2 &lt; length:
+        if lst[idx] &lt; lst[2 * idx + 1]:
+            if lst[2 * idx + 1] &lt; lst[2 * idx + 2]:
+                lst[idx], lst[2 * idx + 2] = lst[2 * idx + 2], lst[idx]
+                downHeap(lst, length, 2 * idx + 2)
+            else:
+                lst[idx], lst[2 * idx + 1] = lst[2 * idx + 1], lst[idx]
+                downHeap(lst, length, 2 * idx + 1)
+        elif lst[idx] &lt; lst[2 * idx + 2]:
+            lst[idx], lst[2 * idx + 2] = lst[2 * idx + 2], lst[idx]
+            downHeap(lst,length, 2 * idx + 2)
+    elif 2 * idx + 1 &lt; length:
+        if lst[idx] &lt; lst[2 * idx + 1]:
+            lst[idx], lst[2 * idx + 1] = lst[2 * idx + 1], lst[idx]
+            downHeap(lst, length, 2 * idx + 1)
+    else:
+        pass</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2023/06/18/Masters-Theorem/#more" rel="contents">
+            <a class="btn" href="/algorithm/2020/11/15/Heapsort/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -713,7 +737,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/QuickAlgorithms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -735,8 +759,8 @@
           
             
                 
-                <a class="post-title-link" href="/algorithm/2023/06/18/Fibonacci-sequence/" itemprop="url">
-                Fibonacci sequence
+                <a class="post-title-link" href="/algorithm/2020/11/14/QuickAlgorithms/" itemprop="url">
+                Quick sort and quick select
               </a>
             
           
@@ -755,8 +779,8 @@
                 
                   <span class="post-meta-item-text">Posted on</span>
                 
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00-05:00">
-                  2023-06-18
+                <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-14T00:00:00-06:00">
+                  2020-11-14
                 </time>
               
 
@@ -833,14 +857,26 @@
 
 
 
-  <h1 id="definition">Definition</h1>
-<p>Fibonacci sequence is a sequence that generats numbers from previous two numbers.
-In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
+  <p>Quick sort and quick selection are algorithms based on the partition algorithm.
+Partition algorithm makes a two sublist($\mathcal{A},\mathcal{B}$) and one value(pivot$ = \gamma$).
+Every element in $\mathcal{A}$ is less or equal than $\gamma$.
+Every element in $\mathcal{B}$ is greater than $\gamma$.
+Notice that $\mathcal{A}$ can have some elements which have the same value with $\gamma$ but not $\gamma$ itself and $\mathcal{A},\mathcal{B}$ may be $\emptyset$.
+As a result, partition function makes $\gamma$ is the highest value of $\mathcal{A}$.
+Quick sort uses this property to sort the list.
+After partition function, $\mathcal{A}$ and $\mathcal{B}$ is sorted to each other by $\gamma$.
+Therefore, quick sort just sort recursively in $\mathcal{A}$ and $\mathcal{B}$.
+Quick selection do the simillar thing.
+Quick selection is an algorithm to find a $n$th element in the entire list.
+If the order of $\gamma$ is equal with what you seek for, it’s done.
+If the order of $\gamma$ is less than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{B}$ again.
+If the order of $\gamma$ is greater than what you seek for, adjust the order to find and try to check $\gamma$ in $\mathcal{A}$ again.
+It works like semi-quick sort, it sorts a little bit and tries to find the elements in $n$th order and keep going on.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2023/06/18/Fibonacci-sequence/#more" rel="contents">
+            <a class="btn" href="/algorithm/2020/11/14/QuickAlgorithms/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -893,7 +929,7 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2020/11/14/MergeSort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Programelot">
@@ -915,8 +951,8 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
           
             
                 
-                <a class="post-title-link" href="/algorithm/2023/01/30/Sum-of-beatty-sequence/" itemprop="url">
-                Sum of beatty sequence
+                <a class="post-title-link" href="/algorithm/2020/11/14/MergeSort/" itemprop="url">
+                Merge sort
               </a>
             
           
@@ -935,8 +971,8 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
                 
                   <span class="post-meta-item-text">Posted on</span>
                 
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-01-30T00:00:00-06:00">
-                  2023-01-30
+                <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-14T00:00:00-06:00">
+                  2020-11-14
                 </time>
               
 
@@ -1013,18 +1049,14 @@ In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
 
 
 
-  <h1 id="problem">Problem</h1>
-<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
-For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
-Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$.
-Then, problem is that compute $S(\alpha, n)$.
-In general, it can be computed easily by computing one by one which takes $O(n)$.
-However, there is another algorithm that takes much less time than this.</p>
+  <p>Merge sort is a naive way to sort with divide and conquer methodology.
+It needs $O(n)$ memory space unlike quick sort.
+However, it has only $O(n \log n)$ time complexity even at the worst-case.</p>
 
 
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2023/01/30/Sum-of-beatty-sequence/#more" rel="contents">
+            <a class="btn" href="/algorithm/2020/11/14/MergeSort/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1062,1099 +1094,6 @@ However, there is another algorithm that takes much less time than this.</p>
         
         
           <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/2023/01/30/Rayleighs-theorem/" itemprop="url">
-                Rayleigh's theorem(Beatty's theorem)
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-01-30T00:00:00-06:00">
-                  2023-01-30
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <h2 id="theorem">Theorem</h2>
-<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
-For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
-Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
-For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$.
-Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2023/01/30/Rayleighs-theorem/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/2021/08/13/Stack-Queue/" itemprop="url">
-                Stack and queue
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-13T00:00:00-05:00">
-                  2021-08-13
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>There is another data strucutre that used to store tons of data.
-Therefore, it has two special operations known as the insert and the pop.
-However, there are two types of ways to make policies for inserting and poping a data from a structure.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2021/08/13/Stack-Queue/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/12/Array-List/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/2021/08/12/Array-List/" itemprop="url">
-                Array and list
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-12T00:00:00-05:00">
-                  2021-08-12
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>Before talking about algorithm itself, we need to talk about data structures that typically uses for algorithms.
-Some of algorithms even works based on a specific data structure that optimizes the algorithm.
-In this chapter, I’ll explain the most common data structures only.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2021/08/12/Array-List/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/10/Complexity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/2021/08/10/Complexity/" itemprop="url">
-                Complexity
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-10T00:00:00-05:00">
-                  2021-08-10
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>To analyze performances of algorithms, we need to define some jargons.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2021/08/10/Complexity/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/2021/08/02/Algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/2021/08/02/Algorithm/" itemprop="url">
-                Algorithm
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-02T00:00:00-05:00">
-                  2021-08-02
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>Algorithm is a mathmatical tool to solve some problem with propal methods.
-For example, let’s think about a situation follows.
-Oneday, you’ve got a job from a city library.
-However, there was a tournado yesterday so all books dropped out of the shelf.
-Your employer calls you and asks you to clean it up in order of books’ ID.
-Despite of your low payment, you have no way but clean it up.
-Therefore, you started to think about the way to clean it up.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/2021/08/02/Algorithm/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
-        
-          <div class="post-eof"></div>
-        
-      
-    </footer>
-  </article>
-  
-    
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithm/approximation/2021/05/28/Hardness-of-approximation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Programelot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="assets/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="REAL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-                
-                <a class="post-title-link" href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/" itemprop="url">
-                Hardness of approximation
-              </a>
-            
-          
-        </h1>
-        
-
-
-        <div class="post-meta">
-          
-            
-              <span>
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Posted on</span>
-                
-                <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-05-28T00:00:00-05:00">
-                  2021-05-28
-                </time>
-              
-
-              
-
-              
-              </span>
-            
-          
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/algorithm" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/approximation" itemprop="url" rel="index">
-                    <span itemprop="name">approximation</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <p>MAX-E3SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clause which contains exactly three literals.</p>
-
-
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/algorithm/approximation/2021/05/28/Hardness-of-approximation/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    <div class="references">
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-        
-        
-        
         
       
     </footer>
@@ -2170,7 +1109,7 @@ Therefore, you started to think about the way to clean it up.</p>
 
 
 
-    <span class="page-number current">1</span> <a class="page-number" href="/page2">2</a> <span class="space">&hellip;</span> <a class="page-number" href="/page5">5</a> <a class="extend prev" rel="next" href="/page2"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page4"><i class="fa fa-angle-left"></i></a> <a class="page-number" href="/">1</a> <span class="space">&hellip;</span> <a class="page-number" href="/page4">4</a> <span class="page-number current">5</span>
   </nav>
 
 
