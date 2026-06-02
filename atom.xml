@@ -1,4 +1,373 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-02T08:51:47-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Fibonacci sequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci sequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/"><![CDATA[<h1 id="definition">Definition</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-02T08:56:35-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication</title><link href="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/" rel="alternate" type="text/html" title="Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication" /><published>2026-06-02T00:00:00-05:00</published><updated>2026-06-02T00:00:00-05:00</updated><id>https://programelot.github.io/2026/06/02/Big%20integer%20based%20on%20NNT</id><content type="html" xml:base="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/"><![CDATA[<p>When implementing arbitrary-precision integers in C++, the key challenge is <strong>how fast you can perform multiplication</strong>. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.</p>
+
+<hr />
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ol>
+  <li><a href="#internal-representation">Internal Representation</a></li>
+  <li><a href="#multiplication-strategy--two-stage-hybrid">Multiplication Strategy — Two-Stage Hybrid</a>
+    <ul>
+      <li><a href="#ntt-based-polynomial-convolution">NTT-Based Polynomial Convolution</a></li>
+      <li><a href="#result-recovery-via-garners-crt">Result Recovery via Garner’s CRT</a></li>
+      <li><a href="#karatsuba-recursive-split">Karatsuba Recursive Split</a></li>
+    </ul>
+  </li>
+  <li><a href="#division--knuth-algorithm-d">Division — Knuth Algorithm D</a></li>
+</ol>
+
+<hr />
+
+<h2 id="internal-representation">Internal Representation</h2>
+
+<p><code class="language-plaintext highlighter-rouge">BigInteger</code> stores its absolute value as a <strong>little-endian limb</strong> array.</p>
+
+\[\text{value} = \sum_{i=0}^{L-1} \text{limbs}[i] \times B^i, \quad B = 10^7\]
+
+<p>Each limb is an <code class="language-plaintext highlighter-rouge">int</code> in the range $[0, B)$, with the least significant digits at index 0. The sign is stored as a separate <code class="language-plaintext highlighter-rouge">bool</code> flag.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number: 123456789012345678901234567890
+Limb array (little-endian):
+  limbs[0] = 1234567   &lt;- least significant 7 digits
+  limbs[1] = 8901234
+  limbs[2] = 5678901
+  limbs[3] = 2345678
+  limbs[4] = 1         &lt;- most significant
+</code></pre></div></div>
+
+<p><strong>Why $B = 10^7$?</strong></p>
+
+<p>When multiplying two limbs as <code class="language-plaintext highlighter-rouge">long long</code>, there must be no overflow.</p>
+
+\[B^2 = 10^{14} &lt; 2^{63} - 1 \approx 9.2 \times 10^{18}\]
+
+<p>$10^7$ is the largest power of 10 that satisfies this constraint.</p>
+
+<hr />
+
+<h2 id="multiplication-strategy--two-stage-hybrid">Multiplication Strategy — Two-Stage Hybrid</h2>
+
+<p>The core of multiplying two numbers is computing the <strong>integer convolution</strong> of their limb arrays.</p>
+
+\[c[k] = \sum_{i+j=k} a[i] \cdot b[j]\]
+
+<p>Propagating carries through the convolution result yields the final product.</p>
+
+<h3 id="ntt-based-polynomial-convolution">NTT-Based Polynomial Convolution</h3>
+
+<p><strong>Number Theoretic Transform (NTT)</strong> is FFT implemented over modular arithmetic. It computes integer convolution in $O(n \log n)$ without floating-point error.</p>
+
+<p>The two primes used for the transform are NTT-friendly primes of the form $p = k \cdot 2^m + 1$.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prime</th>
+      <th>Value</th>
+      <th>Form</th>
+      <th>Max Transform Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$p_1$</td>
+      <td>998,244,353</td>
+      <td>$119 \cdot 2^{23} + 1$</td>
+      <td>$2^{23}$</td>
+    </tr>
+    <tr>
+      <td>$p_2$</td>
+      <td>985,661,441</td>
+      <td>$235 \cdot 2^{22} + 1$</td>
+      <td>$2^{22}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>NTT proceeds as follows.</p>
+
+\[a, b \xrightarrow{\text{NTT mod }p} \hat{a}, \hat{b} \xrightarrow{\text{pointwise}} \hat{c} \xrightarrow{\text{INTT mod }p} c\]
+
+<p>Running this process for each of $p_1$ and $p_2$ gives each result coefficient $c[i]$ expressed under two moduli.</p>
+
+\[c[i] \equiv r_1 \pmod{p_1}, \quad c[i] \equiv r_2 \pmod{p_2}\]
+
+<h3 id="result-recovery-via-garners-crt">Result Recovery via Garner’s CRT</h3>
+
+<p>Recovering the actual value from two residues is the <strong>Chinese Remainder Theorem (CRT)</strong>. We use Garner’s algorithm, which is numerically efficient.</p>
+
+<p>Garner’s algorithm uses a mixed-radix representation.</p>
+
+\[c[i] = c_1 + c_2 \cdot p_1\]
+
+<p>where</p>
+
+\[c_1 = r_1, \quad c_2 = (r_2 - r_1) \cdot p_1^{-1} \pmod{p_2}\]
+
+<p>Since $p_1 \cdot p_2 \approx 9.84 \times 10^{17}$, any coefficient smaller than this product is recovered exactly. The maximum value of each coefficient is $n \cdot (B-1)^2$, so the maximum number of limbs for which NTT can be safely applied is:</p>
+
+\[n \cdot (B-1)^2 &lt; p_1 \cdot p_2 \implies n &lt; \frac{p_1 \cdot p_2}{(10^7)^2} \approx 9860\]
+
+<p>This means NTT can be applied directly to numbers with up to approximately <strong>69,000 decimal digits</strong>.</p>
+
+<h3 id="karatsuba-recursive-split">Karatsuba Recursive Split</h3>
+
+<p>For larger numbers, <strong>Karatsuba’s algorithm</strong> splits the problem in half.</p>
+
+<p>Split $a$ and $b$ each into two halves.</p>
+
+\[a = a_{\text{hi}} \cdot x^m + a_{\text{lo}}, \quad b = b_{\text{hi}} \cdot x^m + b_{\text{lo}}\]
+
+<p>The product becomes</p>
+
+\[a \cdot b = z_2 \cdot x^{2m} + z_1 \cdot x^m + z_0\]
+
+<p>Karatsuba’s key insight is computing the middle term $z_1$ with only three multiplications.</p>
+
+\[z_0 = a_{\text{lo}} \cdot b_{\text{lo}}\]
+
+\[z_2 = a_{\text{hi}} \cdot b_{\text{hi}}\]
+
+\[z_1 = (a_{\text{lo}} + a_{\text{hi}}) \cdot (b_{\text{lo}} + b_{\text{hi}}) - z_0 - z_2\]
+
+<p>Compared to a naive divide-and-conquer with 4 recursive calls, 3 calls reduce the complexity to:</p>
+
+\[T(n) = 3T(n/2) \implies T(n) = O(n^{\log_2 3}) = O(n^{1.585})\]
+
+<p><strong>Two-stage switching logic:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>padded_size = minimum power-of-two size needed for the convolution of the two limb arrays
+
+if padded_size &lt;= 2^21:
+    compute directly with NTT  &lt;- O(n log n)
+else:
+    split with Karatsuba -&gt; recurse on each sub-problem  &lt;- O(n^1.585)
+</code></pre></div></div>
+
+<p>This structure allows multiplication of arbitrarily large numbers, even beyond NTT’s transform size limit ($2^{22}$).</p>
+
+<hr />
+
+<h2 id="division--knuth-algorithm-d">Division — Knuth Algorithm D</h2>
+
+<p>Division is implemented using <strong>Algorithm D</strong> from Knuth’s <em>The Art of Computer Programming Vol. 2</em>. The algorithm proceeds in the following steps.</p>
+
+<ol>
+  <li><strong>Normalization</strong>: Multiply both dividend and divisor by the same integer $d$ so that the most significant limb of the divisor is at least $B/2$.</li>
+  <li><strong>Quotient estimation</strong>: Estimate each digit of the quotient ($\hat{q}$) using the top two limbs.</li>
+  <li><strong>Correction</strong>: Since $\hat{q}$ can exceed the true quotient by at most 2, verify the estimate and reduce it up to twice if needed.</li>
+  <li><strong>Denormalization</strong>: Divide the remainder by $d$ to recover the true remainder.</li>
+</ol>
+
+<p>Sign convention follows the C++ standard (<code class="language-plaintext highlighter-rouge">truncate toward zero</code>).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dividend</th>
+      <th>Divisor</th>
+      <th>Quotient</th>
+      <th>Remainder</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>17</td>
+      <td>5</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>-17</td>
+      <td>5</td>
+      <td>-3</td>
+      <td>-2</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>-5</td>
+      <td>-3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>-17</td>
+      <td>-5</td>
+      <td>3</td>
+      <td>-2</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p>Together, these three components — the $10^7$-based limb representation, the NTT + Garner CRT convolution engine, and Knuth’s Algorithm D — form a self-contained arbitrary-precision integer library that handles numbers of any size with predictable, well-understood complexity at each layer.</p>]]></content><author><name>Programelot</name></author><category term="C++" /><category term="BigInteger" /><category term="NTT" /><category term="Karatsuba" /><category term="ArbitraryPrecision" /><summary type="html"><![CDATA[When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.]]></summary></entry><entry><title type="html">Master’s Theorem</title><link href="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/" rel="alternate" type="text/html" title="Master’s Theorem" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Masters%20Theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/"><![CDATA[<h1 id="definition">Definition</h1>
+<p>Master’s theorem is a theorem that uses for algorithm analysis.</p>
+
+<h1 id="formal-theorem">Formal theorem</h1>
+<p>Let $a \ge 1$ and $b \ge 1$ be constants, $f(n)$ be a non negative function and $T(n)$ be a function defined on the nonnegative intergers by the recurrence $T(n) = aT(n/b) + f(n)$ along with sufficient base cases, where we interpret $n/b$ to mean either $ceil(n/b)$ or $floor(n/b)$.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Form</th>
+      <th>Complexity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$f(n)=O(n^{(log_b a - \epsilon)})$ for some constant $\epsilon&gt;0$</td>
+      <td>$T(n)=\Theta(n^{log_b a})$</td>
+    </tr>
+    <tr>
+      <td>$f(n)=\Theta(n^{log_b a} log^k n)$ for some constant $k\ge0$</td>
+      <td>$T(n)=\Theta(n^{log_b a} log^{k+1}n)$</td>
+    </tr>
+    <tr>
+      <td>$f(n)=\Omega(n^{(log_b a + \epsilon)})$ for some constant $\epsilon&gt;0$ and $\exists c &lt; 1, N &gt; 0$ such that $af(n/b) \le cf(n)$ for all $n \ge N$</td>
+      <td>$T(n)=\Theta(f(n))$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="meaning">Meaning</h1>
+<p>This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Master’s theorem is a theorem that uses for algorithm analysis.]]></summary></entry><entry><title type="html">Maximum sum of a contiguous subsequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="alternate" type="text/html" title="Maximum sum of a contiguous subsequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Maximum%20sum%20of%20a%20contiguous%20subsequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/"><![CDATA[<h1 id="definition">Definition</h1>
+<p>The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</p>
+
+<h1 id="solution">Solution</h1>
+<h2 id="naive-solution">Naive solution</h2>
+<p>In the naive method, every subarray can be computed as it is.
+Computing sum of subarray takes at most \(O(n)\) and there could be \(O(n^2)\) possible subarrays.
+As a result, it takes at most $O(n^3)$.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">){</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
+                <span class="n">max</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="divide-and-conquer">Divide and conquer</h2>
+<p>Divide and conquer can be applied to this problem either.
+Notice that to compute optimal solution, the solution that contain middle point should be reconsidered.
+Therefore, it needs $O(n)$ time for it at each level.
+As a result, it takses at most $O(n \log n)$.
+Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">t</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">leftMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">rightMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">f</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">leftMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
+            <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">rightMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
+            <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">leftMax</span><span class="p">,</span> <span class="n">rightMax</span><span class="p">),</span> <span class="n">leftMiddleMax</span> <span class="o">+</span> <span class="n">rightMiddleMax</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="dynamic-programming">Dynamic programming</h2>
+<h3 id="prefix-sum">Prefix sum</h3>
+<p>Instead of compute the actual problem, this problem can be converted into the smaller problem.
+Let’s assume that answer is $\sum\limits_{k=x}^{y} a_k$.
+Then, answer is $\sum\limits_{k=x}^{y} a_k = \sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x} a_k$.
+Which means it’s enough to solve maximum difference in the Prefix sum array.
+Which is much easier to be solved.
+Notice that to save space, there is no physical Prefix sum array in the code below.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">prefix_i</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">prefix_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">prefix_i</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">min</span> <span class="o">&gt;</span> <span class="n">prefix_i</span><span class="p">){</span>
+            <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">sol</span> <span class="o">&lt;</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">){</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="max-ends-at">Max Ends At</h3>
+<p>Instead of using Prefix sum, algorithm can compute the maximum value that will ends at $i$th elements.
+In this case, it is obvious that it just decide whether it will expend to the next element or not because advantage of choosing subarray from ahead should be positive.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">maxEnds_i</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">maxEnds_i</span> <span class="o">+</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">maxEnds_i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.]]></summary></entry><entry><title type="html">Fibonacci sequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/" rel="alternate" type="text/html" title="Fibonacci sequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Fibonacci%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Fibonacci-sequence/"><![CDATA[<h1 id="definition">Definition</h1>
 <p>Fibonacci sequence is a sequence that generats numbers from previous two numbers.
 In other world, Fibonacci sequence $a$ is a a sequence defined by follows.</p>
 
@@ -248,221 +617,7 @@ Detailed test results are below.</p>
 <tr><td>91</td><td>30796</td><td>106685</td><td>1380392</td><td>...</td><td>10.3351</td><td>11.5776</td><td>14.1379</td><td>...</td><td>Mathematical</td></tr>
 <tr><td>92</td><td>28222</td><td>107592</td><td>1310485</td><td>...</td><td>10.2479</td><td>11.5861</td><td>14.0859</td><td>...</td><td>Mathematical</td></tr>
 </tbody>
-</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.]]></summary></entry><entry><title type="html">Maximum sum of a contiguous subsequence</title><link href="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="alternate" type="text/html" title="Maximum sum of a contiguous subsequence" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Maximum%20sum%20of%20a%20contiguous%20subsequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/"><![CDATA[<h1 id="definition">Definition</h1>
-<p>The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.</p>
-
-<h1 id="solution">Solution</h1>
-<h2 id="naive-solution">Naive solution</h2>
-<p>In the naive method, every subarray can be computed as it is.
-Computing sum of subarray takes at most \(O(n)\) and there could be \(O(n^2)\) possible subarrays.
-As a result, it takes at most $O(n^3)$.</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">){</span>
-            <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">){</span>
-                <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
-            <span class="p">}</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">sum</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
-                <span class="n">max</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="divide-and-conquer">Divide and conquer</h2>
-<p>Divide and conquer can be applied to this problem either.
-Notice that to compute optimal solution, the solution that contain middle point should be reconsidered.
-Therefore, it needs $O(n)$ time for it at each level.
-As a result, it takses at most $O(n \log n)$.
-Notice that $T(n) = 2T(n/2) + O(n)$ and it can be applied to Master theorem.</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">){</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">t</span><span class="p">){</span>
-        <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">leftMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">rightMax</span> <span class="o">=</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">f</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">leftMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
-            <span class="n">leftMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">temp</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">rightMiddleMax</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="p">){</span>
-            <span class="n">rightMiddleMax</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">leftMax</span><span class="p">,</span> <span class="n">rightMax</span><span class="p">),</span> <span class="n">leftMiddleMax</span> <span class="o">+</span> <span class="n">rightMiddleMax</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-    <span class="k">return</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="dynamic-programming">Dynamic programming</h2>
-<h3 id="prefix-sum">Prefix sum</h3>
-<p>Instead of compute the actual problem, this problem can be converted into the smaller problem.
-Let’s assume that answer is $\sum\limits_{k=x}^{y} a_k$.
-Then, answer is $\sum\limits_{k=x}^{y} a_k = \sum\limits_{k=1}^{y} a_k - \sum\limits_{k=1}^{x} a_k$.
-Which means it’s enough to solve maximum difference in the Prefix sum array.
-Which is much easier to be solved.
-Notice that to save space, there is no physical Prefix sum array in the code below.</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-    <span class="kt">int</span> <span class="n">prefix_i</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">prefix_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">prefix_i</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">min</span> <span class="o">&gt;</span> <span class="n">prefix_i</span><span class="p">){</span>
-            <span class="n">min</span> <span class="o">=</span> <span class="n">prefix_i</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">sol</span> <span class="o">&lt;</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">){</span>
-            <span class="n">sol</span> <span class="o">=</span> <span class="n">prefix_i</span> <span class="o">-</span> <span class="n">min</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="max-ends-at">Max Ends At</h3>
-<p>Instead of using Prefix sum, algorithm can compute the maximum value that will ends at $i$th elements.
-In this case, it is obvious that it just decide whether it will expend to the next element or not because advantage of choosing subarray from ahead should be positive.</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">mscs</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-    <span class="kt">int</span> <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-    <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">maxEnds_i</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
-        <span class="n">maxEnds_i</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">maxEnds_i</span> <span class="o">+</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
-        <span class="n">sol</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">maxEnds_i</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">array</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">mscs</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition The maximum sum of a contiguous subsequence problem is a problem that finds a contiguous subarray of an array that sum of it will be a maximum.]]></summary></entry><entry><title type="html">Master’s Theorem</title><link href="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/" rel="alternate" type="text/html" title="Master’s Theorem" /><published>2023-06-18T00:00:00-05:00</published><updated>2023-06-18T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2023/06/18/Masters%20Theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/06/18/Masters-Theorem/"><![CDATA[<h1 id="definition">Definition</h1>
-<p>Master’s theorem is a theorem that uses for algorithm analysis.</p>
-
-<h1 id="formal-theorem">Formal theorem</h1>
-<p>Let $a \ge 1$ and $b \ge 1$ be constants, $f(n)$ be a non negative function and $T(n)$ be a function defined on the nonnegative intergers by the recurrence $T(n) = aT(n/b) + f(n)$ along with sufficient base cases, where we interpret $n/b$ to mean either $ceil(n/b)$ or $floor(n/b)$.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Form</th>
-      <th>Complexity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>$f(n)=O(n^{(log_b a - \epsilon)})$ for some constant $\epsilon&gt;0$</td>
-      <td>$T(n)=\Theta(n^{log_b a})$</td>
-    </tr>
-    <tr>
-      <td>$f(n)=\Theta(n^{log_b a} log^k n)$ for some constant $k\ge0$</td>
-      <td>$T(n)=\Theta(n^{log_b a} log^{k+1}n)$</td>
-    </tr>
-    <tr>
-      <td>$f(n)=\Omega(n^{(log_b a + \epsilon)})$ for some constant $\epsilon&gt;0$ and $\exists c &lt; 1, N &gt; 0$ such that $af(n/b) \le cf(n)$ for all $n \ge N$</td>
-      <td>$T(n)=\Theta(f(n))$</td>
-    </tr>
-  </tbody>
-</table>
-
-<h1 id="meaning">Meaning</h1>
-<p>This theorem can let us know about the complexity of an algorithm when it uses Divide and conquer approach.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Master’s theorem is a theorem that uses for algorithm analysis.]]></summary></entry><entry><title type="html">Rayleigh’s theorem(Beatty’s theorem)</title><link href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh’s theorem(Beatty’s theorem)" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/"><![CDATA[<h2 id="theorem">Theorem</h2>
-<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
-For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
-Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
-For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$.
-Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.</p>
-
-<h2 id="proof">Proof</h2>
-
-<p>Proof will be done with contradictions for two parts.</p>
-
-<h3 id="no-collision">No collision</h3>
-
-<p>There is something that exists in both $[\alpha k]$ and $[\beta k]$.</p>
-
-<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $v = [\alpha r] = [\beta k]$.</p>
-
-<p>Which means $v \le \alpha r &lt; v + 1$ and $ v \le \beta k &lt; v + 1$.</p>
-
-<p>By dividing each by $\alpha, \beta$, $\frac{v}{\alpha} \le r &lt; \frac{v + 1}{\alpha}$ and $\frac{v}{\beta} \le k &lt; \frac{v + 1}{\beta}$.</p>
-
-<p>However, equality can’t be happen because $\alpha, \beta$ is irrational.</p>
-
-<p>Now adding two equation results in $\frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v &lt; r + k &lt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} &lt; (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
-
-<p>Which result in $v &lt; r + k &lt; v + 1$ and it’s a contradiction to $r + k$ is an integer.</p>
-
-<h3 id="coverage">Coverage</h3>
-
-<p>There is something that doesn’t exists in both $[\alpha k]$ and $[\beta k]$.</p>
-
-<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $[\alpha r] = v - 1, [\alpha (r + 1)] = v + 1, [\beta k] = v - 1, [\beta (k + 1)] = v + 1$.</p>
-
-<p>Which means, $\alpha r &lt; v, \alpha (r + 1) \ge v + 1, \beta k &lt; v , \beta (k + 1) \ge v + 1$.</p>
-
-<p>Notice that equality can’t happen in here either because $\alpha, \beta$ is irrational.</p>
-
-<p>By dividing $\alpha, \beta$, it results in  $r &lt; \frac{v}{\alpha}, r + 1 &gt; \frac{v + 1}{\alpha}, k &lt; \frac{v}{\beta} , k + 1 &gt; \frac{v + 1}{\beta}$.</p>
-
-<p>Adding 1st and 3rd inequality, $r + k &lt; \frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v$.</p>
-
-<p>Similarly adding 2nd and 4th inequality, $r + 1 + k + 1 &gt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} = (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
-
-<p>Which means $r + k &gt; v + 1 - 2 = v - 1$.</p>
-
-<p>By using both inequality, $v - 1 &lt; r + k &lt; v$ and it’s a contradiction to $r + k$ is an integer.</p>
-
-<p>As a result, claim holds.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Theorem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$. For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$. Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.]]></summary></entry><entry><title type="html">Sum of beatty sequence</title><link href="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/" rel="alternate" type="text/html" title="Sum of beatty sequence" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Sum%20of%20beatty%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/"><![CDATA[<h1 id="problem">Problem</h1>
+</table>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Definition Fibonacci sequence is a sequence that generats numbers from previous two numbers. In other world, Fibonacci sequence $a$ is a a sequence defined by follows.]]></summary></entry><entry><title type="html">Sum of beatty sequence</title><link href="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/" rel="alternate" type="text/html" title="Sum of beatty sequence" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Sum%20of%20beatty%20sequence</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Sum-of-beatty-sequence/"><![CDATA[<h1 id="problem">Problem</h1>
 <p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
 For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
 Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$.
@@ -547,7 +702,54 @@ Notice that $\alpha = \sqrt{2}$ then $\beta = \frac{\sqrt{2}}{\sqrt{2} - 1} = 2 
   <li>$S(\sqrt{2}, 41) = 57 * 58 / 2 - S(2 + \sqrt{2}, 16) = 1653 - 456 = 1197$</li>
   <li>$S(2 + \sqrt{2}, 41) = S(\sqrt{2}, 41) + 2 * 41 * 42/2 = 1197 + 1722 = 2919$</li>
   <li>$S(\sqrt{2}, 100) = 141 * 142 / 2 - S(2 + \sqrt{2}, 41) = 10011 - 2919 = 7092$</li>
-</ol>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Problem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$. Then, problem is that compute $S(\alpha, n)$. In general, it can be computed easily by computing one by one which takes $O(n)$. However, there is another algorithm that takes much less time than this.]]></summary></entry><entry><title type="html">Stack and queue</title><link href="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/" rel="alternate" type="text/html" title="Stack and queue" /><published>2021-08-13T00:00:00-05:00</published><updated>2021-08-13T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/13/Stack%20Queue</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/"><![CDATA[<p>There is another data strucutre that used to store tons of data.
+</ol>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Problem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Let’s define $S(\alpha, n) = \sum\limits_{k = 1}^{n}[\alpha k]$. Then, problem is that compute $S(\alpha, n)$. In general, it can be computed easily by computing one by one which takes $O(n)$. However, there is another algorithm that takes much less time than this.]]></summary></entry><entry><title type="html">Rayleigh’s theorem(Beatty’s theorem)</title><link href="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/" rel="alternate" type="text/html" title="Rayleigh’s theorem(Beatty’s theorem)" /><published>2023-01-30T00:00:00-06:00</published><updated>2023-01-30T00:00:00-06:00</updated><id>https://programelot.github.io/algorithm/2023/01/30/Rayleighs%20theorem</id><content type="html" xml:base="https://programelot.github.io/algorithm/2023/01/30/Rayleighs-theorem/"><![CDATA[<h2 id="theorem">Theorem</h2>
+<p>Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$.
+For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$.
+Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$.
+For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$.
+Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.</p>
+
+<h2 id="proof">Proof</h2>
+
+<p>Proof will be done with contradictions for two parts.</p>
+
+<h3 id="no-collision">No collision</h3>
+
+<p>There is something that exists in both $[\alpha k]$ and $[\beta k]$.</p>
+
+<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $v = [\alpha r] = [\beta k]$.</p>
+
+<p>Which means $v \le \alpha r &lt; v + 1$ and $ v \le \beta k &lt; v + 1$.</p>
+
+<p>By dividing each by $\alpha, \beta$, $\frac{v}{\alpha} \le r &lt; \frac{v + 1}{\alpha}$ and $\frac{v}{\beta} \le k &lt; \frac{v + 1}{\beta}$.</p>
+
+<p>However, equality can’t be happen because $\alpha, \beta$ is irrational.</p>
+
+<p>Now adding two equation results in $\frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v &lt; r + k &lt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} &lt; (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
+
+<p>Which result in $v &lt; r + k &lt; v + 1$ and it’s a contradiction to $r + k$ is an integer.</p>
+
+<h3 id="coverage">Coverage</h3>
+
+<p>There is something that doesn’t exists in both $[\alpha k]$ and $[\beta k]$.</p>
+
+<p>Then, there is positive integer $v, r, k \in \mathcal{Z}^+$ such that $[\alpha r] = v - 1, [\alpha (r + 1)] = v + 1, [\beta k] = v - 1, [\beta (k + 1)] = v + 1$.</p>
+
+<p>Which means, $\alpha r &lt; v, \alpha (r + 1) \ge v + 1, \beta k &lt; v , \beta (k + 1) \ge v + 1$.</p>
+
+<p>Notice that equality can’t happen in here either because $\alpha, \beta$ is irrational.</p>
+
+<p>By dividing $\alpha, \beta$, it results in  $r &lt; \frac{v}{\alpha}, r + 1 &gt; \frac{v + 1}{\alpha}, k &lt; \frac{v}{\beta} , k + 1 &gt; \frac{v + 1}{\beta}$.</p>
+
+<p>Adding 1st and 3rd inequality, $r + k &lt; \frac{v}{\alpha} + \frac{v}{\beta} = v(\frac{1}{\alpha} + \frac{1}{\beta}) = v$.</p>
+
+<p>Similarly adding 2nd and 4th inequality, $r + 1 + k + 1 &gt; \frac{v + 1}{\alpha} + \frac{v + 1}{\beta} = (v + 1)(\frac{1}{\alpha} + \frac{1}{\beta}) = v + 1$.</p>
+
+<p>Which means $r + k &gt; v + 1 - 2 = v - 1$.</p>
+
+<p>By using both inequality, $v - 1 &lt; r + k &lt; v$ and it’s a contradiction to $r + k$ is an integer.</p>
+
+<p>As a result, claim holds.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Theorem Let’s think about the sequence of $[\alpha k]$ for $k \in \mathcal{Z}^+$ and $\alpha \in \mathcal{R}^+/\mathcal{Q}^+$ and $\alpha &gt; 1$. For example, $[\sqrt{2}] \approxeq 1.414 = 1, [2 \sqrt{2}] \approxeq 2.828 = 2, [3 \sqrt{2}] \approxeq 4.242 = 4, [4 \sqrt{2}] \approxeq 5.656 = 5, [5 \sqrt{2}] \approxeq 7.071 = 7$ for $\alpha = \sqrt{2}$. Then, $[\alpha k]$ and $[\beta k]$ partitions an integer sequence if $\alpha^{-1} + \beta^{-1} = 1$. For example, $\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}/(\sqrt{2} - 1)} = \frac{1}{\sqrt{2}} + \frac{\sqrt{2} - 1}{\sqrt{2}} = 1$. Which means $[\sqrt{2}/(\sqrt{2} - 1)] \approxeq 3.414 = 3, [2\sqrt{2}/(\sqrt{2} - 1)] \approxeq 6.828 = 6$.]]></summary></entry><entry><title type="html">Stack and queue</title><link href="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/" rel="alternate" type="text/html" title="Stack and queue" /><published>2021-08-13T00:00:00-05:00</published><updated>2021-08-13T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/2021/08/13/Stack%20Queue</id><content type="html" xml:base="https://programelot.github.io/algorithm/2021/08/13/Stack-Queue/"><![CDATA[<p>There is another data strucutre that used to store tons of data.
 Therefore, it has two special operations known as the insert and the pop.
 However, there are two types of ways to make policies for inserting and poping a data from a structure.</p>
 
@@ -2072,261 +2274,4 @@ Which means 19% faster than you are.</p>
 
 <p>To solve this problem, we call both methods as sorting algorithms.
 However, it shows different perforamce as you can see.
-From the next time, it will focused on the performance of the algorithm and comparison between them.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.]]></summary></entry><entry><title type="html">Hardness of approximation</title><link href="https://programelot.github.io/algorithm/approximation/2021/05/28/Hardness-of-approximation/" rel="alternate" type="text/html" title="Hardness of approximation" /><published>2021-05-28T00:00:00-05:00</published><updated>2021-05-28T00:00:00-05:00</updated><id>https://programelot.github.io/algorithm/approximation/2021/05/28/Hardness%20of%20approximation</id><content type="html" xml:base="https://programelot.github.io/algorithm/approximation/2021/05/28/Hardness-of-approximation/"><![CDATA[<p>MAX-E3SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clause which contains exactly three literals.</p>
-
-<p>MAX-2SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clauses which contains at most two literals.</p>
-
-<p>Then there exists a $\frac{7}{8}$-approximation algorithm for MAX-E3SAT problem.</p>
-
-<p>Proof is like follow.
-If you see all of the clauses and count the existance of each literals and complementary of literals.
-Then, we can pick at least half of them to be satisfied by pick $x_i$ or $\overline{x_i}$.
-Then, we can cover at least $\frac{7}{8}$ of them because we have three literals for one clauses.</p>
-
-<p>Then, P=NP if there exists a $(\frac{7}{8} + \epsilon)$-approximation algorithm for MAX-E3SAT problem for all constant $\epsilon &gt; 0$.</p>
-
-<p>Proof will be updated later.</p>
-
-<p>Then there exists no $\alpha$-approximation for MAX 2SAT for any constant $\alpha &gt; \frac{433}{440}$ unless P=NP.</p>
-
-<p>Proof is like follow.</p>
-
-<p>First of all, let’s think about follow.</p>
-
-<p>For three literals $l1$, $l2$ and $l3$, consider the follwing set of ten clauses in terms of $l1, l2, l3$ and auxiliary variable $y$.</p>
-
-<ol>
-  <li>$l1$</li>
-  <li>$l2$</li>
-  <li>$l3$</li>
-  <li>$\overline{l1}\lor\overline{l2}$</li>
-  <li>$\overline{l2}\lor\overline{l3}$</li>
-  <li>$\overline{l1}\lor\overline{l3}$</li>
-  <li>$y$</li>
-  <li>$l1\lor\overline{y}$</li>
-  <li>$l2\lor\overline{y}$</li>
-  <li>$l3\lor\overline{y}$</li>
-</ol>
-
-<p>If $l1 \lor l2 \lor l3$ is satisfied, we can choose the value of $y$ so that exactly seven of the ten clauses are satisfied and it is impossible to satisfy more than that.
-If $l1 \lor l2 \lor l3$ is not satisfied, we can choose the value of $y$ so that exactly six of the ten clauses are satisfied and it is impossible to satisfy more than that.</p>
-
-<p>Notice that we can have following table with number of satisfied clauses if $y$ is true.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th># true literals</th>
-      <th># true clauses in 1~3</th>
-      <th># true clauses in 4~6</th>
-      <th># true clauses in 7~10</th>
-      <th># true clauses in Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>4</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>3</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>1</td>
-      <td>4</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>If $y$ is false then number of satisfied clauses is like below.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th># true literals</th>
-      <th># true clauses in 1~3</th>
-      <th># true clauses in 4~6</th>
-      <th># true clauses in 7~10</th>
-      <th># true clauses in Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>3</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>3</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
-      <td>3</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>3</td>
-      <td>6</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>As a result, maximum is follow.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th># true literals</th>
-      <th># true clauses in 1~3</th>
-      <th># true clauses in 4~6</th>
-      <th># true clauses in 7~10 (best)</th>
-      <th># true clauses in Total(best)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>4 ($y$ as true)</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>3 ($y$ as true/false)</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
-      <td>3 ($y$ as false)</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>3 ($y$ as false)</td>
-      <td>6</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Now. think about $m$ clauses that consistes an instance of the MAX E3SAT problem with $n$ varaibles.
-We construct a MAX 2SAT instance by follow.</p>
-
-<p>For each $j$th clause in MAX E3SAT problem, make 10 clauses with distinct auxiliary varaible in the algorithm above.
-Then, set $l1$, $l2$, $l3$ as each literals used in $j$th clause.</p>
-
-<p>For example, following MAX E3SAT was given.</p>
-
-<ol>
-  <li>$x_1 \lor x_2 \lor x_3$</li>
-  <li>$\overline{x_2} \lor x_4 \lor x_5$</li>
-</ol>
-
-<p>Then, following is corresponding MAX 2SAT problem.</p>
-
-<ol>
-  <li>$x_1$</li>
-  <li>$x_2$</li>
-  <li>$x_3$</li>
-  <li>$\overline{x_1}\lor\overline{x_2}$</li>
-  <li>$\overline{x_2}\lor\overline{x_3}$</li>
-  <li>$\overline{x_1}\lor\overline{x_3}$</li>
-  <li>$y_1$</li>
-  <li>$x_1\lor\overline{y_1}$</li>
-  <li>$x_2\lor\overline{y_1}$</li>
-  <li>$x_3\lor\overline{y_1}$</li>
-  <li>$\overline{x_2}$</li>
-  <li>$x_4$</li>
-  <li>$x_5$</li>
-  <li>$x_2\lor\overline{x_4}$</li>
-  <li>$\overline{x_4}\lor\overline{x_5}$</li>
-  <li>$x_2\lor\overline{x_5}$</li>
-  <li>$y_2$</li>
-  <li>$\overline{x_2}\lor\overline{y_2}$</li>
-  <li>$x_4\lor\overline{y_2}$</li>
-  <li>$x_5\lor\overline{y_2}$</li>
-</ol>
-
-<p>Notice that if we make it so then, it shares the optimal solution because MAX 2SAT problem can satisfies 7 of clauses iff corresponding MAX E3SAT problem’s clause satisfies and MAX 2SAT problem can satisfies 6 of clauses otherwise which is less than 7. 
-For example, if $x_1$ is true and $x_4$ is true then, we can set some $y_1$ and $y_2$ to 14 of 20 becomes true.</p>
-
-<p>Now, run the $\alpha$-approximation algorithm for MAX 2SAT on this instance.</p>
-
-<p>Let’s defnine some terminologies.</p>
-
-<ol>
-  <li>$k^{\star}$ be the number of satisfing clauses of MAX E3SAT instance from the optimal solution.</li>
-  <li>$\overline{k}$ be the number of satisfing clauses of MAX E3SAT instance from the $\alpha$-approximation algorithm’s output of MAX 2SAT problem.</li>
-</ol>
-
-<p>Notice that we may have some auxiliary variables $y$ but we will just ignore it for $\overline{k}$.</p>
-
-<p>Then, MAX 2SAT instance’s optimal soltuion satisfies $7k^{\star}$ $+$ $6(m - k^{\star})$ clauses.
-Which means, $\alpha(7k^{\star}$ $+$ $6(m - k^{\star}))$ $\le$ $7\overline{k}$ $+$ $6(m - \overline{k})$.
-Nocie that $0$ $&lt;$ $\alpha$ $\le$ $1$ because this is maximization problem.</p>
-
-<p>As a result, following inequality is true.</p>
-
-<p>$\alpha(7k^{\star}$ $+$ $6(m - k^{\star}))$ $\le$ $7\overline{k}$ $+$ $6(m - \overline{k})$ $\leftrightarrow$
-$\alpha(k^{\star}$ $+$ $6m)$ $\le$ $\overline{k}$ $+$ $6m$ $\leftrightarrow$
-$\alpha k^{\star}$ $+$ $\alpha 6m$ $\le$ $\overline{k}$ $+$ $6m$ $\leftrightarrow$
-$\alpha k^{\star}$ $+$ $\alpha 6m$ $-$ $6m$ $\le$ $\overline{k}$ $\leftrightarrow$
-$\alpha k^{\star}$ $+$ $6(\alpha  - 1)m$ $\le$ $\overline{k}$ $\leftrightarrow$
-$\alpha k^{\star}$ $-$ $6(1 - \alpha)m$ $\le$ $\overline{k}$.</p>
-
-<p>Now, we already have $\frac{7}{8}$-approximation algorithm.
-Therefore, $k^{\star}$ $\ge$ $\frac{7}{8}m$ and $\frac{8}{7}k^{\star}$ $\ge$ $m$.</p>
-
-<p>As a result, $\overline{k}$ $\ge$
-$\alpha k^{\star}$ $-$ $6(1 - \alpha)m$ $\ge$
-$\alpha k^{\star}$ $-$ $6(1 - \alpha)\frac{8}{7}k^{\star}$ $=$
-$(\alpha - 6(1 - \alpha)\frac{8}{7})k^{\star}$ $=$
-$(\frac{55}{7}\alpha - \frac{48}{7})k^{\star}$.</p>
-
-<p>Notice that $m$ $\le$ $\frac{8}{7}k^{\star}$ $\leftrightarrow$
-$-$ $\frac{8}{7}k^{\star}$ $\le$ $-$ $m$ $\leftrightarrow$
-$-$ $6(1 - \alpha)\frac{8}{7}k^{\star}$ $\le$ $-$ $6(1 - \alpha)m$.</p>
-
-<p>If there is $\alpha &gt; \frac{433}{440}$,
-$\overline{k}$ $\ge$
-$(\frac{55}{7}\alpha - \frac{48}{7})k^{\star}$ $&gt;$
-$(\frac{55}{7}\frac{433}{440} - \frac{48}{7})k^{\star}$ $=$
-$(\frac{7}{8})k^{\star}$.</p>
-
-<p>Now, we show that such $\alpha$-approximation for MAX 2SAT can be used to give $(\frac{7}{8} + \epsilon)$-approximation algorithm for MAX-E3SAT problem for some constant $\epsilon &gt; 0$ and $\alpha &gt; \frac{433}{440}$.
-Which is a contradiction.
-Therefore, there is no such an approximation algorithm.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><category term="approximation" /><summary type="html"><![CDATA[MAX-E3SAT is a problem that finds a truth value assignment that satisfies the maximum number of clauses for a given a set of clause which contains exactly three literals.]]></summary></entry></feed>
+From the next time, it will focused on the performance of the algorithm and comparison between them.</p>]]></content><author><name>Programelot</name></author><category term="algorithm" /><summary type="html"><![CDATA[Algorithm is a mathmatical tool to solve some problem with propal methods. For example, let’s think about a situation follows. Oneday, you’ve got a job from a city library. However, there was a tournado yesterday so all books dropped out of the shelf. Your employer calls you and asks you to clean it up in order of books’ ID. Despite of your low payment, you have no way but clean it up. Therefore, you started to think about the way to clean it up.]]></summary></entry></feed>

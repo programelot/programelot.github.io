@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Jekyll, NexT" />
+  <meta name="keywords" content="C++,BigInteger,NTT,Karatsuba,ArbitraryPrecision," />
 
 
 
@@ -114,17 +114,17 @@
 
 
 
-<meta name="description" content="I am Programelot who is researching about optimization.">
-<meta name="keywords" content="Jekyll, NexT">
-<meta property="og:type" content="website">
-<meta property="og:title" content="REAL">
-<meta property="og:url" content="https://programelot.github.io/tags/">
+<meta name="description" content="When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.">
+<meta name="keywords" content="C++, BigInteger, NTT, Karatsuba, ArbitraryPrecision">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication">
+<meta property="og:url" content="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/">
 <meta property="og:site_name" content="REAL">
-<meta property="og:description" content="I am Programelot who is researching about optimization.">
+<meta property="og:description" content="When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="REAL">
-<meta name="twitter:description" content="I am Programelot who is researching about optimization.">
+<meta name="twitter:title" content="Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication">
+<meta name="twitter:description" content="When implementing arbitrary-precision integers in C++, the key challenge is how fast you can perform multiplication. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +157,7 @@
 
 
 
-  <title>              Tags | REAL      </title>
+  <title>Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication | REAL</title>
   
 
 
@@ -340,42 +340,417 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
+
 <div id="posts" class="posts-expand">
-<header class="post-header">
+  
+  
 
-	<h1 class="post-title" itemprop="name headline">
-    
-      Tags
-    
-  </h1>
-
-
-
-</header>
+  
 
   
   
-    <div class="tag-cloud">
-      <div class="tag-cloud-title">
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
           
-            5 tags in total
           
-      </div>
-      <div class="tag-cloud-tags">
-        
-        
-        
-        
-        
-        
+            Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication
+          
+        </h1>
         
 
 
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2026-06-02T00:00:00-05:00">
+                2026-06-02
+              </time>
+            
 
-        <a href="/tag/#/C%2B%2B" style="font-size: 12px;color: rgb(204,204,204)">C++</a> <a href="/tag/#/BigInteger" style="font-size: 12px;color: rgb(204,204,204)">BigInteger</a> <a href="/tag/#/NTT" style="font-size: 12px;color: rgb(204,204,204)">NTT</a> <a href="/tag/#/Karatsuba" style="font-size: 12px;color: rgb(204,204,204)">Karatsuba</a> <a href="/tag/#/ArbitraryPrecision" style="font-size: 12px;color: rgb(204,204,204)">ArbitraryPrecision</a>
-      </div>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>When implementing arbitrary-precision integers in C++, the key challenge is <strong>how fast you can perform multiplication</strong>. This post introduces a two-stage hybrid approach combining NTT and Karatsuba.</p>
+
+<hr />
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ol>
+  <li><a href="#internal-representation">Internal Representation</a></li>
+  <li><a href="#multiplication-strategy--two-stage-hybrid">Multiplication Strategy — Two-Stage Hybrid</a>
+    <ul>
+      <li><a href="#ntt-based-polynomial-convolution">NTT-Based Polynomial Convolution</a></li>
+      <li><a href="#result-recovery-via-garners-crt">Result Recovery via Garner’s CRT</a></li>
+      <li><a href="#karatsuba-recursive-split">Karatsuba Recursive Split</a></li>
+    </ul>
+  </li>
+  <li><a href="#division--knuth-algorithm-d">Division — Knuth Algorithm D</a></li>
+</ol>
+
+<hr />
+
+<h2 id="internal-representation">Internal Representation</h2>
+
+<p><code class="language-plaintext highlighter-rouge">BigInteger</code> stores its absolute value as a <strong>little-endian limb</strong> array.</p>
+
+\[\text{value} = \sum_{i=0}^{L-1} \text{limbs}[i] \times B^i, \quad B = 10^7\]
+
+<p>Each limb is an <code class="language-plaintext highlighter-rouge">int</code> in the range $[0, B)$, with the least significant digits at index 0. The sign is stored as a separate <code class="language-plaintext highlighter-rouge">bool</code> flag.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7</pre></td><td class="code"><pre class="highlight"><code>Number: 123456789012345678901234567890
+Limb array (little-endian):
+  limbs[0] = 1234567   &lt;- least significant 7 digits
+  limbs[1] = 8901234
+  limbs[2] = 5678901
+  limbs[3] = 2345678
+  limbs[4] = 1         &lt;- most significant
+</code></pre></td></tr></tbody></table></div></div>
+
+<p><strong>Why $B = 10^7$?</strong></p>
+
+<p>When multiplying two limbs as <code class="language-plaintext highlighter-rouge">long long</code>, there must be no overflow.</p>
+
+\[B^2 = 10^{14} &lt; 2^{63} - 1 \approx 9.2 \times 10^{18}\]
+
+<p>$10^7$ is the largest power of 10 that satisfies this constraint.</p>
+
+<hr />
+
+<h2 id="multiplication-strategy--two-stage-hybrid">Multiplication Strategy — Two-Stage Hybrid</h2>
+
+<p>The core of multiplying two numbers is computing the <strong>integer convolution</strong> of their limb arrays.</p>
+
+\[c[k] = \sum_{i+j=k} a[i] \cdot b[j]\]
+
+<p>Propagating carries through the convolution result yields the final product.</p>
+
+<h3 id="ntt-based-polynomial-convolution">NTT-Based Polynomial Convolution</h3>
+
+<p><strong>Number Theoretic Transform (NTT)</strong> is FFT implemented over modular arithmetic. It computes integer convolution in $O(n \log n)$ without floating-point error.</p>
+
+<p>The two primes used for the transform are NTT-friendly primes of the form $p = k \cdot 2^m + 1$.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prime</th>
+      <th>Value</th>
+      <th>Form</th>
+      <th>Max Transform Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$p_1$</td>
+      <td>998,244,353</td>
+      <td>$119 \cdot 2^{23} + 1$</td>
+      <td>$2^{23}$</td>
+    </tr>
+    <tr>
+      <td>$p_2$</td>
+      <td>985,661,441</td>
+      <td>$235 \cdot 2^{22} + 1$</td>
+      <td>$2^{22}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>NTT proceeds as follows.</p>
+
+\[a, b \xrightarrow{\text{NTT mod }p} \hat{a}, \hat{b} \xrightarrow{\text{pointwise}} \hat{c} \xrightarrow{\text{INTT mod }p} c\]
+
+<p>Running this process for each of $p_1$ and $p_2$ gives each result coefficient $c[i]$ expressed under two moduli.</p>
+
+\[c[i] \equiv r_1 \pmod{p_1}, \quad c[i] \equiv r_2 \pmod{p_2}\]
+
+<h3 id="result-recovery-via-garners-crt">Result Recovery via Garner’s CRT</h3>
+
+<p>Recovering the actual value from two residues is the <strong>Chinese Remainder Theorem (CRT)</strong>. We use Garner’s algorithm, which is numerically efficient.</p>
+
+<p>Garner’s algorithm uses a mixed-radix representation.</p>
+
+\[c[i] = c_1 + c_2 \cdot p_1\]
+
+<p>where</p>
+
+\[c_1 = r_1, \quad c_2 = (r_2 - r_1) \cdot p_1^{-1} \pmod{p_2}\]
+
+<p>Since $p_1 \cdot p_2 \approx 9.84 \times 10^{17}$, any coefficient smaller than this product is recovered exactly. The maximum value of each coefficient is $n \cdot (B-1)^2$, so the maximum number of limbs for which NTT can be safely applied is:</p>
+
+\[n \cdot (B-1)^2 &lt; p_1 \cdot p_2 \implies n &lt; \frac{p_1 \cdot p_2}{(10^7)^2} \approx 9860\]
+
+<p>This means NTT can be applied directly to numbers with up to approximately <strong>69,000 decimal digits</strong>.</p>
+
+<h3 id="karatsuba-recursive-split">Karatsuba Recursive Split</h3>
+
+<p>For larger numbers, <strong>Karatsuba’s algorithm</strong> splits the problem in half.</p>
+
+<p>Split $a$ and $b$ each into two halves.</p>
+
+\[a = a_{\text{hi}} \cdot x^m + a_{\text{lo}}, \quad b = b_{\text{hi}} \cdot x^m + b_{\text{lo}}\]
+
+<p>The product becomes</p>
+
+\[a \cdot b = z_2 \cdot x^{2m} + z_1 \cdot x^m + z_0\]
+
+<p>Karatsuba’s key insight is computing the middle term $z_1$ with only three multiplications.</p>
+
+\[z_0 = a_{\text{lo}} \cdot b_{\text{lo}}\]
+
+\[z_2 = a_{\text{hi}} \cdot b_{\text{hi}}\]
+
+\[z_1 = (a_{\text{lo}} + a_{\text{hi}}) \cdot (b_{\text{lo}} + b_{\text{hi}}) - z_0 - z_2\]
+
+<p>Compared to a naive divide-and-conquer with 4 recursive calls, 3 calls reduce the complexity to:</p>
+
+\[T(n) = 3T(n/2) \implies T(n) = O(n^{\log_2 3}) = O(n^{1.585})\]
+
+<p><strong>Two-stage switching logic:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6</pre></td><td class="code"><pre class="highlight"><code>padded_size = minimum power-of-two size needed for the convolution of the two limb arrays
+
+if padded_size &lt;= 2^21:
+    compute directly with NTT  &lt;- O(n log n)
+else:
+    split with Karatsuba -&gt; recurse on each sub-problem  &lt;- O(n^1.585)
+</code></pre></td></tr></tbody></table></div></div>
+
+<p>This structure allows multiplication of arbitrarily large numbers, even beyond NTT’s transform size limit ($2^{22}$).</p>
+
+<hr />
+
+<h2 id="division--knuth-algorithm-d">Division — Knuth Algorithm D</h2>
+
+<p>Division is implemented using <strong>Algorithm D</strong> from Knuth’s <em>The Art of Computer Programming Vol. 2</em>. The algorithm proceeds in the following steps.</p>
+
+<ol>
+  <li><strong>Normalization</strong>: Multiply both dividend and divisor by the same integer $d$ so that the most significant limb of the divisor is at least $B/2$.</li>
+  <li><strong>Quotient estimation</strong>: Estimate each digit of the quotient ($\hat{q}$) using the top two limbs.</li>
+  <li><strong>Correction</strong>: Since $\hat{q}$ can exceed the true quotient by at most 2, verify the estimate and reduce it up to twice if needed.</li>
+  <li><strong>Denormalization</strong>: Divide the remainder by $d$ to recover the true remainder.</li>
+</ol>
+
+<p>Sign convention follows the C++ standard (<code class="language-plaintext highlighter-rouge">truncate toward zero</code>).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dividend</th>
+      <th>Divisor</th>
+      <th>Quotient</th>
+      <th>Remainder</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>17</td>
+      <td>5</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>-17</td>
+      <td>5</td>
+      <td>-3</td>
+      <td>-2</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>-5</td>
+      <td>-3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>-17</td>
+      <td>-5</td>
+      <td>3</td>
+      <td>-2</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p>Together, these three components — the $10^7$-based limb representation, the NTT + Garner CRT convolution engine, and Knuth’s Algorithm D — form a self-contained arbitrary-precision integer library that handles numbers of any size with predictable, well-understood complexity at each layer.</p>
+
+
+      
     </div>
-  
+    
+    <div class="references">
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      Programelot
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/" title="Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication">https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/C%2B%2B" rel="tag"># C++</a>
+          
+            
+            <a href="/tag/#/BigInteger" rel="tag"># BigInteger</a>
+          
+            
+            <a href="/tag/#/NTT" rel="tag"># NTT</a>
+          
+            
+            <a href="/tag/#/Karatsuba" rel="tag"># Karatsuba</a>
+          
+            
+            <a href="/tag/#/ArbitraryPrecision" rel="tag"># ArbitraryPrecision</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm/2023/06/18/Maximum-sum-of-a-contiguous-subsequence/" rel="prev" title="Maximum sum of a contiguous subsequence">
+                Maximum sum of a contiguous subsequence <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
 </div>
 
 
@@ -384,6 +759,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -402,10 +788,30 @@
     <div class="sidebar-inner">
 
       
+        
+        
+        
+
+
+
+
+
+
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.gif"
@@ -476,6 +882,34 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#table-of-contents"> <span class="nav-number">1</span> <span class="nav-text">Table of Contents</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#internal-representation"> <span class="nav-number">2</span> <span class="nav-text">Internal Representation</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#multiplication-strategy--two-stage-hybrid"> <span class="nav-number">3</span> <span class="nav-text">Multiplication Strategy — Two-Stage Hybrid</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#ntt-based-polynomial-convolution"> <span class="nav-number">3.1</span> <span class="nav-text">NTT-Based Polynomial Convolution</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#result-recovery-via-garners-crt"> <span class="nav-number">3.2</span> <span class="nav-text">Result Recovery via Garner’s CRT</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#karatsuba-recursive-split"> <span class="nav-number">3.3</span> <span class="nav-text">Karatsuba Recursive Split</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#division--knuth-algorithm-d"> <span class="nav-number">4</span> <span class="nav-text">Division — Knuth Algorithm D</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -633,6 +1067,20 @@
 
     
 
+    
+      
+      <script type="text/javascript">
+          var disqus_config = function () {
+              this.page.url = 'https://programelot.github.io/2026/06/02/Big-integer-based-on-NNT/';
+              this.page.identifier = '/2026/06/02/Big-integer-based-on-NNT/';
+              this.page.title = 'Arbitrary-Precision Integer — NTT + Karatsuba Hybrid Multiplication';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://programelot.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+      </script>
+      
     
 
   
