@@ -1,0 +1,1453 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Jekyll, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Motivation When I was in graduate school, I studied the paper A Supernodal All-Pairs Shortest Path Algorithm (PPoPP &apos;20). This project is a revisit of that paper and a re-implementation of its core ideas. The key contribution of the paper is exploiting graph sparsity in the Floyd-Warshall algorithm by importing techniques from sparse Cholesky factorization: fill-in reducing ordering, symbolic analysis, supernodal traversal, and elimination tree parallelism. All source code can be found at GitHub. Background Single source shortest path (SSSP) Single source shortest path (SSSP) is a problem that finds the shortest paths from a single source vertex to all other vertices in a weighted graph. Bellman-Ford algorithm Bellman-Ford relaxes every edge repeatedly. After $|V| - 1$ iterations, it guarantees that all shortest paths are found, since any shortest path has at most $|V| - 1$ edges. If a shorter path can still be found after $|V| - 1$ iterations, a negative cycle exists. It supports graphs with negative edge weights and can detect negative cycles. It takes $O(|E||V|)$ to compute. Source code is here. Dijkstra Dijkstra&apos;s algorithm uses a priority queue (min-heap) to always relax the vertex with the currently known smallest distance. Because it greedily picks the minimum, it cannot handle negative edge weights. It takes $O(|E| \log |V|)$ to compute. Source code is here. All-pairs shortest path (APSP) All-pairs shortest path (APSP) is a problem that finds the shortest paths between every pair of vertices in a weighted graph. Delegation The simplest approach: run an SSSP solver from every vertex. It takes $O(|V| \times \text{SSSP complexity})$, i.e., $O(|E||V|^2)$ with Bellman-Ford or $O(|E||V|\log|V|)$ with Dijkstra. Source code is here. Johnson&apos;s algorithm Johnson&apos;s algorithm removes negative edge weights with Bellman-Ford so that Dijkstra can be applied safely. Let $n$ = number of vertices, $m$ = number of edges, and $d(i,j)$ the weight from vertex $i$ to vertex $j$. The steps are: Add a new vertex $S$ (index $n+1$) and connect it to all other vertices with weight $0$. Run Bellman-Ford from $S$ to compute $h(v) = d(n+1, v)$ for every vertex $v$. Reweight each edge: $\hat{d}(i,j) = d(i,j) + h(i) - h(j)$. Remove $S$. All reweighted edges are now non-negative. Run Dijkstra from every vertex using the reweighted graph. Recover original distances: $\text{dist}(i,j) = \hat{\text{dist}}(i,j) - h(i) + h(j)$. The non-negativity of $\hat{d}$ follows because $h(i) \le h(j) + d(i,j)$ (shortest-path property), so $\hat{d}(i,j) \ge 0$. It takes $O(|E||V|\log|V|)$ to compute. Source code is here. Floyd-Warshall Floyd-Warshall uses dynamic programming: at the $k$-th iteration it checks, for every pair $(i,j)$, whether using vertex $v_k$ as an intermediate gives a shorter path. $$\text{Dist}^k[i,j] \leftarrow \min\!\left(\text{Dist}^{k-1}[i,j],\; \text{Dist}^{k-1}[i,k] + \text{Dist}^{k-1}[k,j]\right)$$ After $n$ iterations, $\text{Dist}[i,j]$ is the true shortest-path length between $v_i$ and $v_j$. Function FloydWarshall($G = (V, E)$) Initialize $\text{Dist}[i,j] \leftarrow w_{i,j}$ if $(i,j) \in E$, else $\infty$ For $k \leftarrow 1, \cdots, n$ For $i \leftarrow 1, \cdots, n$ For $j \leftarrow 1, \cdots, n$ $\text{Dist}[i,j] \leftarrow \min(\text{Dist}[i,j],\; \text{Dist}[i,k] + \text{Dist}[k,j])$ Return Dist Algorithm 1. Floyd-Warshall It takes $O(|V|^3)$ in time and $O(|V|^2)$ in space. Source code is here. Floyd-Warshall with double buffering The standard Floyd-Warshall reads and writes Dist in place, which creates a data race when parallelized. Double buffering maintains two copies of the distance matrix — one for reading and one for writing — so the $k$-th outer iteration can be parallelized over all $(i, j)$ pairs without conflict. Source code is here. Floyd-Warshall with compressive indexing For sparse graphs, many entries of $\text{Dist}$ are $\infty$. Compressive indexing maintains, for each vertex $k$, a list of indices $(i, j)$ where $\text{Dist}[i,k]$ and $\text{Dist}[k,j]$ are both finite, so the inner loops iterate only over actual edges rather than all $n^2$ pairs. Source code is here. Floyd-Warshall with double buffering + compressive outgoing edge indexing Combining both optimizations: double buffering removes the in-place write race, while compressive indexing skips $\infty$ pairs. Only one axis (say, the $i$ dimension) is parallelized to avoid race conditions when updating the sparse index structure. It also skips updating entries that have not changed. Source code is here. Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing A further variant uses locks to allow full parallelization over both dimensions while still maintaining the sparse index structure. This increases synchronization overhead but reduces the total number of operations. Source code is here. Blocked Floyd-Warshall Blocked Floyd-Warshall improves cache locality by reordering the computation into three phases per block column $k$. Let $N$ = number of vertices, $B$ = number of blocks, $S$ = block size ($N = SB$). Diagonal update: Run classical Floyd-Warshall on the $k$-th diagonal block $A(k,k)$. Panel update: Update the $k$-th block row and column using the newly updated diagonal block via Min-Plus multiply. MinPlus outer product: Update all remaining blocks using the $k$-th block row and column. Function BlockedFloydWarshall($A$) For $bk \leftarrow 1, \cdots, B$ // Diagonal update $A(bk,bk) \leftarrow \text{FloydWarshall}(A(bk,bk))$ // Panel update For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ $A(bi, bk) \leftarrow A(bi, bk) \oplus A(bi, bk) \otimes A(bk, bk)$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bk, bj) \leftarrow A(bk, bj) \oplus A(bk, bk) \otimes A(bk, bj)$ // MinPlus outer product For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bi,bj) \leftarrow A(bi,bj) \oplus A(bi,bk) \otimes A(bk,bj)$ Return $A$ Algorithm 2. Blocked Floyd-Warshall Here $\oplus$ denotes element-wise min, and $\otimes$ denotes the Min-Plus (tropical) matrix product. The outer product step is analogous to the Schur-complement update in LU or Cholesky factorization. Source code is here. Min-Plus semiring APSP can be understood algebraically over the tropical semiring. Define two binary scalar operators: $$x \oplus y := \min(x, y) \qquad x \otimes y := x + y$$ The Min-Plus matrix product of $A \in \mathbb{R}^{m \times k}$ and $B \in \mathbb{R}^{k \times n}$ is: $$C_{ij} \leftarrow \bigoplus_{k} A_{ik} \otimes B_{kj} = \min_k (A_{ik} + B_{kj})$$ This is the graph-path analog of ordinary matrix multiplication: $C_{ij}$ is the length of the shortest two-hop path from source $i$ to destination $j$ via any bridge vertex $k$. Floyd-Warshall computes the closure of the weight matrix under this semiring. Supernodal Floyd-Warshall The naive and blocked Floyd-Warshall algorithms perform $O(n^3)$ work regardless of sparsity. The key insight of the paper is that the algebraic equivalence between Floyd-Warshall and Gaussian elimination means that all techniques from sparse direct solvers can be applied. The result is the SuperFw algorithm, which combines three ideas: nested-dissection reordering, symbolic analysis with supernodal structure, and elimination tree parallelism. Nested dissection ordering When running Blocked Floyd-Warshall, an empty block (all-$\infty$) remains empty as long as the pivot column and row are also empty. This is the graph-path analog of zero fill-in. By reordering vertices, we can defer the creation of finite entries (fill-in) as long as possible, thereby skipping many operations. Nested dissection (ND) finds a vertex separator $S \subset V$ that partitions $V$ into three disjoint sets $V = C_1 \cup S \cup C_2$ such that: There are no edges between $C_1$ and $C_2$ (they are disconnected without $S$). $|C_1|$ and $|C_2|$ are roughly equal. $|S|$ is as small as possible. After reordering, the adjacency matrix takes a block-arrow shape: the two diagonal blocks correspond to $C_1$ and $C_2$, and the separator $S$ forms the final rows and columns. This reordering is applied recursively within $C_1$ and $C_2$ to produce a multi-level separator tree. Tools such as METIS or Scotch compute near-optimal separators. For a planar graph (e.g., a road network), the separator size is $|S| = O(\sqrt{n})$, yielding $O(n^{2.5})$ total work instead of $O(n^3)$. Symbolic analysis and fill-in structure Before running the numerical phase, symbolic analysis computes the exact sparsity pattern of the final $\text{Dist}$ matrix — i.e., which entries will eventually become finite — without performing any arithmetic. This mirrors the symbolic phase of sparse Cholesky factorization and enables: Pre-allocation of memory for all fill-in positions. Construction of the elimination tree and supernodal structure. Elimination tree The elimination tree (eTree) is a tree data structure that captures data dependencies between the block eliminations in Blocked Floyd-Warshall. In the 3-block example from Algorithm 2, eliminating block 1 and block 2 updates the trailing block 3. Neither block-1 nor block-2 elimination depends on the other, so they can proceed in parallel, but both must complete before block-3 is eliminated. This dependency is exactly described by an eTree where blocks 1 and 2 are siblings whose parent is block 3. Under ND ordering, the eTree becomes multi-level: leaf nodes correspond to the finest-grained sub-separators, and the root corresponds to the top-level separator $S$. Two supernodes $a$ and $b$ are called cousins if $\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$ (their descendant sets are disjoint). The elimination of cousin supernodes can proceed in parallel. Supernodal structure A supernode is a group of vertices that share the same fill-in pattern in the post-ND symbolic analysis. Grouping such vertices together turns the sparse matrix into a block-sparse matrix whose blocks can be processed with dense Min-Plus kernels, exploiting SIMD and cache efficiently. The supernodal partition is obtained by vertex contraction on the eTree, yielding a supernodal eTree. For a supernode $v$, $\mathcal{A}(v)$ denotes its ancestors (parent, grandparent, …) and $\mathcal{D}(v)$ its descendants in the eTree. SuperFw algorithm (sequential) Function SuperFw($G = (V, E)$) $n_s \leftarrow$ number of supernodes For $k \leftarrow 1, \cdots, n_s$ // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product For $(i,j) \in \{\mathcal{A}(k) \cup \mathcal{D}(k)\} \times \{\mathcal{A}(k) \cup \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ Return $A$ Algorithm 3. SuperFw (sequential) The Panel and OuterUpdate steps touch only blocks corresponding to ancestors and descendants of $k$, not all $n_s^2$ block pairs. This is exactly what sparsity buys: blocks that are structurally zero (all-$\infty$) are never accessed. When eliminating supernode $v$, the OuterUpdate touches four regions: $\mathcal{D}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (descendant–descendant). $\mathcal{D}(v) \times \mathcal{A}(v)$ — updates the dense distance matrix directly (descendant–ancestor). $\mathcal{A}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (ancestor–descendant). $\mathcal{A}(v) \times \mathcal{A}(v)$ — updates the supernodal block-sparse matrix (trailing matrix, analogous to the Schur complement in Cholesky). At the end of the computation, the supernodal matrix contains the semiring equivalent of the Cholesky factors, and the dense distance matrix contains all pairwise shortest-path lengths. Parallel SuperFw with eTree parallelism Two cousin supernodes $a$ and $b$ ($\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$) operate on disjoint regions of the matrix in their DiagUpdate and PanelUpdate steps, and also in the first three OuterUpdate subsets. Only the $\mathcal{A}(v) \times \mathcal{A}(v)$ blocks of two cousins can overlap, but since Min-Plus addition is associative, those updates can be performed in any order (they commute). The parallel schedule is a bottom-up topological sort of the eTree, partitioning it into levels. All supernodes at the same level are cousins and can be eliminated in parallel. This is called eTree parallelism. Function ParallelSuperFw($G = (V, E)$) Compute eTree levels by bottom-up topological sort For each level $\ell$ from leaves to root For each supernode $k$ at level $\ell$ in parallel // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product (first three subsets — no conflict between cousins) For $(i,j) \in \{\mathcal{D}(k) \times (\mathcal{A}(k) \cup \mathcal{D}(k))\} \cup \{(\mathcal{A}(k) \cup \mathcal{D}(k)) \times \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ // $\mathcal{A}(k) \times \mathcal{A}(k)$ blocks updated with atomic reduce (tree-reduction) For $(i,j) \in \mathcal{A}(k) \times \mathcal{A}(k)$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ (atomic) Return $A$ Algorithm 4. Parallel SuperFw with eTree parallelism eTree parallelism contributes up to $2\times$ better scalability for small graphs, where per-iteration work is low. For large graphs with dense iterations, ordinary within-iteration parallelism is already sufficient. Asymptotic analysis The following table summarizes work $W(n)$, depth $D(n)$, and concurrency $C(n) = W(n)/D(n)$ in the work-depth model (PRAM/CREW). Algorithm $W(n)$ $D(n)$ $C(n)$ BlockedFW $O(n^3)$ $O(n)$ $O(n^2)$ SuperFw $O(n^2 |S|)$ $O(|S| \log^2 n)$ $O\!\left(\dfrac{n^2}{\log^2 n}\right)$ Dijkstra (Johnson) $O(n^2 \log n + nm)$ $O(n \log n + m)$ $O(n)$ Path Doubling $O(n^3)$ $O(\log n)$ $O\!\left(\dfrac{n^3}{\log n}\right)$ Here $|S|$ is the size of the top-level separator of the graph. Work: $W(n) = n^2|S|$ The dominant cost in eliminating the top-level separator $S$ is the OuterUpdate, which computes the outer product of two panels of size $(n - |S|) \times |S|$: $$W^0(n) \approx n^2 S(n)$$ Summing over all $\log n$ levels of the separator tree (each level contributes $\frac{n^2}{2^i} S\!\left(\frac{n}{2^i}\right)$ work) and using the monotonicity of $S(n)$ yields: $$W(n) = n^2 |S|$$ For a planar graph, $|S| = O(\sqrt{n})$, so $W(n) = O(n^{2.5})$. For a 3D mesh, $|S| = O(n^{2/3})$, so $W(n) = O(n^{8/3})$. For expander graphs, $|S| = O(n)$ and SuperFw provides no asymptotic improvement. Depth: $D(n) = O(|S| \log^2 n)$ The top-level separator is eliminated sequentially using blocked Floyd-Warshall with depth $S(n)$. At level $i$ of the separator tree, $2^i$ separators are eliminated in parallel, but blocks in the $\mathcal{A} \times \mathcal{A}$ region are shared: a block may be updated by up to $2^i$ processes simultaneously, adding a tree-reduction depth of $\log(2^i) = i$. Summing over all $\log n$ levels: $$D(n) = \sum_{i=0}^{\log n} i \cdot S\!\left(\frac{n}{2^i}\right) \le S(n) \log^2 n$$ Concurrency: $C(n) = O(n^2 / \log^2 n)$ $$C(n) = \frac{W(n)}{D(n)} = O\!\left(\frac{n^2}{\log^2 n}\right)$$ SuperFw lowers the work of BlockedFW by $O(n/|S|)$ while barely reducing concurrency. In contrast, Dijkstra has lower work but only $O(n)$ concurrency — it cannot exploit large SIMD units or deep memory hierarchies as effectively. Graph classes and when SuperFw helps SuperFw is most beneficial for graphs with small separators, broadly the class of geometric graphs: Planar graphs (road networks, 2D FEM meshes): $|S| = O(\sqrt{n})$, work $O(n^{2.5})$. 3D FEM meshes: $|S| = O(n^{2/3})$, work $O(n^{8/3})$. Power grids, social networks with community structure: separators are small in practice even when not worst-case optimal. SuperFw provides no asymptotic improvement over BlockedFW for expander graphs (e.g., Barabási–Albert, Erdős–Rényi), where $|S| = O(n)$. Implementations This project re-implements the algorithms described above as a study of the paper. The following algorithms are implemented and available at GitHub. SSSP Bellman-Ford Dijkstra APSP Delegation Johnson Floyd-Warshall Floyd-Warshall with double buffering Floyd-Warshall with compressive indexing Floyd-Warshall with double buffering + compressive outgoing edge indexing Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing Blocked Floyd-Warshall">
+<meta name="keywords" content="Jekyll, NexT">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Supernodal Floyd-Warshall">
+<meta property="og:url" content="https://programelot.github.io/projects/SupFW/">
+<meta property="og:site_name" content="REAL">
+<meta property="og:description" content="Motivation When I was in graduate school, I studied the paper A Supernodal All-Pairs Shortest Path Algorithm (PPoPP &apos;20). This project is a revisit of that paper and a re-implementation of its core ideas. The key contribution of the paper is exploiting graph sparsity in the Floyd-Warshall algorithm by importing techniques from sparse Cholesky factorization: fill-in reducing ordering, symbolic analysis, supernodal traversal, and elimination tree parallelism. All source code can be found at GitHub. Background Single source shortest path (SSSP) Single source shortest path (SSSP) is a problem that finds the shortest paths from a single source vertex to all other vertices in a weighted graph. Bellman-Ford algorithm Bellman-Ford relaxes every edge repeatedly. After $|V| - 1$ iterations, it guarantees that all shortest paths are found, since any shortest path has at most $|V| - 1$ edges. If a shorter path can still be found after $|V| - 1$ iterations, a negative cycle exists. It supports graphs with negative edge weights and can detect negative cycles. It takes $O(|E||V|)$ to compute. Source code is here. Dijkstra Dijkstra&apos;s algorithm uses a priority queue (min-heap) to always relax the vertex with the currently known smallest distance. Because it greedily picks the minimum, it cannot handle negative edge weights. It takes $O(|E| \log |V|)$ to compute. Source code is here. All-pairs shortest path (APSP) All-pairs shortest path (APSP) is a problem that finds the shortest paths between every pair of vertices in a weighted graph. Delegation The simplest approach: run an SSSP solver from every vertex. It takes $O(|V| \times \text{SSSP complexity})$, i.e., $O(|E||V|^2)$ with Bellman-Ford or $O(|E||V|\log|V|)$ with Dijkstra. Source code is here. Johnson&apos;s algorithm Johnson&apos;s algorithm removes negative edge weights with Bellman-Ford so that Dijkstra can be applied safely. Let $n$ = number of vertices, $m$ = number of edges, and $d(i,j)$ the weight from vertex $i$ to vertex $j$. The steps are: Add a new vertex $S$ (index $n+1$) and connect it to all other vertices with weight $0$. Run Bellman-Ford from $S$ to compute $h(v) = d(n+1, v)$ for every vertex $v$. Reweight each edge: $\hat{d}(i,j) = d(i,j) + h(i) - h(j)$. Remove $S$. All reweighted edges are now non-negative. Run Dijkstra from every vertex using the reweighted graph. Recover original distances: $\text{dist}(i,j) = \hat{\text{dist}}(i,j) - h(i) + h(j)$. The non-negativity of $\hat{d}$ follows because $h(i) \le h(j) + d(i,j)$ (shortest-path property), so $\hat{d}(i,j) \ge 0$. It takes $O(|E||V|\log|V|)$ to compute. Source code is here. Floyd-Warshall Floyd-Warshall uses dynamic programming: at the $k$-th iteration it checks, for every pair $(i,j)$, whether using vertex $v_k$ as an intermediate gives a shorter path. $$\text{Dist}^k[i,j] \leftarrow \min\!\left(\text{Dist}^{k-1}[i,j],\; \text{Dist}^{k-1}[i,k] + \text{Dist}^{k-1}[k,j]\right)$$ After $n$ iterations, $\text{Dist}[i,j]$ is the true shortest-path length between $v_i$ and $v_j$. Function FloydWarshall($G = (V, E)$) Initialize $\text{Dist}[i,j] \leftarrow w_{i,j}$ if $(i,j) \in E$, else $\infty$ For $k \leftarrow 1, \cdots, n$ For $i \leftarrow 1, \cdots, n$ For $j \leftarrow 1, \cdots, n$ $\text{Dist}[i,j] \leftarrow \min(\text{Dist}[i,j],\; \text{Dist}[i,k] + \text{Dist}[k,j])$ Return Dist Algorithm 1. Floyd-Warshall It takes $O(|V|^3)$ in time and $O(|V|^2)$ in space. Source code is here. Floyd-Warshall with double buffering The standard Floyd-Warshall reads and writes Dist in place, which creates a data race when parallelized. Double buffering maintains two copies of the distance matrix — one for reading and one for writing — so the $k$-th outer iteration can be parallelized over all $(i, j)$ pairs without conflict. Source code is here. Floyd-Warshall with compressive indexing For sparse graphs, many entries of $\text{Dist}$ are $\infty$. Compressive indexing maintains, for each vertex $k$, a list of indices $(i, j)$ where $\text{Dist}[i,k]$ and $\text{Dist}[k,j]$ are both finite, so the inner loops iterate only over actual edges rather than all $n^2$ pairs. Source code is here. Floyd-Warshall with double buffering + compressive outgoing edge indexing Combining both optimizations: double buffering removes the in-place write race, while compressive indexing skips $\infty$ pairs. Only one axis (say, the $i$ dimension) is parallelized to avoid race conditions when updating the sparse index structure. It also skips updating entries that have not changed. Source code is here. Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing A further variant uses locks to allow full parallelization over both dimensions while still maintaining the sparse index structure. This increases synchronization overhead but reduces the total number of operations. Source code is here. Blocked Floyd-Warshall Blocked Floyd-Warshall improves cache locality by reordering the computation into three phases per block column $k$. Let $N$ = number of vertices, $B$ = number of blocks, $S$ = block size ($N = SB$). Diagonal update: Run classical Floyd-Warshall on the $k$-th diagonal block $A(k,k)$. Panel update: Update the $k$-th block row and column using the newly updated diagonal block via Min-Plus multiply. MinPlus outer product: Update all remaining blocks using the $k$-th block row and column. Function BlockedFloydWarshall($A$) For $bk \leftarrow 1, \cdots, B$ // Diagonal update $A(bk,bk) \leftarrow \text{FloydWarshall}(A(bk,bk))$ // Panel update For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ $A(bi, bk) \leftarrow A(bi, bk) \oplus A(bi, bk) \otimes A(bk, bk)$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bk, bj) \leftarrow A(bk, bj) \oplus A(bk, bk) \otimes A(bk, bj)$ // MinPlus outer product For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bi,bj) \leftarrow A(bi,bj) \oplus A(bi,bk) \otimes A(bk,bj)$ Return $A$ Algorithm 2. Blocked Floyd-Warshall Here $\oplus$ denotes element-wise min, and $\otimes$ denotes the Min-Plus (tropical) matrix product. The outer product step is analogous to the Schur-complement update in LU or Cholesky factorization. Source code is here. Min-Plus semiring APSP can be understood algebraically over the tropical semiring. Define two binary scalar operators: $$x \oplus y := \min(x, y) \qquad x \otimes y := x + y$$ The Min-Plus matrix product of $A \in \mathbb{R}^{m \times k}$ and $B \in \mathbb{R}^{k \times n}$ is: $$C_{ij} \leftarrow \bigoplus_{k} A_{ik} \otimes B_{kj} = \min_k (A_{ik} + B_{kj})$$ This is the graph-path analog of ordinary matrix multiplication: $C_{ij}$ is the length of the shortest two-hop path from source $i$ to destination $j$ via any bridge vertex $k$. Floyd-Warshall computes the closure of the weight matrix under this semiring. Supernodal Floyd-Warshall The naive and blocked Floyd-Warshall algorithms perform $O(n^3)$ work regardless of sparsity. The key insight of the paper is that the algebraic equivalence between Floyd-Warshall and Gaussian elimination means that all techniques from sparse direct solvers can be applied. The result is the SuperFw algorithm, which combines three ideas: nested-dissection reordering, symbolic analysis with supernodal structure, and elimination tree parallelism. Nested dissection ordering When running Blocked Floyd-Warshall, an empty block (all-$\infty$) remains empty as long as the pivot column and row are also empty. This is the graph-path analog of zero fill-in. By reordering vertices, we can defer the creation of finite entries (fill-in) as long as possible, thereby skipping many operations. Nested dissection (ND) finds a vertex separator $S \subset V$ that partitions $V$ into three disjoint sets $V = C_1 \cup S \cup C_2$ such that: There are no edges between $C_1$ and $C_2$ (they are disconnected without $S$). $|C_1|$ and $|C_2|$ are roughly equal. $|S|$ is as small as possible. After reordering, the adjacency matrix takes a block-arrow shape: the two diagonal blocks correspond to $C_1$ and $C_2$, and the separator $S$ forms the final rows and columns. This reordering is applied recursively within $C_1$ and $C_2$ to produce a multi-level separator tree. Tools such as METIS or Scotch compute near-optimal separators. For a planar graph (e.g., a road network), the separator size is $|S| = O(\sqrt{n})$, yielding $O(n^{2.5})$ total work instead of $O(n^3)$. Symbolic analysis and fill-in structure Before running the numerical phase, symbolic analysis computes the exact sparsity pattern of the final $\text{Dist}$ matrix — i.e., which entries will eventually become finite — without performing any arithmetic. This mirrors the symbolic phase of sparse Cholesky factorization and enables: Pre-allocation of memory for all fill-in positions. Construction of the elimination tree and supernodal structure. Elimination tree The elimination tree (eTree) is a tree data structure that captures data dependencies between the block eliminations in Blocked Floyd-Warshall. In the 3-block example from Algorithm 2, eliminating block 1 and block 2 updates the trailing block 3. Neither block-1 nor block-2 elimination depends on the other, so they can proceed in parallel, but both must complete before block-3 is eliminated. This dependency is exactly described by an eTree where blocks 1 and 2 are siblings whose parent is block 3. Under ND ordering, the eTree becomes multi-level: leaf nodes correspond to the finest-grained sub-separators, and the root corresponds to the top-level separator $S$. Two supernodes $a$ and $b$ are called cousins if $\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$ (their descendant sets are disjoint). The elimination of cousin supernodes can proceed in parallel. Supernodal structure A supernode is a group of vertices that share the same fill-in pattern in the post-ND symbolic analysis. Grouping such vertices together turns the sparse matrix into a block-sparse matrix whose blocks can be processed with dense Min-Plus kernels, exploiting SIMD and cache efficiently. The supernodal partition is obtained by vertex contraction on the eTree, yielding a supernodal eTree. For a supernode $v$, $\mathcal{A}(v)$ denotes its ancestors (parent, grandparent, …) and $\mathcal{D}(v)$ its descendants in the eTree. SuperFw algorithm (sequential) Function SuperFw($G = (V, E)$) $n_s \leftarrow$ number of supernodes For $k \leftarrow 1, \cdots, n_s$ // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product For $(i,j) \in \{\mathcal{A}(k) \cup \mathcal{D}(k)\} \times \{\mathcal{A}(k) \cup \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ Return $A$ Algorithm 3. SuperFw (sequential) The Panel and OuterUpdate steps touch only blocks corresponding to ancestors and descendants of $k$, not all $n_s^2$ block pairs. This is exactly what sparsity buys: blocks that are structurally zero (all-$\infty$) are never accessed. When eliminating supernode $v$, the OuterUpdate touches four regions: $\mathcal{D}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (descendant–descendant). $\mathcal{D}(v) \times \mathcal{A}(v)$ — updates the dense distance matrix directly (descendant–ancestor). $\mathcal{A}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (ancestor–descendant). $\mathcal{A}(v) \times \mathcal{A}(v)$ — updates the supernodal block-sparse matrix (trailing matrix, analogous to the Schur complement in Cholesky). At the end of the computation, the supernodal matrix contains the semiring equivalent of the Cholesky factors, and the dense distance matrix contains all pairwise shortest-path lengths. Parallel SuperFw with eTree parallelism Two cousin supernodes $a$ and $b$ ($\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$) operate on disjoint regions of the matrix in their DiagUpdate and PanelUpdate steps, and also in the first three OuterUpdate subsets. Only the $\mathcal{A}(v) \times \mathcal{A}(v)$ blocks of two cousins can overlap, but since Min-Plus addition is associative, those updates can be performed in any order (they commute). The parallel schedule is a bottom-up topological sort of the eTree, partitioning it into levels. All supernodes at the same level are cousins and can be eliminated in parallel. This is called eTree parallelism. Function ParallelSuperFw($G = (V, E)$) Compute eTree levels by bottom-up topological sort For each level $\ell$ from leaves to root For each supernode $k$ at level $\ell$ in parallel // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product (first three subsets — no conflict between cousins) For $(i,j) \in \{\mathcal{D}(k) \times (\mathcal{A}(k) \cup \mathcal{D}(k))\} \cup \{(\mathcal{A}(k) \cup \mathcal{D}(k)) \times \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ // $\mathcal{A}(k) \times \mathcal{A}(k)$ blocks updated with atomic reduce (tree-reduction) For $(i,j) \in \mathcal{A}(k) \times \mathcal{A}(k)$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ (atomic) Return $A$ Algorithm 4. Parallel SuperFw with eTree parallelism eTree parallelism contributes up to $2\times$ better scalability for small graphs, where per-iteration work is low. For large graphs with dense iterations, ordinary within-iteration parallelism is already sufficient. Asymptotic analysis The following table summarizes work $W(n)$, depth $D(n)$, and concurrency $C(n) = W(n)/D(n)$ in the work-depth model (PRAM/CREW). Algorithm $W(n)$ $D(n)$ $C(n)$ BlockedFW $O(n^3)$ $O(n)$ $O(n^2)$ SuperFw $O(n^2 |S|)$ $O(|S| \log^2 n)$ $O\!\left(\dfrac{n^2}{\log^2 n}\right)$ Dijkstra (Johnson) $O(n^2 \log n + nm)$ $O(n \log n + m)$ $O(n)$ Path Doubling $O(n^3)$ $O(\log n)$ $O\!\left(\dfrac{n^3}{\log n}\right)$ Here $|S|$ is the size of the top-level separator of the graph. Work: $W(n) = n^2|S|$ The dominant cost in eliminating the top-level separator $S$ is the OuterUpdate, which computes the outer product of two panels of size $(n - |S|) \times |S|$: $$W^0(n) \approx n^2 S(n)$$ Summing over all $\log n$ levels of the separator tree (each level contributes $\frac{n^2}{2^i} S\!\left(\frac{n}{2^i}\right)$ work) and using the monotonicity of $S(n)$ yields: $$W(n) = n^2 |S|$$ For a planar graph, $|S| = O(\sqrt{n})$, so $W(n) = O(n^{2.5})$. For a 3D mesh, $|S| = O(n^{2/3})$, so $W(n) = O(n^{8/3})$. For expander graphs, $|S| = O(n)$ and SuperFw provides no asymptotic improvement. Depth: $D(n) = O(|S| \log^2 n)$ The top-level separator is eliminated sequentially using blocked Floyd-Warshall with depth $S(n)$. At level $i$ of the separator tree, $2^i$ separators are eliminated in parallel, but blocks in the $\mathcal{A} \times \mathcal{A}$ region are shared: a block may be updated by up to $2^i$ processes simultaneously, adding a tree-reduction depth of $\log(2^i) = i$. Summing over all $\log n$ levels: $$D(n) = \sum_{i=0}^{\log n} i \cdot S\!\left(\frac{n}{2^i}\right) \le S(n) \log^2 n$$ Concurrency: $C(n) = O(n^2 / \log^2 n)$ $$C(n) = \frac{W(n)}{D(n)} = O\!\left(\frac{n^2}{\log^2 n}\right)$$ SuperFw lowers the work of BlockedFW by $O(n/|S|)$ while barely reducing concurrency. In contrast, Dijkstra has lower work but only $O(n)$ concurrency — it cannot exploit large SIMD units or deep memory hierarchies as effectively. Graph classes and when SuperFw helps SuperFw is most beneficial for graphs with small separators, broadly the class of geometric graphs: Planar graphs (road networks, 2D FEM meshes): $|S| = O(\sqrt{n})$, work $O(n^{2.5})$. 3D FEM meshes: $|S| = O(n^{2/3})$, work $O(n^{8/3})$. Power grids, social networks with community structure: separators are small in practice even when not worst-case optimal. SuperFw provides no asymptotic improvement over BlockedFW for expander graphs (e.g., Barabási–Albert, Erdős–Rényi), where $|S| = O(n)$. Implementations This project re-implements the algorithms described above as a study of the paper. The following algorithms are implemented and available at GitHub. SSSP Bellman-Ford Dijkstra APSP Delegation Johnson Floyd-Warshall Floyd-Warshall with double buffering Floyd-Warshall with compressive indexing Floyd-Warshall with double buffering + compressive outgoing edge indexing Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing Blocked Floyd-Warshall">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Supernodal Floyd-Warshall">
+<meta name="twitter:description" content="Motivation When I was in graduate school, I studied the paper A Supernodal All-Pairs Shortest Path Algorithm (PPoPP &apos;20). This project is a revisit of that paper and a re-implementation of its core ideas. The key contribution of the paper is exploiting graph sparsity in the Floyd-Warshall algorithm by importing techniques from sparse Cholesky factorization: fill-in reducing ordering, symbolic analysis, supernodal traversal, and elimination tree parallelism. All source code can be found at GitHub. Background Single source shortest path (SSSP) Single source shortest path (SSSP) is a problem that finds the shortest paths from a single source vertex to all other vertices in a weighted graph. Bellman-Ford algorithm Bellman-Ford relaxes every edge repeatedly. After $|V| - 1$ iterations, it guarantees that all shortest paths are found, since any shortest path has at most $|V| - 1$ edges. If a shorter path can still be found after $|V| - 1$ iterations, a negative cycle exists. It supports graphs with negative edge weights and can detect negative cycles. It takes $O(|E||V|)$ to compute. Source code is here. Dijkstra Dijkstra&apos;s algorithm uses a priority queue (min-heap) to always relax the vertex with the currently known smallest distance. Because it greedily picks the minimum, it cannot handle negative edge weights. It takes $O(|E| \log |V|)$ to compute. Source code is here. All-pairs shortest path (APSP) All-pairs shortest path (APSP) is a problem that finds the shortest paths between every pair of vertices in a weighted graph. Delegation The simplest approach: run an SSSP solver from every vertex. It takes $O(|V| \times \text{SSSP complexity})$, i.e., $O(|E||V|^2)$ with Bellman-Ford or $O(|E||V|\log|V|)$ with Dijkstra. Source code is here. Johnson&apos;s algorithm Johnson&apos;s algorithm removes negative edge weights with Bellman-Ford so that Dijkstra can be applied safely. Let $n$ = number of vertices, $m$ = number of edges, and $d(i,j)$ the weight from vertex $i$ to vertex $j$. The steps are: Add a new vertex $S$ (index $n+1$) and connect it to all other vertices with weight $0$. Run Bellman-Ford from $S$ to compute $h(v) = d(n+1, v)$ for every vertex $v$. Reweight each edge: $\hat{d}(i,j) = d(i,j) + h(i) - h(j)$. Remove $S$. All reweighted edges are now non-negative. Run Dijkstra from every vertex using the reweighted graph. Recover original distances: $\text{dist}(i,j) = \hat{\text{dist}}(i,j) - h(i) + h(j)$. The non-negativity of $\hat{d}$ follows because $h(i) \le h(j) + d(i,j)$ (shortest-path property), so $\hat{d}(i,j) \ge 0$. It takes $O(|E||V|\log|V|)$ to compute. Source code is here. Floyd-Warshall Floyd-Warshall uses dynamic programming: at the $k$-th iteration it checks, for every pair $(i,j)$, whether using vertex $v_k$ as an intermediate gives a shorter path. $$\text{Dist}^k[i,j] \leftarrow \min\!\left(\text{Dist}^{k-1}[i,j],\; \text{Dist}^{k-1}[i,k] + \text{Dist}^{k-1}[k,j]\right)$$ After $n$ iterations, $\text{Dist}[i,j]$ is the true shortest-path length between $v_i$ and $v_j$. Function FloydWarshall($G = (V, E)$) Initialize $\text{Dist}[i,j] \leftarrow w_{i,j}$ if $(i,j) \in E$, else $\infty$ For $k \leftarrow 1, \cdots, n$ For $i \leftarrow 1, \cdots, n$ For $j \leftarrow 1, \cdots, n$ $\text{Dist}[i,j] \leftarrow \min(\text{Dist}[i,j],\; \text{Dist}[i,k] + \text{Dist}[k,j])$ Return Dist Algorithm 1. Floyd-Warshall It takes $O(|V|^3)$ in time and $O(|V|^2)$ in space. Source code is here. Floyd-Warshall with double buffering The standard Floyd-Warshall reads and writes Dist in place, which creates a data race when parallelized. Double buffering maintains two copies of the distance matrix — one for reading and one for writing — so the $k$-th outer iteration can be parallelized over all $(i, j)$ pairs without conflict. Source code is here. Floyd-Warshall with compressive indexing For sparse graphs, many entries of $\text{Dist}$ are $\infty$. Compressive indexing maintains, for each vertex $k$, a list of indices $(i, j)$ where $\text{Dist}[i,k]$ and $\text{Dist}[k,j]$ are both finite, so the inner loops iterate only over actual edges rather than all $n^2$ pairs. Source code is here. Floyd-Warshall with double buffering + compressive outgoing edge indexing Combining both optimizations: double buffering removes the in-place write race, while compressive indexing skips $\infty$ pairs. Only one axis (say, the $i$ dimension) is parallelized to avoid race conditions when updating the sparse index structure. It also skips updating entries that have not changed. Source code is here. Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing A further variant uses locks to allow full parallelization over both dimensions while still maintaining the sparse index structure. This increases synchronization overhead but reduces the total number of operations. Source code is here. Blocked Floyd-Warshall Blocked Floyd-Warshall improves cache locality by reordering the computation into three phases per block column $k$. Let $N$ = number of vertices, $B$ = number of blocks, $S$ = block size ($N = SB$). Diagonal update: Run classical Floyd-Warshall on the $k$-th diagonal block $A(k,k)$. Panel update: Update the $k$-th block row and column using the newly updated diagonal block via Min-Plus multiply. MinPlus outer product: Update all remaining blocks using the $k$-th block row and column. Function BlockedFloydWarshall($A$) For $bk \leftarrow 1, \cdots, B$ // Diagonal update $A(bk,bk) \leftarrow \text{FloydWarshall}(A(bk,bk))$ // Panel update For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ $A(bi, bk) \leftarrow A(bi, bk) \oplus A(bi, bk) \otimes A(bk, bk)$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bk, bj) \leftarrow A(bk, bj) \oplus A(bk, bk) \otimes A(bk, bj)$ // MinPlus outer product For $bi \leftarrow 1, \cdots, B$, $bi eq bk$ For $bj \leftarrow 1, \cdots, B$, $bj eq bk$ $A(bi,bj) \leftarrow A(bi,bj) \oplus A(bi,bk) \otimes A(bk,bj)$ Return $A$ Algorithm 2. Blocked Floyd-Warshall Here $\oplus$ denotes element-wise min, and $\otimes$ denotes the Min-Plus (tropical) matrix product. The outer product step is analogous to the Schur-complement update in LU or Cholesky factorization. Source code is here. Min-Plus semiring APSP can be understood algebraically over the tropical semiring. Define two binary scalar operators: $$x \oplus y := \min(x, y) \qquad x \otimes y := x + y$$ The Min-Plus matrix product of $A \in \mathbb{R}^{m \times k}$ and $B \in \mathbb{R}^{k \times n}$ is: $$C_{ij} \leftarrow \bigoplus_{k} A_{ik} \otimes B_{kj} = \min_k (A_{ik} + B_{kj})$$ This is the graph-path analog of ordinary matrix multiplication: $C_{ij}$ is the length of the shortest two-hop path from source $i$ to destination $j$ via any bridge vertex $k$. Floyd-Warshall computes the closure of the weight matrix under this semiring. Supernodal Floyd-Warshall The naive and blocked Floyd-Warshall algorithms perform $O(n^3)$ work regardless of sparsity. The key insight of the paper is that the algebraic equivalence between Floyd-Warshall and Gaussian elimination means that all techniques from sparse direct solvers can be applied. The result is the SuperFw algorithm, which combines three ideas: nested-dissection reordering, symbolic analysis with supernodal structure, and elimination tree parallelism. Nested dissection ordering When running Blocked Floyd-Warshall, an empty block (all-$\infty$) remains empty as long as the pivot column and row are also empty. This is the graph-path analog of zero fill-in. By reordering vertices, we can defer the creation of finite entries (fill-in) as long as possible, thereby skipping many operations. Nested dissection (ND) finds a vertex separator $S \subset V$ that partitions $V$ into three disjoint sets $V = C_1 \cup S \cup C_2$ such that: There are no edges between $C_1$ and $C_2$ (they are disconnected without $S$). $|C_1|$ and $|C_2|$ are roughly equal. $|S|$ is as small as possible. After reordering, the adjacency matrix takes a block-arrow shape: the two diagonal blocks correspond to $C_1$ and $C_2$, and the separator $S$ forms the final rows and columns. This reordering is applied recursively within $C_1$ and $C_2$ to produce a multi-level separator tree. Tools such as METIS or Scotch compute near-optimal separators. For a planar graph (e.g., a road network), the separator size is $|S| = O(\sqrt{n})$, yielding $O(n^{2.5})$ total work instead of $O(n^3)$. Symbolic analysis and fill-in structure Before running the numerical phase, symbolic analysis computes the exact sparsity pattern of the final $\text{Dist}$ matrix — i.e., which entries will eventually become finite — without performing any arithmetic. This mirrors the symbolic phase of sparse Cholesky factorization and enables: Pre-allocation of memory for all fill-in positions. Construction of the elimination tree and supernodal structure. Elimination tree The elimination tree (eTree) is a tree data structure that captures data dependencies between the block eliminations in Blocked Floyd-Warshall. In the 3-block example from Algorithm 2, eliminating block 1 and block 2 updates the trailing block 3. Neither block-1 nor block-2 elimination depends on the other, so they can proceed in parallel, but both must complete before block-3 is eliminated. This dependency is exactly described by an eTree where blocks 1 and 2 are siblings whose parent is block 3. Under ND ordering, the eTree becomes multi-level: leaf nodes correspond to the finest-grained sub-separators, and the root corresponds to the top-level separator $S$. Two supernodes $a$ and $b$ are called cousins if $\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$ (their descendant sets are disjoint). The elimination of cousin supernodes can proceed in parallel. Supernodal structure A supernode is a group of vertices that share the same fill-in pattern in the post-ND symbolic analysis. Grouping such vertices together turns the sparse matrix into a block-sparse matrix whose blocks can be processed with dense Min-Plus kernels, exploiting SIMD and cache efficiently. The supernodal partition is obtained by vertex contraction on the eTree, yielding a supernodal eTree. For a supernode $v$, $\mathcal{A}(v)$ denotes its ancestors (parent, grandparent, …) and $\mathcal{D}(v)$ its descendants in the eTree. SuperFw algorithm (sequential) Function SuperFw($G = (V, E)$) $n_s \leftarrow$ number of supernodes For $k \leftarrow 1, \cdots, n_s$ // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product For $(i,j) \in \{\mathcal{A}(k) \cup \mathcal{D}(k)\} \times \{\mathcal{A}(k) \cup \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ Return $A$ Algorithm 3. SuperFw (sequential) The Panel and OuterUpdate steps touch only blocks corresponding to ancestors and descendants of $k$, not all $n_s^2$ block pairs. This is exactly what sparsity buys: blocks that are structurally zero (all-$\infty$) are never accessed. When eliminating supernode $v$, the OuterUpdate touches four regions: $\mathcal{D}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (descendant–descendant). $\mathcal{D}(v) \times \mathcal{A}(v)$ — updates the dense distance matrix directly (descendant–ancestor). $\mathcal{A}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (ancestor–descendant). $\mathcal{A}(v) \times \mathcal{A}(v)$ — updates the supernodal block-sparse matrix (trailing matrix, analogous to the Schur complement in Cholesky). At the end of the computation, the supernodal matrix contains the semiring equivalent of the Cholesky factors, and the dense distance matrix contains all pairwise shortest-path lengths. Parallel SuperFw with eTree parallelism Two cousin supernodes $a$ and $b$ ($\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$) operate on disjoint regions of the matrix in their DiagUpdate and PanelUpdate steps, and also in the first three OuterUpdate subsets. Only the $\mathcal{A}(v) \times \mathcal{A}(v)$ blocks of two cousins can overlap, but since Min-Plus addition is associative, those updates can be performed in any order (they commute). The parallel schedule is a bottom-up topological sort of the eTree, partitioning it into levels. All supernodes at the same level are cousins and can be eliminated in parallel. This is called eTree parallelism. Function ParallelSuperFw($G = (V, E)$) Compute eTree levels by bottom-up topological sort For each level $\ell$ from leaves to root For each supernode $k$ at level $\ell$ in parallel // Diagonal update $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$ // Panel update For $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$ $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$ $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$ // MinPlus outer product (first three subsets — no conflict between cousins) For $(i,j) \in \{\mathcal{D}(k) \times (\mathcal{A}(k) \cup \mathcal{D}(k))\} \cup \{(\mathcal{A}(k) \cup \mathcal{D}(k)) \times \mathcal{D}(k)\}$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ // $\mathcal{A}(k) \times \mathcal{A}(k)$ blocks updated with atomic reduce (tree-reduction) For $(i,j) \in \mathcal{A}(k) \times \mathcal{A}(k)$ $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ (atomic) Return $A$ Algorithm 4. Parallel SuperFw with eTree parallelism eTree parallelism contributes up to $2\times$ better scalability for small graphs, where per-iteration work is low. For large graphs with dense iterations, ordinary within-iteration parallelism is already sufficient. Asymptotic analysis The following table summarizes work $W(n)$, depth $D(n)$, and concurrency $C(n) = W(n)/D(n)$ in the work-depth model (PRAM/CREW). Algorithm $W(n)$ $D(n)$ $C(n)$ BlockedFW $O(n^3)$ $O(n)$ $O(n^2)$ SuperFw $O(n^2 |S|)$ $O(|S| \log^2 n)$ $O\!\left(\dfrac{n^2}{\log^2 n}\right)$ Dijkstra (Johnson) $O(n^2 \log n + nm)$ $O(n \log n + m)$ $O(n)$ Path Doubling $O(n^3)$ $O(\log n)$ $O\!\left(\dfrac{n^3}{\log n}\right)$ Here $|S|$ is the size of the top-level separator of the graph. Work: $W(n) = n^2|S|$ The dominant cost in eliminating the top-level separator $S$ is the OuterUpdate, which computes the outer product of two panels of size $(n - |S|) \times |S|$: $$W^0(n) \approx n^2 S(n)$$ Summing over all $\log n$ levels of the separator tree (each level contributes $\frac{n^2}{2^i} S\!\left(\frac{n}{2^i}\right)$ work) and using the monotonicity of $S(n)$ yields: $$W(n) = n^2 |S|$$ For a planar graph, $|S| = O(\sqrt{n})$, so $W(n) = O(n^{2.5})$. For a 3D mesh, $|S| = O(n^{2/3})$, so $W(n) = O(n^{8/3})$. For expander graphs, $|S| = O(n)$ and SuperFw provides no asymptotic improvement. Depth: $D(n) = O(|S| \log^2 n)$ The top-level separator is eliminated sequentially using blocked Floyd-Warshall with depth $S(n)$. At level $i$ of the separator tree, $2^i$ separators are eliminated in parallel, but blocks in the $\mathcal{A} \times \mathcal{A}$ region are shared: a block may be updated by up to $2^i$ processes simultaneously, adding a tree-reduction depth of $\log(2^i) = i$. Summing over all $\log n$ levels: $$D(n) = \sum_{i=0}^{\log n} i \cdot S\!\left(\frac{n}{2^i}\right) \le S(n) \log^2 n$$ Concurrency: $C(n) = O(n^2 / \log^2 n)$ $$C(n) = \frac{W(n)}{D(n)} = O\!\left(\frac{n^2}{\log^2 n}\right)$$ SuperFw lowers the work of BlockedFW by $O(n/|S|)$ while barely reducing concurrency. In contrast, Dijkstra has lower work but only $O(n)$ concurrency — it cannot exploit large SIMD units or deep memory hierarchies as effectively. Graph classes and when SuperFw helps SuperFw is most beneficial for graphs with small separators, broadly the class of geometric graphs: Planar graphs (road networks, 2D FEM meshes): $|S| = O(\sqrt{n})$, work $O(n^{2.5})$. 3D FEM meshes: $|S| = O(n^{2/3})$, work $O(n^{8/3})$. Power grids, social networks with community structure: separators are small in practice even when not worst-case optimal. SuperFw provides no asymptotic improvement over BlockedFW for expander graphs (e.g., Barabási–Albert, Erdős–Rényi), where $|S| = O(n)$. Implementations This project re-implements the algorithms described above as a study of the paper. The following algorithms are implemented and available at GitHub. SSSP Bellman-Ford Dijkstra APSP Delegation Johnson Floyd-Warshall Floyd-Warshall with double buffering Floyd-Warshall with compressive indexing Floyd-Warshall with double buffering + compressive outgoing edge indexing Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing Blocked Floyd-Warshall">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://programelot.github.io/"/>
+
+
+
+
+
+  <title></title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">REAL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-project">
+          <a href="/projects/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Project
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/projects/SupFW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            Supernodal Floyd-Warshall
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+            
+          
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Motivation</h2>
+When I was in graduate school, I studied the paper <a href="https://dl.acm.org/doi/abs/10.1145/3332466.3374533">A Supernodal All-Pairs Shortest Path Algorithm</a> (PPoPP '20).<br>
+This project is a revisit of that paper and a re-implementation of its core ideas.<br>
+The key contribution of the paper is exploiting graph sparsity in the Floyd-Warshall algorithm by importing techniques from sparse Cholesky factorization: fill-in reducing ordering, symbolic analysis, supernodal traversal, and elimination tree parallelism.<br>
+All source code can be found at <a href="https://github.com/programelot/Supernodal-Floyd-Warshall">GitHub</a>.
+<hr>
+<h2>Background</h2>
+<h3>Single source shortest path (SSSP)</h3>
+Single source shortest path (SSSP) is a problem that finds the shortest paths from a single source vertex to all other vertices in a weighted graph.
+<hr>
+<h4>Bellman-Ford algorithm</h4>
+Bellman-Ford relaxes every edge repeatedly.<br>
+After $|V| - 1$ iterations, it guarantees that all shortest paths are found, since any shortest path has at most $|V| - 1$ edges.<br>
+If a shorter path can still be found after $|V| - 1$ iterations, a negative cycle exists.<br>
+It supports graphs with negative edge weights and can detect negative cycles.<br>
+It takes $O(|E||V|)$ to compute.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/SSSP/Bellman-Ford.cpp">here</a>.
+<hr>
+<h4>Dijkstra</h4>
+Dijkstra's algorithm uses a priority queue (min-heap) to always relax the vertex with the currently known smallest distance.<br>
+Because it greedily picks the minimum, it cannot handle negative edge weights.<br>
+It takes $O(|E| \log |V|)$ to compute.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/SSSP/Dijkstra.cpp">here</a>.
+<hr>
+<h3>All-pairs shortest path (APSP)</h3>
+All-pairs shortest path (APSP) is a problem that finds the shortest paths between every pair of vertices in a weighted graph.
+<hr>
+<h4>Delegation</h4>
+The simplest approach: run an SSSP solver from every vertex.<br>
+It takes $O(|V| \times \text{SSSP complexity})$, i.e., $O(|E||V|^2)$ with Bellman-Ford or $O(|E||V|\log|V|)$ with Dijkstra.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/Delegation.cpp">here</a>.
+<hr>
+<h4>Johnson's algorithm</h4>
+Johnson's algorithm removes negative edge weights with Bellman-Ford so that Dijkstra can be applied safely.<br>
+Let $n$ = number of vertices, $m$ = number of edges, and $d(i,j)$ the weight from vertex $i$ to vertex $j$.<br>
+The steps are:
+<ol>
+    <li>Add a new vertex $S$ (index $n+1$) and connect it to all other vertices with weight $0$.</li>
+    <li>Run Bellman-Ford from $S$ to compute $h(v) = d(n+1, v)$ for every vertex $v$.</li>
+    <li>Reweight each edge: $\hat{d}(i,j) = d(i,j) + h(i) - h(j)$.</li>
+    <li>Remove $S$. All reweighted edges are now non-negative.</li>
+    <li>Run Dijkstra from every vertex using the reweighted graph.</li>
+    <li>Recover original distances: $\text{dist}(i,j) = \hat{\text{dist}}(i,j) - h(i) + h(j)$.</li>
+</ol>
+The non-negativity of $\hat{d}$ follows because $h(i) \le h(j) + d(i,j)$ (shortest-path property), so $\hat{d}(i,j) \ge 0$.<br>
+It takes $O(|E||V|\log|V|)$ to compute.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/Johnson.cpp">here</a>.
+<hr>
+<h4>Floyd-Warshall</h4>
+Floyd-Warshall uses dynamic programming: at the $k$-th iteration it checks, for every pair $(i,j)$, whether using vertex $v_k$ as an intermediate gives a shorter path.<br>
+$$\text{Dist}^k[i,j] \leftarrow \min\!\left(\text{Dist}^{k-1}[i,j],\; \text{Dist}^{k-1}[i,k] + \text{Dist}^{k-1}[k,j]\right)$$
+After $n$ iterations, $\text{Dist}[i,j]$ is the true shortest-path length between $v_i$ and $v_j$.
+<div class="alg">
+    <b>Function</b> FloydWarshall($G = (V, E)$)
+    <div class="algTab">
+        Initialize $\text{Dist}[i,j] \leftarrow w_{i,j}$ if $(i,j) \in E$, else $\infty$<br>
+        <b>For</b> $k \leftarrow 1, \cdots, n$
+        <div class="algTab">
+            <b>For</b> $i \leftarrow 1, \cdots, n$
+            <div class="algTab">
+                <b>For</b> $j \leftarrow 1, \cdots, n$
+                <div class="algTab">
+                    $\text{Dist}[i,j] \leftarrow \min(\text{Dist}[i,j],\; \text{Dist}[i,k] + \text{Dist}[k,j])$
+                </div>
+            </div>
+        </div>
+        <b>Return</b> Dist
+    </div>
+</div>
+<p class="algCap">Algorithm 1. Floyd-Warshall</p>
+It takes $O(|V|^3)$ in time and $O(|V|^2)$ in space.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshall.cpp">here</a>.
+<hr>
+<h4>Floyd-Warshall with double buffering</h4>
+The standard Floyd-Warshall reads and writes <code>Dist</code> in place, which creates a data race when parallelized.<br>
+Double buffering maintains two copies of the distance matrix — one for reading and one for writing — so the $k$-th outer iteration can be parallelized over all $(i, j)$ pairs without conflict.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualBuffer.cpp">here</a>.
+<hr>
+<h4>Floyd-Warshall with compressive indexing</h4>
+For sparse graphs, many entries of $\text{Dist}$ are $\infty$.<br>
+Compressive indexing maintains, for each vertex $k$, a list of indices $(i, j)$ where $\text{Dist}[i,k]$ and $\text{Dist}[k,j]$ are both finite, so the inner loops iterate only over actual edges rather than all $n^2$ pairs.
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallCompressive.cpp">here</a>.
+<hr>
+<h4>Floyd-Warshall with double buffering + compressive outgoing edge indexing</h4>
+Combining both optimizations: double buffering removes the in-place write race, while compressive indexing skips $\infty$ pairs.<br>
+Only one axis (say, the $i$ dimension) is parallelized to avoid race conditions when updating the sparse index structure.<br>
+It also skips updating entries that have not changed.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualCompressive.cpp">here</a>.
+<hr>
+<h4>Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing</h4>
+A further variant uses locks to allow full parallelization over both dimensions while still maintaining the sparse index structure.<br>
+This increases synchronization overhead but reduces the total number of operations.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualCompInOut.cpp">here</a>.
+<hr>
+<h4>Blocked Floyd-Warshall</h4>
+Blocked Floyd-Warshall improves cache locality by reordering the computation into three phases per block column $k$.<br>
+Let $N$ = number of vertices, $B$ = number of blocks, $S$ = block size ($N = SB$).
+<ol>
+    <li><b>Diagonal update:</b> Run classical Floyd-Warshall on the $k$-th diagonal block $A(k,k)$.</li>
+    <li><b>Panel update:</b> Update the $k$-th block row and column using the newly updated diagonal block via Min-Plus multiply.</li>
+    <li><b>MinPlus outer product:</b> Update all remaining blocks using the $k$-th block row and column.</li>
+</ol>
+<div class="alg">
+    <b>Function</b> BlockedFloydWarshall($A$)
+    <div class="algTab">
+        <b>For</b> $bk \leftarrow 1, \cdots, B$
+        <div class="algTab">
+            // Diagonal update<br>
+            $A(bk,bk) \leftarrow \text{FloydWarshall}(A(bk,bk))$<br>
+            // Panel update<br>
+            <b>For</b> $bi \leftarrow 1, \cdots, B$, $bi \neq bk$
+            <div class="algTab">
+                $A(bi, bk) \leftarrow A(bi, bk) \oplus A(bi, bk) \otimes A(bk, bk)$<br>
+            </div>
+            <b>For</b> $bj \leftarrow 1, \cdots, B$, $bj \neq bk$
+            <div class="algTab">
+                $A(bk, bj) \leftarrow A(bk, bj) \oplus A(bk, bk) \otimes A(bk, bj)$<br>
+            </div>
+            // MinPlus outer product<br>
+            <b>For</b> $bi \leftarrow 1, \cdots, B$, $bi \neq bk$
+            <div class="algTab">
+                <b>For</b> $bj \leftarrow 1, \cdots, B$, $bj \neq bk$
+                <div class="algTab">
+                    $A(bi,bj) \leftarrow A(bi,bj) \oplus A(bi,bk) \otimes A(bk,bj)$
+                </div>
+            </div>
+        </div>
+        <b>Return</b> $A$
+    </div>
+</div>
+<p class="algCap">Algorithm 2. Blocked Floyd-Warshall</p>
+Here $\oplus$ denotes element-wise min, and $\otimes$ denotes the Min-Plus (tropical) matrix product.<br>
+The outer product step is analogous to the Schur-complement update in LU or Cholesky factorization.<br>
+Source code is <a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/BlockedFloydWarshall.cpp">here</a>.
+<hr>
+<h2>Min-Plus semiring</h2>
+APSP can be understood algebraically over the <em>tropical semiring</em>.<br>
+Define two binary scalar operators:
+$$x \oplus y := \min(x, y) \qquad x \otimes y := x + y$$
+The Min-Plus matrix product of $A \in \mathbb{R}^{m \times k}$ and $B \in \mathbb{R}^{k \times n}$ is:
+$$C_{ij} \leftarrow \bigoplus_{k} A_{ik} \otimes B_{kj} = \min_k (A_{ik} + B_{kj})$$
+This is the graph-path analog of ordinary matrix multiplication: $C_{ij}$ is the length of the shortest two-hop path from source $i$ to destination $j$ via any bridge vertex $k$.<br>
+Floyd-Warshall computes the <em>closure</em> of the weight matrix under this semiring.
+<hr>
+<h2>Supernodal Floyd-Warshall</h2>
+The naive and blocked Floyd-Warshall algorithms perform $O(n^3)$ work regardless of sparsity.<br>
+The key insight of the paper is that the algebraic equivalence between Floyd-Warshall and Gaussian elimination means that all techniques from <em>sparse direct solvers</em> can be applied.<br>
+The result is the <b>SuperFw</b> algorithm, which combines three ideas: nested-dissection reordering, symbolic analysis with supernodal structure, and elimination tree parallelism.
+<hr>
+<h3>Nested dissection ordering</h3>
+When running Blocked Floyd-Warshall, an empty block (all-$\infty$) remains empty as long as the pivot column and row are also empty.<br>
+This is the graph-path analog of <em>zero fill-in</em>.<br>
+By reordering vertices, we can defer the creation of finite entries (fill-in) as long as possible, thereby skipping many operations.<br>
+<br>
+<b>Nested dissection (ND)</b> finds a <em>vertex separator</em> $S \subset V$ that partitions $V$ into three disjoint sets $V = C_1 \cup S \cup C_2$ such that:
+<ol>
+    <li>There are no edges between $C_1$ and $C_2$ (they are disconnected without $S$).</li>
+    <li>$|C_1|$ and $|C_2|$ are roughly equal.</li>
+    <li>$|S|$ is as small as possible.</li>
+</ol>
+After reordering, the adjacency matrix takes a block-arrow shape: the two diagonal blocks correspond to $C_1$ and $C_2$, and the separator $S$ forms the final rows and columns.<br>
+This reordering is applied recursively within $C_1$ and $C_2$ to produce a multi-level separator tree.<br>
+Tools such as METIS or Scotch compute near-optimal separators.<br>
+For a planar graph (e.g., a road network), the separator size is $|S| = O(\sqrt{n})$, yielding $O(n^{2.5})$ total work instead of $O(n^3)$.
+<hr>
+<h3>Symbolic analysis and fill-in structure</h3>
+Before running the numerical phase, <em>symbolic analysis</em> computes the exact sparsity pattern of the final $\text{Dist}$ matrix — i.e., which entries will eventually become finite — without performing any arithmetic.<br>
+This mirrors the symbolic phase of sparse Cholesky factorization and enables:
+<ul>
+    <li>Pre-allocation of memory for all fill-in positions.</li>
+    <li>Construction of the elimination tree and supernodal structure.</li>
+</ul>
+<hr>
+<h3>Elimination tree</h3>
+The <em>elimination tree</em> (eTree) is a tree data structure that captures data dependencies between the block eliminations in Blocked Floyd-Warshall.<br>
+<br>
+In the 3-block example from Algorithm 2, eliminating block 1 and block 2 updates the trailing block 3.<br>
+Neither block-1 nor block-2 elimination depends on the other, so they can proceed in parallel, but both must complete before block-3 is eliminated.<br>
+This dependency is exactly described by an eTree where blocks 1 and 2 are siblings whose parent is block 3.<br>
+<br>
+Under ND ordering, the eTree becomes multi-level: leaf nodes correspond to the finest-grained sub-separators, and the root corresponds to the top-level separator $S$.<br>
+Two supernodes $a$ and $b$ are called <em>cousins</em> if $\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$ (their descendant sets are disjoint).<br>
+The elimination of cousin supernodes can proceed in parallel.
+<hr>
+<h3>Supernodal structure</h3>
+A <em>supernode</em> is a group of vertices that share the same fill-in pattern in the post-ND symbolic analysis.<br>
+Grouping such vertices together turns the sparse matrix into a <em>block-sparse matrix</em> whose blocks can be processed with dense Min-Plus kernels, exploiting SIMD and cache efficiently.
+<ul>
+    <li>The supernodal partition is obtained by vertex contraction on the eTree, yielding a <em>supernodal eTree</em>.</li>
+    <li>For a supernode $v$, $\mathcal{A}(v)$ denotes its ancestors (parent, grandparent, …) and $\mathcal{D}(v)$ its descendants in the eTree.</li>
+</ul>
+<hr>
+<h3>SuperFw algorithm (sequential)</h3>
+<div class="alg">
+    <b>Function</b> SuperFw($G = (V, E)$)
+    <div class="algTab">
+        $n_s \leftarrow$ number of supernodes<br>
+        <b>For</b> $k \leftarrow 1, \cdots, n_s$
+        <div class="algTab">
+            // Diagonal update<br>
+            $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$<br>
+            // Panel update<br>
+            <b>For</b> $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$
+            <div class="algTab">
+                $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$<br>
+                $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$<br>
+            </div>
+            // MinPlus outer product<br>
+            <b>For</b> $(i,j) \in \{\mathcal{A}(k) \cup \mathcal{D}(k)\} \times \{\mathcal{A}(k) \cup \mathcal{D}(k)\}$
+            <div class="algTab">
+                $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$
+            </div>
+        </div>
+        <b>Return</b> $A$
+    </div>
+</div>
+<p class="algCap">Algorithm 3. SuperFw (sequential)</p>
+The Panel and OuterUpdate steps touch only blocks corresponding to ancestors and descendants of $k$, not all $n_s^2$ block pairs.<br>
+This is exactly what sparsity buys: blocks that are structurally zero (all-$\infty$) are never accessed.<br>
+<br>
+When eliminating supernode $v$, the OuterUpdate touches four regions:
+<ol>
+    <li>$\mathcal{D}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (descendant–descendant).</li>
+    <li>$\mathcal{D}(v) \times \mathcal{A}(v)$ — updates the dense distance matrix directly (descendant–ancestor).</li>
+    <li>$\mathcal{A}(v) \times \mathcal{D}(v)$ — updates the dense distance matrix directly (ancestor–descendant).</li>
+    <li>$\mathcal{A}(v) \times \mathcal{A}(v)$ — updates the supernodal block-sparse matrix (trailing matrix, analogous to the Schur complement in Cholesky).</li>
+</ol>
+At the end of the computation, the supernodal matrix contains the semiring equivalent of the Cholesky factors, and the dense distance matrix contains all pairwise shortest-path lengths.
+<hr>
+<h3>Parallel SuperFw with eTree parallelism</h3>
+Two cousin supernodes $a$ and $b$ ($\mathcal{D}(a) \cap \mathcal{D}(b) = \emptyset$) operate on disjoint regions of the matrix in their DiagUpdate and PanelUpdate steps, and also in the first three OuterUpdate subsets.<br>
+Only the $\mathcal{A}(v) \times \mathcal{A}(v)$ blocks of two cousins can overlap, but since Min-Plus addition is associative, those updates can be performed in any order (they commute).<br>
+<br>
+The parallel schedule is a bottom-up topological sort of the eTree, partitioning it into <em>levels</em>.<br>
+All supernodes at the same level are cousins and can be eliminated in parallel.<br>
+This is called <b>eTree parallelism</b>.
+<div class="alg">
+    <b>Function</b> ParallelSuperFw($G = (V, E)$)
+    <div class="algTab">
+        Compute eTree levels by bottom-up topological sort<br>
+        <b>For</b> each level $\ell$ from leaves to root
+        <div class="algTab">
+            <b>For each</b> supernode $k$ at level $\ell$ <b>in parallel</b>
+            <div class="algTab">
+                // Diagonal update<br>
+                $A(k,k) \leftarrow \text{FloydWarshall}(A(k,k))$<br>
+                // Panel update<br>
+                <b>For</b> $i \in \mathcal{A}(k) \cup \mathcal{D}(k)$
+                <div class="algTab">
+                    $A(i,k) \leftarrow A(i,k) \oplus A(i,k) \otimes A(k,k)$<br>
+                    $A(k,i) \leftarrow A(k,i) \oplus A(k,k) \otimes A(k,i)$<br>
+                </div>
+                // MinPlus outer product (first three subsets — no conflict between cousins)<br>
+                <b>For</b> $(i,j) \in \{\mathcal{D}(k) \times (\mathcal{A}(k) \cup \mathcal{D}(k))\} \cup \{(\mathcal{A}(k) \cup \mathcal{D}(k)) \times \mathcal{D}(k)\}$
+                <div class="algTab">
+                    $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$
+                </div>
+                // $\mathcal{A}(k) \times \mathcal{A}(k)$ blocks updated with atomic reduce (tree-reduction)<br>
+                <b>For</b> $(i,j) \in \mathcal{A}(k) \times \mathcal{A}(k)$
+                <div class="algTab">
+                    $A(i,j) \leftarrow A(i,j) \oplus A(i,k) \otimes A(k,j)$ (atomic)
+                </div>
+            </div>
+        </div>
+        <b>Return</b> $A$
+    </div>
+</div>
+<p class="algCap">Algorithm 4. Parallel SuperFw with eTree parallelism</p>
+eTree parallelism contributes up to $2\times$ better scalability for small graphs, where per-iteration work is low.<br>
+For large graphs with dense iterations, ordinary within-iteration parallelism is already sufficient.
+<hr>
+<h2>Asymptotic analysis</h2>
+The following table summarizes work $W(n)$, depth $D(n)$, and concurrency $C(n) = W(n)/D(n)$ in the work-depth model (PRAM/CREW).
+<table style="border-collapse: collapse; width: 100%; text-align: center;">
+    <thead>
+        <tr style="border-bottom: 2px solid #ccc;">
+            <th style="padding: 6px 12px; text-align: left;">Algorithm</th>
+            <th style="padding: 6px 12px;">$W(n)$</th>
+            <th style="padding: 6px 12px;">$D(n)$</th>
+            <th style="padding: 6px 12px;">$C(n)$</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid #eee;">
+            <td style="text-align: left; padding: 6px 12px;">BlockedFW</td>
+            <td>$O(n^3)$</td>
+            <td>$O(n)$</td>
+            <td>$O(n^2)$</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #eee;">
+            <td style="text-align: left; padding: 6px 12px;"><b>SuperFw</b></td>
+            <td>$O(n^2 |S|)$</td>
+            <td>$O(|S| \log^2 n)$</td>
+            <td>$O\!\left(\dfrac{n^2}{\log^2 n}\right)$</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #eee;">
+            <td style="text-align: left; padding: 6px 12px;">Dijkstra (Johnson)</td>
+            <td>$O(n^2 \log n + nm)$</td>
+            <td>$O(n \log n + m)$</td>
+            <td>$O(n)$</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding: 6px 12px;">Path Doubling</td>
+            <td>$O(n^3)$</td>
+            <td>$O(\log n)$</td>
+            <td>$O\!\left(\dfrac{n^3}{\log n}\right)$</td>
+        </tr>
+    </tbody>
+</table>
+Here $|S|$ is the size of the top-level separator of the graph.<br>
+<br>
+<h3>Work: $W(n) = n^2|S|$</h3>
+The dominant cost in eliminating the top-level separator $S$ is the OuterUpdate, which computes the outer product of two panels of size $(n - |S|) \times |S|$:
+$$W^0(n) \approx n^2 S(n)$$
+Summing over all $\log n$ levels of the separator tree (each level contributes $\frac{n^2}{2^i} S\!\left(\frac{n}{2^i}\right)$ work) and using the monotonicity of $S(n)$ yields:
+$$W(n) = n^2 |S|$$
+For a planar graph, $|S| = O(\sqrt{n})$, so $W(n) = O(n^{2.5})$. For a 3D mesh, $|S| = O(n^{2/3})$, so $W(n) = O(n^{8/3})$. For expander graphs, $|S| = O(n)$ and SuperFw provides no asymptotic improvement.
+<br>
+<h3>Depth: $D(n) = O(|S| \log^2 n)$</h3>
+The top-level separator is eliminated sequentially using blocked Floyd-Warshall with depth $S(n)$.<br>
+At level $i$ of the separator tree, $2^i$ separators are eliminated in parallel, but blocks in the $\mathcal{A} \times \mathcal{A}$ region are shared: a block may be updated by up to $2^i$ processes simultaneously, adding a tree-reduction depth of $\log(2^i) = i$.<br>
+Summing over all $\log n$ levels:
+$$D(n) = \sum_{i=0}^{\log n} i \cdot S\!\left(\frac{n}{2^i}\right) \le S(n) \log^2 n$$
+<h3>Concurrency: $C(n) = O(n^2 / \log^2 n)$</h3>
+$$C(n) = \frac{W(n)}{D(n)} = O\!\left(\frac{n^2}{\log^2 n}\right)$$
+SuperFw lowers the work of BlockedFW by $O(n/|S|)$ while barely reducing concurrency.<br>
+In contrast, Dijkstra has lower work but only $O(n)$ concurrency — it cannot exploit large SIMD units or deep memory hierarchies as effectively.
+<hr>
+<h2>Graph classes and when SuperFw helps</h2>
+SuperFw is most beneficial for graphs with small separators, broadly the class of <em>geometric graphs</em>:
+<ul>
+    <li><b>Planar graphs</b> (road networks, 2D FEM meshes): $|S| = O(\sqrt{n})$, work $O(n^{2.5})$.</li>
+    <li><b>3D FEM meshes</b>: $|S| = O(n^{2/3})$, work $O(n^{8/3})$.</li>
+    <li><b>Power grids, social networks with community structure:</b> separators are small in practice even when not worst-case optimal.</li>
+</ul>
+SuperFw provides <em>no</em> asymptotic improvement over BlockedFW for expander graphs (e.g., Barabási–Albert, Erdős–Rényi), where $|S| = O(n)$.
+<hr>
+<h2>Implementations</h2>
+This project re-implements the algorithms described above as a study of the paper.<br>
+The following algorithms are implemented and available at <a href="https://github.com/programelot/Supernodal-Floyd-Warshall">GitHub</a>.
+<h3>SSSP</h3>
+<ul>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/SSSP/Bellman-Ford.cpp">Bellman-Ford</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/SSSP/Dijkstra.cpp">Dijkstra</a></li>
+</ul>
+<h3>APSP</h3>
+<ul>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/Delegation.cpp">Delegation</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/Johnson.cpp">Johnson</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshall.cpp">Floyd-Warshall</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualBuffer.cpp">Floyd-Warshall with double buffering</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallCompressive.cpp">Floyd-Warshall with compressive indexing</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualCompressive.cpp">Floyd-Warshall with double buffering + compressive outgoing edge indexing</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/FloydWarshallDualCompInOut.cpp">Floyd-Warshall with double buffering + compressive (incoming / outgoing) edge indexing</a></li>
+    <li><a href="https://github.com/programelot/Supernodal-Floyd-Warshall/blob/main/src/APSP/BlockedFloydWarshall.cpp">Blocked Floyd-Warshall</a></li>
+</ul>
+
+
+      
+    </div>
+    
+    <div class="references">
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      Programelot
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="https://programelot.github.io/projects/SupFW/" title="Supernodal Floyd-Warshall">https://programelot.github.io/projects/SupFW/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Programelot</span>
+  <br>
+  
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+
+    
+      
+      <script type="text/javascript">
+          var disqus_config = function () {
+              this.page.url = 'https://programelot.github.io/projects/SupFW/';
+              this.page.identifier = '/projects/SupFW/';
+              this.page.title = 'Supernodal Floyd-Warshall';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://programelot.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+      </script>
+      
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+  </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+               SVG: { linebreaks: { automatic: true } }
+      });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  
+
+</body>
+</html>
+
