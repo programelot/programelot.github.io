@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="" />
+  <meta name="keywords" content="network-flow,flow-decomposition,circulation,graph," />
 
 
 
@@ -115,7 +115,7 @@
 
 
 <meta name="description" content="A graph is a data structure that represents relationships between nodes. From any graph, we can define a flow. Formally, the flow of a graph is defined as follows. For a given graph $G= (V, E)$, flow $f$ is a mapping function $V \times V \rightarrow \mathcal{R}$. To be a flow, there are some requirements. If there is a capacity $c$ for edeges $c : V \times V \rightarrow \mathcal{R}$, which $(u,v) \in E$ iff $c(u,v)$ exists. Then flow of graph can’t exceed that capacity. Which means $f(u,v) \le c(u, v)$. Also it requires two variables which are source $s$ and destination $t$. Then $\sum\limits_{(i, v) \in E, v eq s,t}f(i, v) = \sum\limits_{(v, j) \in E, v eq s,t}f(v, j)$. Which means that every value goes in $v$ should go out from $v$ either. Then we can evaluate this flow $f$ as $\sum\limits_{(s, v) \in E}f(s, v) - \sum\limits_{(v, s) \in E}f(v, s)$ $=$ $\sum\limits_{(v, t) \in E}f(v, t) - \sum\limits_{(t, v) \in E}f(t, v)$.">
-<meta name="keywords" content="Jekyll, NexT">
+<meta name="keywords" content="network-flow, flow-decomposition, circulation, graph">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Network Flow Decomposition">
 <meta property="og:url" content="https://programelot.github.io/algorithm/graph/network/2021/04/02/Network-flow-algorithm/">
@@ -580,6 +580,22 @@ Therefore, this process terminates in at most $\left\vert E \right\vert$ steps.<
     
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/network-flow" rel="tag"># network-flow</a>
+          
+            
+            <a href="/tag/#/flow-decomposition" rel="tag"># flow-decomposition</a>
+          
+            
+            <a href="/tag/#/circulation" rel="tag"># circulation</a>
+          
+            
+            <a href="/tag/#/graph" rel="tag"># graph</a>
+          
+        </div>
+      
 
       
       
@@ -683,7 +699,7 @@ Therefore, this process terminates in at most $\left\vert E \right\vert$ steps.<
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -694,7 +710,7 @@ Therefore, this process terminates in at most $\left\vert E \right\vert$ steps.<
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -705,7 +721,7 @@ Therefore, this process terminates in at most $\left\vert E \right\vert$ steps.<
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">174</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

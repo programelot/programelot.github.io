@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="" />
+  <meta name="keywords" content="heapsort,heap,priority-queue,in-place-sort,comparison-sort," />
 
 
 
@@ -115,7 +115,7 @@
 
 
 <meta name="description" content="Heap sort is an in-place sorting algorithm that uses a heap data structure. It first transforms the list into a max-heap, then repeatedly pops the maximum value and places it at the end of the list. To build the heap in-place, the list is treated as a complete binary tree. With this assumption, it traverses from the bottom up and applies downHeap to convert the binary tree into a valid heap. This step takes $O(n \log n)$ (in fact, it is known to run in $O(n)$ with a careful analysis). After that, repeatedly swapping the root with the last element and restoring the heap property yields the sorted result. Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm. ```python def downHeap(lst, length, idx): if 2 * idx + 2 &amp;lt; length: if lst[idx] &amp;lt; lst[2 * idx + 1]: if lst[2 * idx + 1] &amp;lt; lst[2 * idx + 2]: lst[idx], lst[2 * idx + 2] = lst[2 * idx + 2], lst[idx] downHeap(lst, length, 2 * idx + 2) else: lst[idx], lst[2 * idx + 1] = lst[2 * idx + 1], lst[idx] downHeap(lst, length, 2 * idx + 1) elif lst[idx] &amp;lt; lst[2 * idx + 2]: lst[idx], lst[2 * idx + 2] = lst[2 * idx + 2], lst[idx] downHeap(lst,length, 2 * idx + 2) elif 2 * idx + 1 &amp;lt; length: if lst[idx] &amp;lt; lst[2 * idx + 1]: lst[idx], lst[2 * idx + 1] = lst[2 * idx + 1], lst[idx] downHeap(lst, length, 2 * idx + 1) else: pass">
-<meta name="keywords" content="Jekyll, NexT">
+<meta name="keywords" content="heapsort, heap, priority-queue, in-place-sort, comparison-sort">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Heap Sort">
 <meta property="og:url" content="https://programelot.github.io/algorithm/sorting/2020/11/15/Heapsort/">
@@ -595,6 +595,25 @@ Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm.</p>
     
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/heapsort" rel="tag"># heapsort</a>
+          
+            
+            <a href="/tag/#/heap" rel="tag"># heap</a>
+          
+            
+            <a href="/tag/#/priority-queue" rel="tag"># priority-queue</a>
+          
+            
+            <a href="/tag/#/in-place-sort" rel="tag"># in-place-sort</a>
+          
+            
+            <a href="/tag/#/comparison-sort" rel="tag"># comparison-sort</a>
+          
+        </div>
+      
 
       
       
@@ -698,7 +717,7 @@ Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm.</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -709,7 +728,7 @@ Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm.</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -720,7 +739,7 @@ Overall, heap sort is an $O(n \log n)$ in-place sorting algorithm.</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">174</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

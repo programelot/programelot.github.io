@@ -1,0 +1,1456 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="network-flow,ford-fulkerson,max-flow-min-cut,augmenting-path,residual-graph," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="REAL" type="application/atom+xml" />
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Maximum Flow">
+<meta name="keywords" content="network-flow, ford-fulkerson, max-flow-min-cut, augmenting-path, residual-graph">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem">
+<meta property="og:url" content="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/">
+<meta property="og:site_name" content="REAL">
+<meta property="og:description" content="Maximum Flow">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem">
+<meta name="twitter:description" content="Maximum Flow">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://programelot.github.io/"/>
+
+
+
+
+
+  <title>Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem | REAL</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">REAL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-project">
+          <a href="/projects/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Project
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Programelot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="REAL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem
+          
+        </h1>
+        
+
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2026-06-03T00:00:00-05:00">
+                06-03-2026
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/algorithms" itemprop="url" rel="index">
+                    <span itemprop="name">algorithms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <h1 id="maximum-flow">Maximum Flow</h1>
+
+<h2 id="motivation-and-definitions">Motivation and Definitions</h2>
+
+<p>The problem of sending as much flow (e.g., oil, data) as possible from source $s$ to sink $t$ through a network with capacity constraints.</p>
+
+<blockquote>
+  <p><strong>Definition 1.</strong> A <strong>flow network</strong> is a directed graph $G = (V, E)$ where each edge $e$ has a nonnegative capacity $c_e$ and two special nodes (source $s$, sink $t$).</p>
+</blockquote>
+
+<p><strong>Simplifying assumptions:</strong> No edges enter $s$ or leave $t$; every node has at least one incident edge; all capacities are integers.</p>
+
+<blockquote>
+  <p><strong>Definition 2.</strong> An <strong>$s$-$t$ flow</strong> $f: E \to \mathbb{R}_+$ satisfies:</p>
+  <ul>
+    <li><strong>Capacity condition:</strong> $0 \leq f(e) \leq c_e$ for all $e$</li>
+    <li><strong>Flow conservation:</strong> $f^{in}(v) = f^{out}(v)$ for all $v \in V \setminus {s,t}$</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p><strong>Definition 3.</strong> The value of a flow: $v(f) := \sum_{e \text{ out of } s} f(e)$</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Problem (Maximum Flow).</strong> Find an $s$-$t$ flow of maximum value.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="residual-graph">Residual Graph</h2>
+
+<p>A greedy approach (always augmenting along any path) is insufficient: once flow is sent, it cannot be redirected. We fix this by introducing the <strong>residual graph</strong>, which allows canceling flow.</p>
+
+<blockquote>
+  <p><strong>Definition 4.</strong> The <strong>residual graph</strong> $G_f$ for flow $f$:</p>
+  <ul>
+    <li>Node set: same as $G$</li>
+    <li><strong>Forward edge:</strong> for $e = \langle u,v \rangle$ with $f(e) &lt; c_e$, add $\langle u,v \rangle$ with capacity $c_e - f(e)$</li>
+    <li><strong>Backward edge:</strong> for $e = \langle u,v \rangle$ with $f(e) &gt; 0$, add $\langle v,u \rangle$ with capacity $f(e)$</li>
+  </ul>
+</blockquote>
+
+<p>An $s$-$t$ path in $G_f$ is called an <strong>augmenting path</strong>.</p>
+
+<hr />
+
+<h2 id="augment-function">Augment Function</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8</pre></td><td class="code"><pre class="highlight"><code>function Augment(f, P):
+    b ← minimum residual capacity over all edges in P
+    for each e = ⟨u,v⟩ ∈ P do
+        if e is forward edge: f(e) ← f(e) + b
+        else:
+            e' := ⟨v,u⟩
+            f(e') ← f(e') - b
+    return f
+</code></pre></td></tr></tbody></table></div></div>
+
+<p><strong>Lemma 1.</strong> If $f$ is a valid $s$-$t$ flow and $P$ is a simple $s$-$t$ path in $G_f$, then <code class="language-plaintext highlighter-rouge">Augment(f, P)</code> returns a valid $s$-$t$ flow.</p>
+
+<p><strong>Proof sketch.</strong> For capacity: forward edges $f’(e) = f(e)+b \leq c_e$; backward edges $f’(e’) = f(e’)-b \geq 0$. For flow conservation: at each internal node $v$ of $P$, exactly one edge enters and one leaves, so the net change is zero. ∎</p>
+
+<hr />
+
+<h2 id="ford-fulkerson-algorithm">Ford-Fulkerson Algorithm</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5</pre></td><td class="code"><pre class="highlight"><code>f(e) ← 0  for all e ∈ E
+while there exists an s-t path in Gf do
+    P ← simple s-t path in Gf
+    f ← Augment(f, P)
+return f
+</code></pre></td></tr></tbody></table></div></div>
+
+<hr />
+
+<h2 id="termination-and-complexity">Termination and Complexity</h2>
+
+<p><strong>Lemma 2.</strong> Throughout the algorithm, all edge flows and residual capacities are always integers.</p>
+
+<p><strong>Proof.</strong> By induction on iterations; the bottleneck $b$ is always an integer. ∎</p>
+
+<p><strong>Lemma 3.</strong> Each iteration strictly increases $v(f)$.</p>
+
+<p><strong>Proof.</strong> All residual capacities are positive, so $b &gt; 0$. The first edge of $P$ is a forward edge leaving $s$ (not revisited), so $f^{out}(s)$ increases by $b &gt; 0$. ∎</p>
+
+<p>Define $C := \sum_{e \text{ out of } s} c_e$.</p>
+
+<p><strong>Lemma 4.</strong> The algorithm terminates in at most $C$ iterations.</p>
+
+<p><strong>Proof.</strong> $v(f) \leq C$ always. Each iteration increases $v(f)$ by at least 1 (integer, by Lemma 2). Starting from 0, at most $C$ iterations follow. ∎</p>
+
+<p><strong>Theorem 1.</strong> Ford-Fulkerson runs in $O(mC)$ time.</p>
+
+<blockquote>
+  <p><strong>Note:</strong> This is <strong>not</strong> a polynomial-time algorithm. $C$ can be exponential in the number of input bits, making this a <strong>pseudo-polynomial</strong> algorithm. A strongly polynomial algorithm is bounded only by the number of input entries.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="s-t-cut">$s$-$t$ Cut</h2>
+
+<blockquote>
+  <p><strong>Definition 5.</strong> $(S, \bar{S})$ is an <strong>$s$-$t$ cut</strong> if $s \in S$, $t \in \bar{S}$, $S \cap \bar{S} = \emptyset$, $S \cup \bar{S} = V$.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Definition 6.</strong> Capacity of cut $(S, \bar{S})$: $c(S, \bar{S}) := \sum_{e \text{ out of } S} c_e$</p>
+</blockquote>
+
+<p><strong>Lemma 5.</strong> For any $s$-$t$ flow $f$ and $s$-$t$ cut $(S, \bar{S})$: $v(f) = f^{out}(S) - f^{in}(S)$.</p>
+
+<p><strong>Proof.</strong> Sum $[f^{out}(v) - f^{in}(v)]$ over all $v \in S$: internal edges cancel; flow conservation makes all $v \neq s$ contribute 0. ∎</p>
+
+<p><strong>Corollary 1.</strong> $v(f) \leq c(S, \bar{S})$ for any flow $f$ and cut $(S, \bar{S})$.</p>
+
+<hr />
+
+<h2 id="max-flow--min-cut">Max-Flow = Min-Cut</h2>
+
+<p><strong>Lemma 6.</strong> If $G_f$ has no $s$-$t$ path, there exists a cut $(S^<em>, \bar{S}^</em>)$ with $v(f) = c(S^<em>, \bar{S}^</em>)$.</p>
+
+<p><strong>Proof.</strong> Let $S$ = vertices reachable from $s$ in $G_f$, $\bar{S} = V \setminus S$.</p>
+
+<ul>
+  <li>Each edge $e = \langle u,v \rangle$ leaving $S$ in $G$: since $v \notin S$, $\langle u,v \rangle \notin G_f$ → $f(e) = c_e$.</li>
+  <li>Each edge $e = \langle u,v \rangle$ entering $S$ in $G$: since $u \notin S$, backward edge $\langle v,u \rangle \notin G_f$ → $f(e) = 0$.</li>
+</ul>
+
+<p>Therefore $v(f) = f^{out}(S) - f^{in}(S) = c(S, \bar{S})$. ∎</p>
+
+<p><strong>Corollary 2 (Ford-Fulkerson returns max flow).</strong> The algorithm terminates when $G_f$ has no $s$-$t$ path, at which point Lemma 6 gives an equal-value cut, making $f$ optimal.</p>
+
+<p><strong>Theorem 2 (Max-Flow Min-Cut).</strong> In every flow network, the value of the maximum $s$-$t$ flow equals the capacity of the minimum $s$-$t$ cut.</p>
+
+<p><strong>Theorem 3 (Integrality).</strong> If all capacities are integers, there exists a maximum flow in which every edge carries integer flow.</p>
+
+<p><strong>Proof.</strong> Ford-Fulkerson returns such a flow. ∎</p>
+
+
+      
+    </div>
+    
+    <div class="references">
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      Programelot
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/" title="Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem">https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/network-flow" rel="tag"># network-flow</a>
+          
+            
+            <a href="/tag/#/ford-fulkerson" rel="tag"># ford-fulkerson</a>
+          
+            
+            <a href="/tag/#/max-flow-min-cut" rel="tag"># max-flow-min-cut</a>
+          
+            
+            <a href="/tag/#/augmenting-path" rel="tag"># augmenting-path</a>
+          
+            
+            <a href="/tag/#/residual-graph" rel="tag"># residual-graph</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/algorithms/2026/06/03/np-completeness-3dm/" rel="next" title="NP-Completeness: Nondeterminism and 3-Dimensional Matching">
+                <i class="fa fa-chevron-left"></i> NP-Completeness: Nondeterminism and 3-Dimensional Matching
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithms/2026/06/03/maximum-subarray-and-closest-pair/" rel="prev" title="Maximum Subarray Sum and Closest Pair of Points">
+                Maximum Subarray Sum and Closest Pair of Points <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="Programelot" />
+          <p class="site-author-name" itemprop="name">Programelot</p>
+           
+              <p class="site-description motion-element" itemprop="description">I am Programelot who is researching about optimization.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">174</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#maximum-flow"> <span class="nav-number">1</span> <span class="nav-text">Maximum Flow</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#motivation-and-definitions"> <span class="nav-number">1.1</span> <span class="nav-text">Motivation and Definitions</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#residual-graph"> <span class="nav-number">1.2</span> <span class="nav-text">Residual Graph</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#augment-function"> <span class="nav-number">1.3</span> <span class="nav-text">Augment Function</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#ford-fulkerson-algorithm"> <span class="nav-number">1.4</span> <span class="nav-text">Ford-Fulkerson Algorithm</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#termination-and-complexity"> <span class="nav-number">1.5</span> <span class="nav-text">Termination and Complexity</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#s-t-cut"> <span class="nav-number">1.6</span> <span class="nav-text">$s$-$t$ Cut</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#max-flow--min-cut"> <span class="nav-number">1.7</span> <span class="nav-text">Max-Flow = Min-Cut</span> </a> </li> </ol> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Programelot</span>
+  <br>
+  
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+
+    
+      
+      <script type="text/javascript">
+          var disqus_config = function () {
+              this.page.url = 'https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/';
+              this.page.identifier = '/algorithms/2026/06/03/network-flow-ford-fulkerson/';
+              this.page.title = 'Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://programelot.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+      </script>
+      
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+  </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+               SVG: { linebreaks: { automatic: true } }
+      });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  
+
+</body>
+</html>
+
