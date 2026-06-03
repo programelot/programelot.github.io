@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-03T03:11:47-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Efficient Maximum Flow Algorithms and Bipartite Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/" rel="alternate" type="text/html" title="Efficient Maximum Flow Algorithms and Bipartite Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/bipartite-matching</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/"><![CDATA[<h1 id="improving-ford-fulkerson">Improving Ford-Fulkerson</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-03T03:28:35-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Efficient Maximum Flow Algorithms and Bipartite Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/" rel="alternate" type="text/html" title="Efficient Maximum Flow Algorithms and Bipartite Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/bipartite-matching</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/"><![CDATA[<h1 id="improving-ford-fulkerson">Improving Ford-Fulkerson</h1>
 
 <h2 id="a-bad-example">A Bad Example</h2>
 
@@ -1550,7 +1550,7 @@ for each job i = 1, ..., n do
   <li>Set the target independent set size $k’ = k$.</li>
 </ol>
 
-<p><strong>Example:</strong> For ${(x_1 \vee \bar{x}_2 \vee x_3),\ (\bar{x}_1 \vee \bar{x}_2 \vee \bar{x}_4)}$, set $k’=2$.</p>
+<p><strong>Example:</strong> For $\lbrace (x_1 \vee \bar{x}_2 \vee x_3),\ (\bar{x}_1 \vee \bar{x}_2 \vee \bar{x}_4)\rbrace$, set $k’=2$.</p>
 
 <p><strong>($\Rightarrow$)</strong> If 3-SAT is satisfiable: pick one true literal per clause to get $k$ vertices.</p>
 <ul>
@@ -1581,32 +1581,8 @@ for each job i = 1, ..., n do
   <p><strong>Definition 4.</strong> An <strong>efficient certifier</strong> $B$ for problem $X$:</p>
   <ul>
     <li>Takes strings $s$ (instance) and $t$ (hint) as input.</li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>Runs in time polynomial in $</td>
-            <td>s</td>
-            <td>$ and $</td>
-            <td>t</td>
-            <td>$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>For every yes-instance $s$: there exists $t$ with $</td>
-            <td>t</td>
-            <td>\leq p(</td>
-            <td>s</td>
-            <td>)$ such that $B(s,t) = \text{yes}$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
+    <li>Runs in time polynomial in $\lvert s\rvert$ and $\lvert t\rvert$.</li>
+    <li>For every yes-instance $s$: there exists $t$ with $\lvert t\rvert \leq p(\lvert s\rvert)$ such that $B(s,t) = \text{yes}$.</li>
     <li>For every no-instance $s$: $B(s,t) = \text{no}$ for all $t$.</li>
   </ul>
 </blockquote>
@@ -1621,4 +1597,4 @@ for each job i = 1, ..., n do
 
 <p><strong>Proof.</strong> If $X \in \text{P}$ with algorithm $A$, define $B(s,t)$ = “ignore $t$ and run $A(s)$.” This is an efficient certifier. ∎</p>
 
-<p><strong>Theorem 3.</strong> 3-SAT, Independent Set, Vertex Cover $\in$ NP.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="NP" /><category term="3-SAT" /><category term="independent-set" /><category term="gadget" /><category term="P-vs-NP" /><category term="reduction" /><summary type="html"><![CDATA[3-SAT ≤P Independent Set]]></summary></entry></feed>
+<p><strong>Theorem 3.</strong> 3-SAT, Independent Set, Vertex Cover $\in$ NP.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="NP" /><category term="3-SAT" /><category term="independent-set" /><category term="gadget" /><category term="P-vs-NP" /><category term="reduction" /><summary type="html"><![CDATA[3-SAT ≤P Independent Set]]></summary></entry></feed>

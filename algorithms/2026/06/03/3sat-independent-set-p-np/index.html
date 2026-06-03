@@ -502,7 +502,7 @@
   <li>Set the target independent set size $k’ = k$.</li>
 </ol>
 
-<p><strong>Example:</strong> For ${(x_1 \vee \bar{x}_2 \vee x_3),\ (\bar{x}_1 \vee \bar{x}_2 \vee \bar{x}_4)}$, set $k’=2$.</p>
+<p><strong>Example:</strong> For $\lbrace (x_1 \vee \bar{x}_2 \vee x_3),\ (\bar{x}_1 \vee \bar{x}_2 \vee \bar{x}_4)\rbrace$, set $k’=2$.</p>
 
 <p><strong>($\Rightarrow$)</strong> If 3-SAT is satisfiable: pick one true literal per clause to get $k$ vertices.</p>
 <ul>
@@ -533,32 +533,8 @@
   <p><strong>Definition 4.</strong> An <strong>efficient certifier</strong> $B$ for problem $X$:</p>
   <ul>
     <li>Takes strings $s$ (instance) and $t$ (hint) as input.</li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>Runs in time polynomial in $</td>
-            <td>s</td>
-            <td>$ and $</td>
-            <td>t</td>
-            <td>$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>For every yes-instance $s$: there exists $t$ with $</td>
-            <td>t</td>
-            <td>\leq p(</td>
-            <td>s</td>
-            <td>)$ such that $B(s,t) = \text{yes}$.</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
+    <li>Runs in time polynomial in $\lvert s\rvert$ and $\lvert t\rvert$.</li>
+    <li>For every yes-instance $s$: there exists $t$ with $\lvert t\rvert \leq p(\lvert s\rvert)$ such that $B(s,t) = \text{yes}$.</li>
     <li>For every no-instance $s$: $B(s,t) = \text{no}$ for all $t$.</li>
   </ul>
 </blockquote>
