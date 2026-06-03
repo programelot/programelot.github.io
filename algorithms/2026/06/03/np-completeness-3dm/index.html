@@ -536,19 +536,7 @@
 <h2 id="problem-definition">Problem Definition</h2>
 
 <blockquote>
-  <table>
-    <tbody>
-      <tr>
-        <td><strong>Problem 3 (3-Dimensional Matching).</strong> Given three disjoint sets $X, Y, Z$ of equal size ($</td>
-        <td>X</td>
-        <td>=</td>
-        <td>Y</td>
-        <td>=</td>
-        <td>Z</td>
-        <td>=n$) and $T \subseteq X \times Y \times Z$: does $T$ contain $n$ triples that together include each element of $X \cup Y \cup Z$ exactly once?</td>
-      </tr>
-    </tbody>
-  </table>
+  <p><strong>Problem 3 (3-Dimensional Matching).</strong> Given three disjoint sets $X, Y, Z$ of equal size ($\lvert X\rvert=\lvert Y\rvert=\lvert Z\rvert=n$) and $T \subseteq X \times Y \times Z$: does $T$ contain $n$ triples that together include each element of $X \cup Y \cup Z$ exactly once?</p>
 </blockquote>
 
 <p><strong>Theorem 3.</strong> 3-Dimensional Matching is NP-complete.</p>
@@ -557,17 +545,7 @@
 
 <h2 id="part-1-in-np">Part 1: $\in$ NP</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>For a yes-instance, present as hint a subset $T’ \subseteq T$ with $</td>
-      <td>T’</td>
-      <td>=n$. We verify in polynomial time that $</td>
-      <td>T’</td>
-      <td>=n$, $T’ \subseteq T$, and each element of $X \cup Y \cup Z$ appears exactly once.</td>
-    </tr>
-  </tbody>
-</table>
+<p>For a yes-instance, present as hint a subset $T’ \subseteq T$ with $\lvert T’\rvert=n$. We verify in polynomial time that $\lvert T’\rvert=n$, $T’ \subseteq T$, and each element of $X \cup Y \cup Z$ appears exactly once.</p>
 
 <hr />
 
@@ -579,7 +557,7 @@
 
 <p>For each variable $x_i$:</p>
 <ul>
-  <li>$A_i := {a_{i,1}, \ldots, a_{i,2k}}$, $B_i := {b_{i,1}, \ldots, b_{i,2k}}$</li>
+  <li>$A_i := \lbrace a_{i,1}, \ldots, a_{i,2k}\rbrace$, $B_i := \lbrace b_{i,1}, \ldots, b_{i,2k}\rbrace$</li>
   <li><strong>Variable triples</strong> $t_{i,\ell} = (a_{i,\ell},\ a_{i,\ell+1},\ b_{i,\ell})$ for $\ell = 1, \ldots, 2k$ (with $a_{i,2k+1} := a_{i,1}$)</li>
 </ul>
 
@@ -589,7 +567,7 @@
 
 <h3 id="clause-gadget">Clause Gadget</h3>
 
-<p>For each clause $C_j$, define $P_j := {p_j, p’_j}$ and add three <strong>clause triples</strong>:</p>
+<p>For each clause $C_j$, define $P_j := \lbrace p_j, p’_j\rbrace$ and add three <strong>clause triples</strong>:</p>
 <ul>
   <li>If $C_j$ contains $x_i$: add $(p_j, p’<em>j, b</em>{i,2j})$</li>
   <li>If $C_j$ contains $\bar{x}<em>i$: add $(p_j, p’_j, b</em>{i,2j-1})$</li>
@@ -599,44 +577,17 @@
 
 <h3 id="cleanup-gadget">Cleanup Gadget</h3>
 
-<p>$(n-1)k$ cleanup gadgets: for $m = 1, \ldots, (n-1)k$, define $Q_m := {q_m, q’<em>m}$ and add <strong>cleanup triples</strong> $(q_m, q’_m, b</em>{i,\ell})$ for all $i, \ell$.</p>
+<p>$(n-1)k$ cleanup gadgets: for $m = 1, \ldots, (n-1)k$, define $Q_m := \lbrace q_m, q’<em>m\rbrace$ and add <strong>cleanup triples</strong> $(q_m, q’_m, b</em>{i,\ell})$ for all $i, \ell$.</p>
 
 <hr />
 
 <h2 id="set-partition">Set Partition</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>$$X := {a_{i,j}\</td>
-      <td>\ j \text{ even}} \cup {p_j} \cup {q_m}$$</td>
-    </tr>
-    <tr>
-      <td>$$Y := {a_{i,j}\</td>
-      <td>\ j \text{ odd}} \cup {p’_j} \cup {q’_m}$$</td>
-    </tr>
-    <tr>
-      <td>$$Z := {b_{i,j}\</td>
-      <td>\ 1 \leq i \leq n,\ 1 \leq j \leq 2k}$$</td>
-    </tr>
-  </tbody>
-</table>
+<p>\(X := \{a_{i,j}\ \mid\ j \text{ even}\} \cup \{p_j\} \cup \{q_m\}\)
+\(Y := \{a_{i,j}\ \mid\ j \text{ odd}\} \cup \{p'_j\} \cup \{q'_m\}\)
+\(Z := \{b_{i,j}\ \mid\ 1 \leq i \leq n,\ 1 \leq j \leq 2k\}\)</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>$</td>
-      <td>X</td>
-      <td>=</td>
-      <td>Y</td>
-      <td>=</td>
-      <td>Z</td>
-      <td>= 2nk$, $</td>
-      <td>T</td>
-      <td>= O(n^2k^2)$ — the construction is completed in polynomial time.</td>
-    </tr>
-  </tbody>
-</table>
+<p>$\lvert X\rvert = \lvert Y\rvert = \lvert Z\rvert = 2nk$, $\lvert T\rvert = O(n^2k^2)$ — the construction is completed in polynomial time.</p>
 
 <hr />
 

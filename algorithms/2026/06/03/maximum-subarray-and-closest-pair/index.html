@@ -595,7 +595,7 @@ return sol
 <h2 id="problem-definition-1">Problem Definition</h2>
 
 <blockquote>
-  <p><strong>Problem 2.</strong> Given $n$ points $P = {p_1, \ldots, p_n}$ in the 2D Euclidean plane, find the closest pair of points.</p>
+  <p><strong>Problem 2.</strong> Given $n$ points $P = \lbrace p_1, \ldots, p_n\rbrace$ in the 2D Euclidean plane, find the closest pair of points.</p>
 </blockquote>
 
 <p>$(x_i, y_i)$ are the coordinates of $p_i$, and $d(p_i, p_j)$ is the Euclidean distance between two points.</p>
@@ -704,19 +704,7 @@ function ClosestPair(Px, Py):
 
 <p>The algorithm correctly finds the closest pair of points in $P$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> By induction on $</td>
-      <td>P_x</td>
-      <td>$. The case $</td>
-      <td>P_x</td>
-      <td>\leq 3$ is trivial. For $</td>
-      <td>P_x</td>
-      <td>\geq 4$, by the inductive hypothesis $(p_{l1}, p_{l2})$ and $(p_{r1}, p_{r2})$ are the closest pairs in each half.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> By induction on $\lvert P_x\rvert$. The case $\lvert P_x\rvert \leq 3$ is trivial. For $\lvert P_x\rvert \geq 4$, by the inductive hypothesis $(p_{l1}, p_{l2})$ and $(p_{r1}, p_{r2})$ are the closest pairs in each half.</p>
 
 <p><strong>Case 1.</strong> $\delta &gt; d(p_{o1}, p_{o2})$: The two closest points must be in different halves. By Lemmas 1 and 2, both are in $S_y$ within 11 positions, so the algorithm finds them.</p>
 

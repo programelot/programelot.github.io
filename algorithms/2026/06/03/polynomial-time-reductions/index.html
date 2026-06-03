@@ -530,15 +530,7 @@
 
 <p><strong>Theorem 2.</strong> Independent Set $\leq_P$ Vertex Cover (and vice versa — they are equally hard).</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> Given $G = (V,E)$ and $k$, ask the Vertex Cover oracle “Does $G$ have a vertex cover of size $\leq</td>
-      <td>V</td>
-      <td>-k$?” By Lemma 3, this answer is the answer to the original problem. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> Given $G = (V,E)$ and $k$, ask the Vertex Cover oracle “Does $G$ have a vertex cover of size $\leq \lvert V\rvert-k$?” By Lemma 3, this answer is the answer to the original problem. ∎</p>
 
 <hr />
 
@@ -555,7 +547,7 @@
 <p><strong>Proof.</strong> Given Vertex Cover instance $G = (V,E)$, $k$, construct:</p>
 <ul>
   <li>Base set $U = E$</li>
-  <li>For each vertex $i \in V$: $S_i = {\text{all edges incident to } i}$</li>
+  <li>For each vertex $i \in V$: $S_i = \lbrace\text{all edges incident to }i\rbrace$</li>
   <li>$k’ = k$</li>
 </ul>
 
@@ -573,17 +565,7 @@
 
 <ul>
   <li>Optimization → decision: trivial</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Decision → optimization: run the decision version for $k = 0, 1, \ldots,</td>
-          <td>V</td>
-          <td>$ (binary search suffices)</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+  <li>Decision → optimization: run the decision version for $k = 0, 1, \ldots, \lvert V\rvert$ (binary search suffices)</li>
 </ul>
 
 <p>This equivalence justifies focusing only on yes/no decision problems throughout complexity theory.</p>

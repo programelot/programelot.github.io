@@ -559,7 +559,7 @@ return f
   <li>Add source $s$ with edges $\langle s, x \rangle$ of capacity 1 for all $x \in X$.</li>
   <li>Add sink $t$ with edges $\langle y, t \rangle$ of capacity 1 for all $y \in Y$.</li>
   <li>Compute maximum integer flow $f^*$.</li>
-  <li>Output $M = {(x,y) : f^*(x,y) \neq 0}$.</li>
+  <li>Output $M = \lbrace (x,y) : f^*(x,y) \neq 0\rbrace$.</li>
 </ol>
 
 <hr />
@@ -570,29 +570,9 @@ return f
 
 <p><strong>Proof.</strong> The only incoming edge of $x$ is $\langle s,x \rangle$ with capacity 1, so $f^<em>(x,y) \leq 1$ by flow conservation. Since $f^</em>$ is integer, $f^*(x,y) = 1$. ∎</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Lemma 4.</strong> $</td>
-      <td>M</td>
-      <td>\geq \text{OPT}$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Lemma 4.</strong> $\lvert M\rvert \geq \text{OPT}$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> Fix maximum matching $O$. For each $(x,y) \in O$, send unit flow along $s$-$x$-$y$-$t$. Since $O$ is a matching, each edge is used at most once → valid flow of value $</td>
-      <td>O</td>
-      <td>$. Therefore $v(f^*) \geq</td>
-      <td>O</td>
-      <td>= \text{OPT}$. With cut $S := {s} \cup X$, $v(f^*) =</td>
-      <td>M</td>
-      <td>$ (by Lemma 3, no edges enter $S$). ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> Fix maximum matching $O$. For each $(x,y) \in O$, send unit flow along $s$-$x$-$y$-$t$. Since $O$ is a matching, each edge is used at most once → valid flow of value $\lvert O\rvert$. Therefore $v(f^<em>) \geq \lvert O\rvert = \text{OPT}$. With cut $S := \lbrace s\rbrace \cup X$, $v(f^</em>) = \lvert M\rvert$ (by Lemma 3, no edges enter $S$). ∎</p>
 
 <p><strong>Lemma 5.</strong> Each $X$ node is incident to at most one edge of $M$.</p>
 
@@ -608,15 +588,7 @@ return f
 
 <p><strong>Theorem 4.</strong> The algorithm runs in $O((m+n)n)$ time.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> The constructed network has $n+2$ vertices and $m+n$ edges. Ford-Fulkerson computes integer flow in $O(m’ \cdot</td>
-      <td>X</td>
-      <td>) = O((m+n)n)$ time. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> The constructed network has $n+2$ vertices and $m+n$ edges. Ford-Fulkerson computes integer flow in $O(m’ \cdot \lvert X\rvert) = O((m+n)n)$ time. ∎</p>
 
 <hr />
 

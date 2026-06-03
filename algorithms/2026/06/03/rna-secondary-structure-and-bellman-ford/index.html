@@ -475,15 +475,15 @@
 <h2 id="problem-definition">Problem Definition</h2>
 
 <blockquote>
-  <p><strong>Definition 1.</strong> The <strong>primary structure</strong> of an RNA molecule $B = b_1 \ldots b_n$ is a sequence of symbols drawn from ${A, C, G, U}$.</p>
+  <p><strong>Definition 1.</strong> The <strong>primary structure</strong> of an RNA molecule $B = b_1 \ldots b_n$ is a sequence of symbols drawn from $\lbrace A, C, G, U\rbrace$.</p>
 </blockquote>
 
 <blockquote>
-  <p><strong>Definition 2.</strong> A <strong>secondary structure</strong> $S \subseteq {1,\ldots,n} \times {1,\ldots,n}$ over primary structure $B$ satisfies:</p>
+  <p><strong>Definition 2.</strong> A <strong>secondary structure</strong> $S \subseteq \lbrace 1,\ldots,n\rbrace \times \lbrace 1,\ldots,n\rbrace$ over primary structure $B$ satisfies:</p>
 
   <ol>
     <li><strong>(No sharp turns)</strong> $(i,j) \in S \implies i &lt; j - 4$</li>
-    <li><strong>(Complementary base pairs)</strong> ${b_i, b_j} = {A,U}$ or ${C,G}$</li>
+    <li><strong>(Complementary base pairs)</strong> $\lbrace b_i, b_j\rbrace = \lbrace A,U\rbrace$ or $\lbrace C,G\rbrace$</li>
     <li><strong>(Matching)</strong> Each index appears at most once</li>
     <li><strong>(Noncrossing)</strong> For $(i,j),(k,l) \in S$, $i &lt; k &lt; j &lt; l$ is forbidden</li>
   </ol>

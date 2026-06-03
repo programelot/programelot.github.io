@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-03T03:28:35-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Efficient Maximum Flow Algorithms and Bipartite Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/" rel="alternate" type="text/html" title="Efficient Maximum Flow Algorithms and Bipartite Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/bipartite-matching</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/"><![CDATA[<h1 id="improving-ford-fulkerson">Improving Ford-Fulkerson</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://programelot.github.io/atom.xml" rel="self" type="application/atom+xml" /><link href="https://programelot.github.io/" rel="alternate" type="text/html" /><updated>2026-06-03T04:59:41-05:00</updated><id>https://programelot.github.io/atom.xml</id><title type="html">REAL</title><subtitle>I am Programelot who is researching about optimization.</subtitle><author><name>Programelot</name></author><entry><title type="html">Efficient Maximum Flow Algorithms and Bipartite Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/" rel="alternate" type="text/html" title="Efficient Maximum Flow Algorithms and Bipartite Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/bipartite-matching</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/bipartite-matching/"><![CDATA[<h1 id="improving-ford-fulkerson">Improving Ford-Fulkerson</h1>
 
 <h2 id="a-bad-example">A Bad Example</h2>
 
@@ -87,7 +87,7 @@ return f
   <li>Add source $s$ with edges $\langle s, x \rangle$ of capacity 1 for all $x \in X$.</li>
   <li>Add sink $t$ with edges $\langle y, t \rangle$ of capacity 1 for all $y \in Y$.</li>
   <li>Compute maximum integer flow $f^*$.</li>
-  <li>Output $M = {(x,y) : f^*(x,y) \neq 0}$.</li>
+  <li>Output $M = \lbrace (x,y) : f^*(x,y) \neq 0\rbrace$.</li>
 </ol>
 
 <hr />
@@ -98,29 +98,9 @@ return f
 
 <p><strong>Proof.</strong> The only incoming edge of $x$ is $\langle s,x \rangle$ with capacity 1, so $f^<em>(x,y) \leq 1$ by flow conservation. Since $f^</em>$ is integer, $f^*(x,y) = 1$. ∎</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Lemma 4.</strong> $</td>
-      <td>M</td>
-      <td>\geq \text{OPT}$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Lemma 4.</strong> $\lvert M\rvert \geq \text{OPT}$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> Fix maximum matching $O$. For each $(x,y) \in O$, send unit flow along $s$-$x$-$y$-$t$. Since $O$ is a matching, each edge is used at most once → valid flow of value $</td>
-      <td>O</td>
-      <td>$. Therefore $v(f^*) \geq</td>
-      <td>O</td>
-      <td>= \text{OPT}$. With cut $S := {s} \cup X$, $v(f^*) =</td>
-      <td>M</td>
-      <td>$ (by Lemma 3, no edges enter $S$). ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> Fix maximum matching $O$. For each $(x,y) \in O$, send unit flow along $s$-$x$-$y$-$t$. Since $O$ is a matching, each edge is used at most once → valid flow of value $\lvert O\rvert$. Therefore $v(f^<em>) \geq \lvert O\rvert = \text{OPT}$. With cut $S := \lbrace s\rbrace \cup X$, $v(f^</em>) = \lvert M\rvert$ (by Lemma 3, no edges enter $S$). ∎</p>
 
 <p><strong>Lemma 5.</strong> Each $X$ node is incident to at most one edge of $M$.</p>
 
@@ -136,15 +116,7 @@ return f
 
 <p><strong>Theorem 4.</strong> The algorithm runs in $O((m+n)n)$ time.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> The constructed network has $n+2$ vertices and $m+n$ edges. Ford-Fulkerson computes integer flow in $O(m’ \cdot</td>
-      <td>X</td>
-      <td>) = O((m+n)n)$ time. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> The constructed network has $n+2$ vertices and $m+n$ edges. Ford-Fulkerson computes integer flow in $O(m’ \cdot \lvert X\rvert) = O((m+n)n)$ time. ∎</p>
 
 <hr />
 
@@ -158,7 +130,7 @@ return f
   <li>Flipping matched/unmatched status along the path increases the matching size by 1.</li>
 </ul>
 
-<p>An algorithm can directly search for alternating paths without explicitly constructing the flow network.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="bipartite-matching" /><category term="network-flow" /><category term="edmonds-karp" /><category term="capacity-scaling" /><category term="alternating-path" /><summary type="html"><![CDATA[Improving Ford-Fulkerson]]></summary></entry><entry><title type="html">Maximum Subarray Sum and Closest Pair of Points</title><link href="https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair/" rel="alternate" type="text/html" title="Maximum Subarray Sum and Closest Pair of Points" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair/"><![CDATA[<h1 id="maximum-subarray-sum">Maximum Subarray Sum</h1>
+<p>An algorithm can directly search for alternating paths without explicitly constructing the flow network.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="bipartite-matching" /><category term="network-flow" /><category term="edmonds-karp" /><category term="capacity-scaling" /><category term="alternating-path" /><summary type="html"><![CDATA[Improving Ford-Fulkerson]]></summary></entry><entry><title type="html">Maximum Subarray Sum and Closest Pair of Points</title><link href="https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair/" rel="alternate" type="text/html" title="Maximum Subarray Sum and Closest Pair of Points" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/maximum-subarray-and-closest-pair/"><![CDATA[<h1 id="maximum-subarray-sum">Maximum Subarray Sum</h1>
 
 <h2 id="problem-definition">Problem Definition</h2>
 
@@ -283,7 +255,7 @@ return sol
 <h2 id="problem-definition-1">Problem Definition</h2>
 
 <blockquote>
-  <p><strong>Problem 2.</strong> Given $n$ points $P = {p_1, \ldots, p_n}$ in the 2D Euclidean plane, find the closest pair of points.</p>
+  <p><strong>Problem 2.</strong> Given $n$ points $P = \lbrace p_1, \ldots, p_n\rbrace$ in the 2D Euclidean plane, find the closest pair of points.</p>
 </blockquote>
 
 <p>$(x_i, y_i)$ are the coordinates of $p_i$, and $d(p_i, p_j)$ is the Euclidean distance between two points.</p>
@@ -392,19 +364,7 @@ function ClosestPair(Px, Py):
 
 <p>The algorithm correctly finds the closest pair of points in $P$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> By induction on $</td>
-      <td>P_x</td>
-      <td>$. The case $</td>
-      <td>P_x</td>
-      <td>\leq 3$ is trivial. For $</td>
-      <td>P_x</td>
-      <td>\geq 4$, by the inductive hypothesis $(p_{l1}, p_{l2})$ and $(p_{r1}, p_{r2})$ are the closest pairs in each half.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> By induction on $\lvert P_x\rvert$. The case $\lvert P_x\rvert \leq 3$ is trivial. For $\lvert P_x\rvert \geq 4$, by the inductive hypothesis $(p_{l1}, p_{l2})$ and $(p_{r1}, p_{r2})$ are the closest pairs in each half.</p>
 
 <p><strong>Case 1.</strong> $\delta &gt; d(p_{o1}, p_{o2})$: The two closest points must be in different halves. By Lemmas 1 and 2, both are in $S_y$ within 11 positions, so the algorithm finds them.</p>
 
@@ -418,7 +378,7 @@ function ClosestPair(Px, Py):
 
 <p><strong>Proof.</strong> Separating $L_y, R_y$ and constructing $S_y$ each take $O(n)$ by scanning $P_y$ once. Therefore $T(n) = 2T(n/2) + \Theta(n)$, which by the Master Theorem gives $T(n) = O(n \log n)$. Preprocessing (sorting) also takes $O(n \log n)$. ∎</p>
 
-<p><strong>Bottom-up approach:</strong> Since the structure mirrors mergesort, one can include the $y$-sorted list in the return tuple of each recursive call and build it during the merge step.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="divide-and-conquer" /><category term="maximum-subarray" /><category term="closest-pair" /><category term="kadane" /><category term="master-theorem" /><summary type="html"><![CDATA[Maximum Subarray Sum]]></summary></entry><entry><title type="html">NP-Completeness: Nondeterminism and 3-Dimensional Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm/" rel="alternate" type="text/html" title="NP-Completeness: Nondeterminism and 3-Dimensional Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm/"><![CDATA[<h1 id="np-hard-and-np-complete">NP-Hard and NP-Complete</h1>
+<p><strong>Bottom-up approach:</strong> Since the structure mirrors mergesort, one can include the $y$-sorted list in the return tuple of each recursive call and build it during the merge step.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="divide-and-conquer" /><category term="maximum-subarray" /><category term="closest-pair" /><category term="kadane" /><category term="master-theorem" /><summary type="html"><![CDATA[Maximum Subarray Sum]]></summary></entry><entry><title type="html">NP-Completeness: Nondeterminism and 3-Dimensional Matching</title><link href="https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm/" rel="alternate" type="text/html" title="NP-Completeness: Nondeterminism and 3-Dimensional Matching" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/np-completeness-3dm/"><![CDATA[<h1 id="np-hard-and-np-complete">NP-Hard and NP-Complete</h1>
 
 <h2 id="alternative-view-nondeterministic-programming">Alternative View: Nondeterministic Programming</h2>
 
@@ -484,19 +444,7 @@ function ClosestPair(Px, Py):
 <h2 id="problem-definition">Problem Definition</h2>
 
 <blockquote>
-  <table>
-    <tbody>
-      <tr>
-        <td><strong>Problem 3 (3-Dimensional Matching).</strong> Given three disjoint sets $X, Y, Z$ of equal size ($</td>
-        <td>X</td>
-        <td>=</td>
-        <td>Y</td>
-        <td>=</td>
-        <td>Z</td>
-        <td>=n$) and $T \subseteq X \times Y \times Z$: does $T$ contain $n$ triples that together include each element of $X \cup Y \cup Z$ exactly once?</td>
-      </tr>
-    </tbody>
-  </table>
+  <p><strong>Problem 3 (3-Dimensional Matching).</strong> Given three disjoint sets $X, Y, Z$ of equal size ($\lvert X\rvert=\lvert Y\rvert=\lvert Z\rvert=n$) and $T \subseteq X \times Y \times Z$: does $T$ contain $n$ triples that together include each element of $X \cup Y \cup Z$ exactly once?</p>
 </blockquote>
 
 <p><strong>Theorem 3.</strong> 3-Dimensional Matching is NP-complete.</p>
@@ -505,17 +453,7 @@ function ClosestPair(Px, Py):
 
 <h2 id="part-1-in-np">Part 1: $\in$ NP</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>For a yes-instance, present as hint a subset $T’ \subseteq T$ with $</td>
-      <td>T’</td>
-      <td>=n$. We verify in polynomial time that $</td>
-      <td>T’</td>
-      <td>=n$, $T’ \subseteq T$, and each element of $X \cup Y \cup Z$ appears exactly once.</td>
-    </tr>
-  </tbody>
-</table>
+<p>For a yes-instance, present as hint a subset $T’ \subseteq T$ with $\lvert T’\rvert=n$. We verify in polynomial time that $\lvert T’\rvert=n$, $T’ \subseteq T$, and each element of $X \cup Y \cup Z$ appears exactly once.</p>
 
 <hr />
 
@@ -527,7 +465,7 @@ function ClosestPair(Px, Py):
 
 <p>For each variable $x_i$:</p>
 <ul>
-  <li>$A_i := {a_{i,1}, \ldots, a_{i,2k}}$, $B_i := {b_{i,1}, \ldots, b_{i,2k}}$</li>
+  <li>$A_i := \lbrace a_{i,1}, \ldots, a_{i,2k}\rbrace$, $B_i := \lbrace b_{i,1}, \ldots, b_{i,2k}\rbrace$</li>
   <li><strong>Variable triples</strong> $t_{i,\ell} = (a_{i,\ell},\ a_{i,\ell+1},\ b_{i,\ell})$ for $\ell = 1, \ldots, 2k$ (with $a_{i,2k+1} := a_{i,1}$)</li>
 </ul>
 
@@ -537,7 +475,7 @@ function ClosestPair(Px, Py):
 
 <h3 id="clause-gadget">Clause Gadget</h3>
 
-<p>For each clause $C_j$, define $P_j := {p_j, p’_j}$ and add three <strong>clause triples</strong>:</p>
+<p>For each clause $C_j$, define $P_j := \lbrace p_j, p’_j\rbrace$ and add three <strong>clause triples</strong>:</p>
 <ul>
   <li>If $C_j$ contains $x_i$: add $(p_j, p’<em>j, b</em>{i,2j})$</li>
   <li>If $C_j$ contains $\bar{x}<em>i$: add $(p_j, p’_j, b</em>{i,2j-1})$</li>
@@ -547,44 +485,17 @@ function ClosestPair(Px, Py):
 
 <h3 id="cleanup-gadget">Cleanup Gadget</h3>
 
-<p>$(n-1)k$ cleanup gadgets: for $m = 1, \ldots, (n-1)k$, define $Q_m := {q_m, q’<em>m}$ and add <strong>cleanup triples</strong> $(q_m, q’_m, b</em>{i,\ell})$ for all $i, \ell$.</p>
+<p>$(n-1)k$ cleanup gadgets: for $m = 1, \ldots, (n-1)k$, define $Q_m := \lbrace q_m, q’<em>m\rbrace$ and add <strong>cleanup triples</strong> $(q_m, q’_m, b</em>{i,\ell})$ for all $i, \ell$.</p>
 
 <hr />
 
 <h2 id="set-partition">Set Partition</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>$$X := {a_{i,j}\</td>
-      <td>\ j \text{ even}} \cup {p_j} \cup {q_m}$$</td>
-    </tr>
-    <tr>
-      <td>$$Y := {a_{i,j}\</td>
-      <td>\ j \text{ odd}} \cup {p’_j} \cup {q’_m}$$</td>
-    </tr>
-    <tr>
-      <td>$$Z := {b_{i,j}\</td>
-      <td>\ 1 \leq i \leq n,\ 1 \leq j \leq 2k}$$</td>
-    </tr>
-  </tbody>
-</table>
+<p>\(X := \{a_{i,j}\ \mid\ j \text{ even}\} \cup \{p_j\} \cup \{q_m\}\)
+\(Y := \{a_{i,j}\ \mid\ j \text{ odd}\} \cup \{p'_j\} \cup \{q'_m\}\)
+\(Z := \{b_{i,j}\ \mid\ 1 \leq i \leq n,\ 1 \leq j \leq 2k\}\)</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>$</td>
-      <td>X</td>
-      <td>=</td>
-      <td>Y</td>
-      <td>=</td>
-      <td>Z</td>
-      <td>= 2nk$, $</td>
-      <td>T</td>
-      <td>= O(n^2k^2)$ — the construction is completed in polynomial time.</td>
-    </tr>
-  </tbody>
-</table>
+<p>$\lvert X\rvert = \lvert Y\rvert = \lvert Z\rvert = 2nk$, $\lvert T\rvert = O(n^2k^2)$ — the construction is completed in polynomial time.</p>
 
 <hr />
 
@@ -602,20 +513,20 @@ function ClosestPair(Px, Py):
   <li>Elements of $A_i$ can only be covered by variable triples → the matching selects either all odd or all even $\ell$ triples.</li>
   <li>Assign $x_i$ = true if odd triples selected, false if even.</li>
   <li>For each clause $C_j$, the selected clause triple’s $b_{i,\ell}$ reveals the corresponding variable is true → the clause is satisfied. ∎</li>
-</ol>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="NP-complete" /><category term="3DM" /><category term="reduction" /><category term="NP-hard" /><category term="cook-levin" /><category term="nondeterminism" /><summary type="html"><![CDATA[NP-Hard and NP-Complete]]></summary></entry><entry><title type="html">Dynamic Programming: RNA Secondary Structure and Bellman-Ford</title><link href="https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford/" rel="alternate" type="text/html" title="Dynamic Programming: RNA Secondary Structure and Bellman-Ford" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford/"><![CDATA[<h1 id="rna-secondary-structure-prediction">RNA Secondary Structure Prediction</h1>
+</ol>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="NP-complete" /><category term="3DM" /><category term="reduction" /><category term="NP-hard" /><category term="cook-levin" /><category term="nondeterminism" /><summary type="html"><![CDATA[NP-Hard and NP-Complete]]></summary></entry><entry><title type="html">Dynamic Programming: RNA Secondary Structure and Bellman-Ford</title><link href="https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford/" rel="alternate" type="text/html" title="Dynamic Programming: RNA Secondary Structure and Bellman-Ford" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/rna-secondary-structure-and-bellman-ford/"><![CDATA[<h1 id="rna-secondary-structure-prediction">RNA Secondary Structure Prediction</h1>
 
 <h2 id="problem-definition">Problem Definition</h2>
 
 <blockquote>
-  <p><strong>Definition 1.</strong> The <strong>primary structure</strong> of an RNA molecule $B = b_1 \ldots b_n$ is a sequence of symbols drawn from ${A, C, G, U}$.</p>
+  <p><strong>Definition 1.</strong> The <strong>primary structure</strong> of an RNA molecule $B = b_1 \ldots b_n$ is a sequence of symbols drawn from $\lbrace A, C, G, U\rbrace$.</p>
 </blockquote>
 
 <blockquote>
-  <p><strong>Definition 2.</strong> A <strong>secondary structure</strong> $S \subseteq {1,\ldots,n} \times {1,\ldots,n}$ over primary structure $B$ satisfies:</p>
+  <p><strong>Definition 2.</strong> A <strong>secondary structure</strong> $S \subseteq \lbrace 1,\ldots,n\rbrace \times \lbrace 1,\ldots,n\rbrace$ over primary structure $B$ satisfies:</p>
 
   <ol>
     <li><strong>(No sharp turns)</strong> $(i,j) \in S \implies i &lt; j - 4$</li>
-    <li><strong>(Complementary base pairs)</strong> ${b_i, b_j} = {A,U}$ or ${C,G}$</li>
+    <li><strong>(Complementary base pairs)</strong> $\lbrace b_i, b_j\rbrace = \lbrace A,U\rbrace$ or $\lbrace C,G\rbrace$</li>
     <li><strong>(Matching)</strong> Each index appears at most once</li>
     <li><strong>(Noncrossing)</strong> For $(i,j),(k,l) \in S$, $i &lt; k &lt; j &lt; l$ is forbidden</li>
   </ol>
@@ -755,7 +666,7 @@ for i ← 1, ..., n-1 do
 return M[s]
 </code></pre></div></div>
 
-<p>This version using only a 1D array is also correct.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="dynamic-programming" /><category term="RNA-folding" /><category term="bellman-ford" /><category term="shortest-path" /><category term="negative-edges" /><summary type="html"><![CDATA[RNA Secondary Structure Prediction]]></summary></entry><entry><title type="html">Complexity Theory: Polynomial-Time Reductions</title><link href="https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions/" rel="alternate" type="text/html" title="Complexity Theory: Polynomial-Time Reductions" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions/"><![CDATA[<h1 id="complexity-theory-polynomial-time-reductions">Complexity Theory: Polynomial-Time Reductions</h1>
+<p>This version using only a 1D array is also correct.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="dynamic-programming" /><category term="RNA-folding" /><category term="bellman-ford" /><category term="shortest-path" /><category term="negative-edges" /><summary type="html"><![CDATA[RNA Secondary Structure Prediction]]></summary></entry><entry><title type="html">Complexity Theory: Polynomial-Time Reductions</title><link href="https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions/" rel="alternate" type="text/html" title="Complexity Theory: Polynomial-Time Reductions" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/polynomial-time-reductions/"><![CDATA[<h1 id="complexity-theory-polynomial-time-reductions">Complexity Theory: Polynomial-Time Reductions</h1>
 
 <h2 id="introduction">Introduction</h2>
 
@@ -815,15 +726,7 @@ return M[s]
 
 <p><strong>Theorem 2.</strong> Independent Set $\leq_P$ Vertex Cover (and vice versa — they are equally hard).</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> Given $G = (V,E)$ and $k$, ask the Vertex Cover oracle “Does $G$ have a vertex cover of size $\leq</td>
-      <td>V</td>
-      <td>-k$?” By Lemma 3, this answer is the answer to the original problem. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> Given $G = (V,E)$ and $k$, ask the Vertex Cover oracle “Does $G$ have a vertex cover of size $\leq \lvert V\rvert-k$?” By Lemma 3, this answer is the answer to the original problem. ∎</p>
 
 <hr />
 
@@ -840,7 +743,7 @@ return M[s]
 <p><strong>Proof.</strong> Given Vertex Cover instance $G = (V,E)$, $k$, construct:</p>
 <ul>
   <li>Base set $U = E$</li>
-  <li>For each vertex $i \in V$: $S_i = {\text{all edges incident to } i}$</li>
+  <li>For each vertex $i \in V$: $S_i = \lbrace\text{all edges incident to }i\rbrace$</li>
   <li>$k’ = k$</li>
 </ul>
 
@@ -858,20 +761,10 @@ return M[s]
 
 <ul>
   <li>Optimization → decision: trivial</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Decision → optimization: run the decision version for $k = 0, 1, \ldots,</td>
-          <td>V</td>
-          <td>$ (binary search suffices)</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+  <li>Decision → optimization: run the decision version for $k = 0, 1, \ldots, \lvert V\rvert$ (binary search suffices)</li>
 </ul>
 
-<p>This equivalence justifies focusing only on yes/no decision problems throughout complexity theory.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="complexity-theory" /><category term="polynomial-reduction" /><category term="independent-set" /><category term="vertex-cover" /><category term="set-cover" /><summary type="html"><![CDATA[Complexity Theory: Polynomial-Time Reductions]]></summary></entry><entry><title type="html">Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem</title><link href="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/" rel="alternate" type="text/html" title="Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/"><![CDATA[<h1 id="maximum-flow">Maximum Flow</h1>
+<p>This equivalence justifies focusing only on yes/no decision problems throughout complexity theory.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="complexity-theory" /><category term="polynomial-reduction" /><category term="independent-set" /><category term="vertex-cover" /><category term="set-cover" /><summary type="html"><![CDATA[Complexity Theory: Polynomial-Time Reductions]]></summary></entry><entry><title type="html">Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem</title><link href="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/" rel="alternate" type="text/html" title="Maximum Flow: Ford-Fulkerson and the Max-Flow Min-Cut Theorem" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/network-flow-ford-fulkerson/"><![CDATA[<h1 id="maximum-flow">Maximum Flow</h1>
 
 <h2 id="motivation-and-definitions">Motivation and Definitions</h2>
 
@@ -887,7 +780,7 @@ return M[s]
   <p><strong>Definition 2.</strong> An <strong>$s$-$t$ flow</strong> $f: E \to \mathbb{R}_+$ satisfies:</p>
   <ul>
     <li><strong>Capacity condition:</strong> $0 \leq f(e) \leq c_e$ for all $e$</li>
-    <li><strong>Flow conservation:</strong> $f^{in}(v) = f^{out}(v)$ for all $v \in V \setminus {s,t}$</li>
+    <li><strong>Flow conservation:</strong> $f^{in}(v) = f^{out}(v)$ for all $v \in V \setminus \lbrace s,t\rbrace$</li>
   </ul>
 </blockquote>
 
@@ -1008,7 +901,7 @@ return f
 
 <p><strong>Theorem 3 (Integrality).</strong> If all capacities are integers, there exists a maximum flow in which every edge carries integer flow.</p>
 
-<p><strong>Proof.</strong> Ford-Fulkerson returns such a flow. ∎</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="network-flow" /><category term="ford-fulkerson" /><category term="max-flow-min-cut" /><category term="augmenting-path" /><category term="residual-graph" /><summary type="html"><![CDATA[Maximum Flow]]></summary></entry><entry><title type="html">Dynamic Programming: Hotel Scheduling, LNS, and Sequence Alignment</title><link href="https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro/" rel="alternate" type="text/html" title="Dynamic Programming: Hotel Scheduling, LNS, and Sequence Alignment" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro/"><![CDATA[<h1 id="dynamic-programming">Dynamic Programming</h1>
+<p><strong>Proof.</strong> Ford-Fulkerson returns such a flow. ∎</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="network-flow" /><category term="ford-fulkerson" /><category term="max-flow-min-cut" /><category term="augmenting-path" /><category term="residual-graph" /><summary type="html"><![CDATA[Maximum Flow]]></summary></entry><entry><title type="html">Dynamic Programming: Hotel Scheduling, LNS, and Sequence Alignment</title><link href="https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro/" rel="alternate" type="text/html" title="Dynamic Programming: Hotel Scheduling, LNS, and Sequence Alignment" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/dynamic-programming-intro/"><![CDATA[<h1 id="dynamic-programming">Dynamic Programming</h1>
 
 <h2 id="motivation-hotel-scheduling-problem">Motivation: Hotel Scheduling Problem</h2>
 
@@ -1177,7 +1070,7 @@ return M[n]
 <p><strong>LHS ≥ RHS:</strong></p>
 
 <ul>
-  <li>$\text{OPT}(i) \geq 1$: The sequence ${a_i}$ itself is nondecreasing.</li>
+  <li>$\text{OPT}(i) \geq 1$: The sequence $\lbrace a_i\rbrace$ itself is nondecreasing.</li>
   <li>For all $j$ with $a_j \leq a_i$: appending $a_i$ to the subsequence achieving $\text{OPT}(j)$ gives a nondecreasing subsequence of length $\text{OPT}(j)+1$, so $\text{OPT}(i) \geq \text{OPT}(j)+1$.</li>
 </ul>
 
@@ -1223,7 +1116,7 @@ pop everything  (output)
 <p>A problem that quantifies how similar two strings are.</p>
 
 <blockquote>
-  <p><strong>Definition 2.</strong> A <strong>matching</strong> $M \subseteq {1,\ldots,m} \times {1,\ldots,n}$ is a set where each index appears at most once.</p>
+  <p><strong>Definition 2.</strong> A <strong>matching</strong> $M \subseteq \lbrace 1,\ldots,m\rbrace \times \lbrace 1,\ldots,n\rbrace$ is a set where each index appears at most once.</p>
 </blockquote>
 
 <blockquote>
@@ -1270,7 +1163,7 @@ for i ← 1, ..., m do
 return M[m,n]
 </code></pre></div></div>
 
-<p><strong>Theorem 2.</strong> The algorithm is correct (by induction on $i+j$) and runs in $O(mn)$ time.</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="dynamic-programming" /><category term="memoization" /><category term="LNS" /><category term="sequence-alignment" /><category term="scheduling" /><summary type="html"><![CDATA[Dynamic Programming]]></summary></entry><entry><title type="html">Karatsuba Integer Multiplication</title><link href="https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication/" rel="alternate" type="text/html" title="Karatsuba Integer Multiplication" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication/"><![CDATA[<h1 id="karatsuba-integer-multiplication">Karatsuba Integer Multiplication</h1>
+<p><strong>Theorem 2.</strong> The algorithm is correct (by induction on $i+j$) and runs in $O(mn)$ time.</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="dynamic-programming" /><category term="memoization" /><category term="LNS" /><category term="sequence-alignment" /><category term="scheduling" /><summary type="html"><![CDATA[Dynamic Programming]]></summary></entry><entry><title type="html">Karatsuba Integer Multiplication</title><link href="https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication/" rel="alternate" type="text/html" title="Karatsuba Integer Multiplication" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/karatsuba-integer-multiplication/"><![CDATA[<h1 id="karatsuba-integer-multiplication">Karatsuba Integer Multiplication</h1>
 
 <h2 id="problem">Problem</h2>
 
@@ -1327,7 +1220,7 @@ return p1·2^(2⌊n/2⌋) + (p2+p3)·2^(⌊n/2⌋) + p4
 
 <p><strong>Proof.</strong> $T(n) = 3T(n/2) + cn$. By the Master Theorem:</p>
 
-\[T(n) = \Theta(n^{\log_2 3}) = O(n^{1.59}) \qquad \square\]]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="divide-and-conquer" /><category term="karatsuba" /><category term="integer-multiplication" /><category term="master-theorem" /><summary type="html"><![CDATA[Karatsuba Integer Multiplication]]></summary></entry><entry><title type="html">Greedy Algorithms: Interval Scheduling and Minimizing Maximum Lateness</title><link href="https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling/" rel="alternate" type="text/html" title="Greedy Algorithms: Interval Scheduling and Minimizing Maximum Lateness" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling/"><![CDATA[<h1 id="interval-scheduling">Interval Scheduling</h1>
+\[T(n) = \Theta(n^{\log_2 3}) = O(n^{1.59}) \qquad \square\]]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="divide-and-conquer" /><category term="karatsuba" /><category term="integer-multiplication" /><category term="master-theorem" /><summary type="html"><![CDATA[Karatsuba Integer Multiplication]]></summary></entry><entry><title type="html">Greedy Algorithms: Interval Scheduling and Minimizing Maximum Lateness</title><link href="https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling/" rel="alternate" type="text/html" title="Greedy Algorithms: Interval Scheduling and Minimizing Maximum Lateness" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/greedy-interval-scheduling/"><![CDATA[<h1 id="interval-scheduling">Interval Scheduling</h1>
 
 <h2 id="problem-definition">Problem Definition</h2>
 
@@ -1379,8 +1272,8 @@ return sol
 
 <p><strong>Notation:</strong></p>
 <ul>
-  <li>Algorithm’s solution: $\text{sol} = {i_1, \ldots, i_k}$ ($i_\ell$ selected in iteration $\ell$)</li>
-  <li>Optimal solution: $O = {j_1, \ldots, j_m}$ ($f(j_1) \leq \cdots \leq f(j_m)$)</li>
+  <li>Algorithm’s solution: $\text{sol} = \lbrace i_1, \ldots, i_k\rbrace$ ($i_\ell$ selected in iteration $\ell$)</li>
+  <li>Optimal solution: $O = \lbrace j_1, \ldots, j_m\rbrace$ ($f(j_1) \leq \cdots \leq f(j_m)$)</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> For all $1 \leq r \leq m$: $k \geq r$ and $f(i_r) \leq f(j_r)$.</p>
@@ -1412,29 +1305,11 @@ return sol
 
 <p>We can output a <strong>certificate</strong> of optimality alongside the solution.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Observation 2.</strong> If $J \subseteq I$ is compatible, then $\text{OPT}(I) \geq</td>
-      <td>J</td>
-      <td>$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Observation 2.</strong> If $J \subseteq I$ is compatible, then $\text{OPT}(I) \geq \lvert J\rvert$.</p>
 
 <p><strong>Lemma 2.</strong> If $I_1, \ldots, I_k$ partition $I$ and every pair of intervals within each $I_i$ overlaps, then $\text{OPT}(I) \leq k$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> For the optimal solution $O$, $</td>
-      <td>I_i \cap O</td>
-      <td>\leq 1$ for each $I_i$. Therefore $\text{OPT}(I) =</td>
-      <td>O</td>
-      <td>\leq k$. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> For the optimal solution $O$, $\lvert I_i \cap O\rvert \leq 1$ for each $I_i$. Therefore $\text{OPT}(I) = \lvert O\rvert \leq k$. ∎</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let R = given intervals
 sol ← ∅
@@ -1507,7 +1382,7 @@ for each job i = 1, ..., n do
 <ul>
   <li>Jobs other than $i, j$: completion time unchanged.</li>
   <li>$j$: $\bar{s}(j) = s(i) &lt; s(j)$ so $\bar{\ell}(j) \leq \ell(j) \leq L$.</li>
-  <li>$i$: $\bar{\ell}(i) = \max{0, f(j) - d_i} \leq \max{0, f(j) - d_j} = \ell(j) \leq L$ (since $d_i &gt; d_j$).</li>
+  <li>$i$: $\bar{\ell}(i) = \max\lbrace 0, f(j) - d_i\rbrace \leq \max\lbrace 0, f(j) - d_j\rbrace = \ell(j) \leq L$ (since $d_i &gt; d_j$).</li>
 </ul>
 
 <p>Each swap reduces inversions by 1. After at most $\binom{n}{2}$ swaps, we reach an inversion-free schedule. ∎</p>
@@ -1518,7 +1393,7 @@ for each job i = 1, ..., n do
 
 <p><strong>Theorem 3.</strong> The EDD algorithm is correct. (Follows from Lemmas 3, 4, and 5.)</p>
 
-<p>Time complexity: $O(n \log n)$ (dominated by sorting).</p>]]></content><author><name>Claude</name></author><category term="algorithms" /><category term="greedy" /><category term="interval-scheduling" /><category term="EDD" /><category term="job-scheduling" /><category term="stay-ahead" /><category term="certifying-algorithm" /><summary type="html"><![CDATA[Interval Scheduling]]></summary></entry><entry><title type="html">3-SAT, Independent Set, and the P vs. NP Question</title><link href="https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np/" rel="alternate" type="text/html" title="3-SAT, Independent Set, and the P vs. NP Question" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np/"><![CDATA[<h1 id="3-sat-p-independent-set">3-SAT ≤P Independent Set</h1>
+<p>Time complexity: $O(n \log n)$ (dominated by sorting).</p>]]></content><author><name>Programelot</name></author><category term="algorithms" /><category term="greedy" /><category term="interval-scheduling" /><category term="EDD" /><category term="job-scheduling" /><category term="stay-ahead" /><category term="certifying-algorithm" /><summary type="html"><![CDATA[Interval Scheduling]]></summary></entry><entry><title type="html">3-SAT, Independent Set, and the P vs. NP Question</title><link href="https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np/" rel="alternate" type="text/html" title="3-SAT, Independent Set, and the P vs. NP Question" /><published>2026-06-03T00:00:00-05:00</published><updated>2026-06-03T00:00:00-05:00</updated><id>https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np</id><content type="html" xml:base="https://programelot.github.io/algorithms/2026/06/03/3sat-independent-set-p-np/"><![CDATA[<h1 id="3-sat-p-independent-set">3-SAT ≤P Independent Set</h1>
 
 <h2 id="sat-problem">SAT Problem</h2>
 

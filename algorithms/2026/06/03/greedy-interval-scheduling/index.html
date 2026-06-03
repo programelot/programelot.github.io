@@ -522,8 +522,8 @@ return sol
 
 <p><strong>Notation:</strong></p>
 <ul>
-  <li>Algorithm’s solution: $\text{sol} = {i_1, \ldots, i_k}$ ($i_\ell$ selected in iteration $\ell$)</li>
-  <li>Optimal solution: $O = {j_1, \ldots, j_m}$ ($f(j_1) \leq \cdots \leq f(j_m)$)</li>
+  <li>Algorithm’s solution: $\text{sol} = \lbrace i_1, \ldots, i_k\rbrace$ ($i_\ell$ selected in iteration $\ell$)</li>
+  <li>Optimal solution: $O = \lbrace j_1, \ldots, j_m\rbrace$ ($f(j_1) \leq \cdots \leq f(j_m)$)</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> For all $1 \leq r \leq m$: $k \geq r$ and $f(i_r) \leq f(j_r)$.</p>
@@ -555,29 +555,11 @@ return sol
 
 <p>We can output a <strong>certificate</strong> of optimality alongside the solution.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Observation 2.</strong> If $J \subseteq I$ is compatible, then $\text{OPT}(I) \geq</td>
-      <td>J</td>
-      <td>$.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Observation 2.</strong> If $J \subseteq I$ is compatible, then $\text{OPT}(I) \geq \lvert J\rvert$.</p>
 
 <p><strong>Lemma 2.</strong> If $I_1, \ldots, I_k$ partition $I$ and every pair of intervals within each $I_i$ overlaps, then $\text{OPT}(I) \leq k$.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Proof.</strong> For the optimal solution $O$, $</td>
-      <td>I_i \cap O</td>
-      <td>\leq 1$ for each $I_i$. Therefore $\text{OPT}(I) =</td>
-      <td>O</td>
-      <td>\leq k$. ∎</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Proof.</strong> For the optimal solution $O$, $\lvert I_i \cap O\rvert \leq 1$ for each $I_i$. Therefore $\text{OPT}(I) = \lvert O\rvert \leq k$. ∎</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10</pre></td><td class="code"><pre class="highlight"><code>let R = given intervals
 sol ← ∅
@@ -650,7 +632,7 @@ for each job i = 1, ..., n do
 <ul>
   <li>Jobs other than $i, j$: completion time unchanged.</li>
   <li>$j$: $\bar{s}(j) = s(i) &lt; s(j)$ so $\bar{\ell}(j) \leq \ell(j) \leq L$.</li>
-  <li>$i$: $\bar{\ell}(i) = \max{0, f(j) - d_i} \leq \max{0, f(j) - d_j} = \ell(j) \leq L$ (since $d_i &gt; d_j$).</li>
+  <li>$i$: $\bar{\ell}(i) = \max\lbrace 0, f(j) - d_i\rbrace \leq \max\lbrace 0, f(j) - d_j\rbrace = \ell(j) \leq L$ (since $d_i &gt; d_j$).</li>
 </ul>
 
 <p>Each swap reduces inversions by 1. After at most $\binom{n}{2}$ swaps, we reach an inversion-free schedule. ∎</p>

@@ -639,7 +639,7 @@ return M[n]
 <p><strong>LHS ≥ RHS:</strong></p>
 
 <ul>
-  <li>$\text{OPT}(i) \geq 1$: The sequence ${a_i}$ itself is nondecreasing.</li>
+  <li>$\text{OPT}(i) \geq 1$: The sequence $\lbrace a_i\rbrace$ itself is nondecreasing.</li>
   <li>For all $j$ with $a_j \leq a_i$: appending $a_i$ to the subsequence achieving $\text{OPT}(j)$ gives a nondecreasing subsequence of length $\text{OPT}(j)+1$, so $\text{OPT}(i) \geq \text{OPT}(j)+1$.</li>
 </ul>
 
@@ -685,7 +685,7 @@ pop everything  (output)
 <p>A problem that quantifies how similar two strings are.</p>
 
 <blockquote>
-  <p><strong>Definition 2.</strong> A <strong>matching</strong> $M \subseteq {1,\ldots,m} \times {1,\ldots,n}$ is a set where each index appears at most once.</p>
+  <p><strong>Definition 2.</strong> A <strong>matching</strong> $M \subseteq \lbrace 1,\ldots,m\rbrace \times \lbrace 1,\ldots,n\rbrace$ is a set where each index appears at most once.</p>
 </blockquote>
 
 <blockquote>
